@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Refactor environment variables into config module
+- Simplify Solr query for "downloads"
 
 ## [0.0.2] - 2018-09-18
 ### Added
