@@ -13,7 +13,7 @@ Create a virtual environment and run it:
 
 ## Todo
 
-- Get variables from environment to make it easier to deploy from systemd
+- Take a list of items (POST in JSON?)
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).

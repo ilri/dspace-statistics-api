@@ -3,10 +3,12 @@
 # https://wiki.duraspace.org/display/DSPACE/Solr
 
 import falcon
+import os
 from SolrClient import SolrClient
 
-solr_server = 'http://localhost:3000/solr'
-solr_core = 'statistics'
+# Check if Solr connection information was provided in the environment
+solr_server = os.environ.get('SOLR_SERVER', 'http://localhost:8080/solr')
+solr_core = os.environ.get('SOLR_CORE', 'statistics')
 
 class ItemResource:
     def on_get(self, req, resp):
