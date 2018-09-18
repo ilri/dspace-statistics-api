@@ -27,7 +27,7 @@ class ItemResource:
         # Get downloads
         res = solr.query(SOLR_CORE, {
             'q':'type:0',
-            'fq':'owningItem:{0} AND isBot:false AND statistics_type:view AND -(bundleName:[* TO *] -bundleName:ORIGINAL)'.format(item_id)
+            'fq':'owningItem:{0} AND isBot:false AND statistics_type:view AND bundleName:ORIGINAL'.format(item_id)
         })
 
         downloads = res.get_num_found() 
