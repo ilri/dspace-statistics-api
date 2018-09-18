@@ -13,7 +13,7 @@ Create a virtual environment and run it:
 
 ## Todo
 
-- Take a list of items (POST in JSON?)
+- Ability to return a paginated list of items (on a different route?)
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
