@@ -11,5 +11,9 @@ Create a virtual environment and run it:
     $ pip install falcon gunicorn SolrClient
     $ gunicorn app:api
 
+## Todo
+
+- Get variables from environment to make it easier to deploy from systemd
+
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
