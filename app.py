@@ -2,13 +2,11 @@
 # See DSpace Solr docs for tips about parameters
 # https://wiki.duraspace.org/display/DSPACE/Solr
 
+from config import SOLR_SERVER
+from config import SOLR_CORE
 import falcon
-import os
 from SolrClient import SolrClient
 
-# Check if Solr connection information was provided in the environment
-solr_server = os.environ.get('SOLR_SERVER', 'http://localhost:8080/solr')
-solr_core = os.environ.get('SOLR_CORE', 'statistics')
 
 class ItemResource:
     def on_get(self, req, resp):
@@ -16,10 +14,10 @@ class ItemResource:
         # Return HTTPBadRequest if id parameter is not present and valid
         item_id = req.get_param_as_int("id", required=True, min=0)
 
-        solr = SolrClient(solr_server)
+        solr = SolrClient(SOLR_SERVER)
 
         # Get views
-        res = solr.query(solr_core, {
+        res = solr.query(SOLR_CORE, {
             'q':'type:0',
             'fq':'owningItem:{0} AND isBot:false AND statistics_type:view AND -bundleName:ORIGINAL'.format(item_id)
         })
@@ -27,7 +25,7 @@ class ItemResource:
         views = res.get_num_found()
 
         # Get downloads
-        res = solr.query(solr_core, {
+        res = solr.query(SOLR_CORE, {
             'q':'type:0',
             'fq':'owningItem:{0} AND isBot:false AND statistics_type:view AND -(bundleName:[* TO *] -bundleName:ORIGINAL)'.format(item_id)
         })
