@@ -11,3 +11,5 @@ Create a virtual environment and run it:
     $ pip install falcon gunicorn SolrClient
     $ gunicorn app:api
 
+## License
+This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
