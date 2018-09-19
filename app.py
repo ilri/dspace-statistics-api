@@ -19,18 +19,16 @@ class ItemResource:
         # Get views
         res = solr.query(SOLR_CORE, {
             'q':'type:0',
-            'fq':'owningItem:{0} AND isBot:false AND statistics_type:view AND -bundleName:ORIGINAL'.format(item_id),
-            'rows':0
-        })
+            'fq':'owningItem:{0} AND isBot:false AND statistics_type:view AND -bundleName:ORIGINAL'.format(item_id)
+        }, rows=0)
 
         views = res.get_num_found()
 
         # Get downloads
         res = solr.query(SOLR_CORE, {
             'q':'type:0',
-            'fq':'owningItem:{0} AND isBot:false AND statistics_type:view AND bundleName:ORIGINAL'.format(item_id),
-            'rows':0
-        })
+            'fq':'owningItem:{0} AND isBot:false AND statistics_type:view AND bundleName:ORIGINAL'.format(item_id)
+        }, rows=0)
 
         downloads = res.get_num_found() 
 
