@@ -42,3 +42,5 @@ class ItemResource:
 
 api = falcon.API()
 api.add_route('/item', ItemResource())
+
+# vim: set sw=4 ts=4 expandtab:
