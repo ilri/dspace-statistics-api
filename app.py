@@ -2,7 +2,6 @@
 # See DSpace Solr docs for tips about parameters
 # https://wiki.duraspace.org/display/DSPACE/Solr
 
-from config import SOLR_CORE
 from database import database_connection_ro
 import falcon
 from solr import solr_connection

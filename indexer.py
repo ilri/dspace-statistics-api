@@ -4,7 +4,6 @@
 # See DSpace Solr docs for tips about parameters
 # https://wiki.duraspace.org/display/DSPACE/Solr
 
-from config import SOLR_CORE
 from database import database_connection_rw
 from solr import solr_connection
 
@@ -12,7 +11,7 @@ def index_views():
     print("Populating database with item views.")
 
     # determine the total number of items with views (aka Solr's numFound)
-    res = solr.query(SOLR_CORE, {
+    res = solr.query('statistics', {
         'q':'type:2',
         'fq':'isBot:false AND statistics_type:view',
         'facet':True,
@@ -28,7 +27,7 @@ def index_views():
     while results_current_page <= results_num_pages:
         print('Page {0} of {1}.'.format(results_current_page, results_num_pages))
 
-        res = solr.query(SOLR_CORE, {
+        res = solr.query('statistics', {
             'q':'type:2',
             'fq':'isBot:false AND statistics_type:view',
             'facet':True,
@@ -53,7 +52,7 @@ def index_downloads():
     print("Populating database with item downloads.")
 
     # determine the total number of items with downloads (aka Solr's numFound)
-    res = solr.query(SOLR_CORE, {
+    res = solr.query('statistics', {
         'q':'type:0',
         'fq':'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
         'facet':True,
@@ -69,7 +68,7 @@ def index_downloads():
     while results_current_page <= results_num_pages:
         print('Page {0} of {1}.'.format(results_current_page, results_num_pages))
 
-        res = solr.query(SOLR_CORE, {
+        res = solr.query('statistics', {
             'q':'type:0',
             'fq':'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
             'facet':True,
