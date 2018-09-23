@@ -15,6 +15,8 @@ Create a virtual environment and run it:
 
 - Ability to return a paginated list of items (on a different route?)
 - Add API documentation
+- Close up DB connection when gunicorn shuts down gracefully
+- Better logging
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
