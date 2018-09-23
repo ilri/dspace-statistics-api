@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Rename project to "DSpace Statistics API"
 
+### Added
+- Example systemd service and timer unit for indexer service
+
 ## [0.0.4] - 2018-09-23
 ### Added
 - Added example systemd unit file for API
