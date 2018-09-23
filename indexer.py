@@ -5,7 +5,7 @@
 # https://wiki.duraspace.org/display/DSPACE/Solr
 
 from config import SOLR_CORE
-from database import database_connection
+from database import database_connection_rw
 from solr import solr_connection
 
 def index_views():
@@ -90,7 +90,7 @@ def index_downloads():
 
         results_current_page += 1
 
-db = database_connection()
+db = database_connection_rw()
 solr = solr_connection()
 
 # use separate views and downloads tables so we can REPLACE INTO carelessly (ie, item may have views but no downloads)
