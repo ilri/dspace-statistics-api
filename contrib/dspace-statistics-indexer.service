@@ -1,0 +1,14 @@
+[Unit]
+Description=CGSpace Statistics Indexer
+After=tomcat7.target
+
+[Service]
+Environment=SOLR_SERVER=http://localhost:8081/solr
+Environment=SOLR_CORE=statistics
+User=nobody
+Group=nogroup
+WorkingDirectory=/opt/ilri/cgspace-statistics-api
+ExecStart=/opt/ilri/cgspace-statistics-api/venv/bin/python indexer.py
+
+[Install]
+WantedBy=multi-user.target
