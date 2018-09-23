@@ -3,29 +3,33 @@
 # https://wiki.duraspace.org/display/DSPACE/Solr
 
 from config import SOLR_CORE
+from database import database_connection
 import falcon
 from solr import solr_connection
 
+db = database_connection()
+solr = solr_connection()
 
 class ItemResource:
     def on_get(self, req, resp, item_id):
         """Handles GET requests"""
 
-        # Get views
-        res = solr.query(SOLR_CORE, {
-            'q':'type:2 AND id:{0}'.format(item_id),
-            'fq':'isBot:false AND statistics_type:view'
-        }, rows=0)
+        cursor = db.cursor()
+        # get item views (and catch the TypeError if item doesn't have any views)
+        cursor.execute('SELECT views FROM itemviews WHERE id={0}'.format(item_id))
+        try:
+            views = cursor.fetchone()['views']
+        except:
+            views = 0
 
-        views = res.get_num_found()
+        # get item downloads (and catch the TypeError if item doesn't have any downloads)
+        cursor.execute('SELECT downloads FROM itemdownloads WHERE id={0}'.format(item_id))
+        try:
+            downloads = cursor.fetchone()['downloads']
+        except:
+            downloads = 0
 
-        # Get downloads
-        res = solr.query(SOLR_CORE, {
-            'q':'type:0 AND owningItem:{0}'.format(item_id),
-            'fq':'isBot:false AND statistics_type:view AND bundleName:ORIGINAL'
-        }, rows=0)
-
-        downloads = res.get_num_found() 
+        cursor.close()
 
         statistics = {
             'id': item_id,
