@@ -2,10 +2,9 @@
 # See DSpace Solr docs for tips about parameters
 # https://wiki.duraspace.org/display/DSPACE/Solr
 
-from config import SOLR_SERVER
 from config import SOLR_CORE
 import falcon
-from SolrClient import SolrClient
+from solr import solr_connection
 
 
 class ItemResource:
@@ -13,8 +12,6 @@ class ItemResource:
         """Handles GET requests"""
         # Return HTTPBadRequest if id parameter is not present and valid
         item_id = req.get_param_as_int("id", required=True, min=0)
-
-        solr = SolrClient(SOLR_SERVER)
 
         # Get views
         res = solr.query(SOLR_CORE, {
