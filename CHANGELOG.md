@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added example systemd unit file for API
 
+### Changed
+- Refactor Solr configuration and connection
+
 ## [0.0.3] - 2018-09-20
 ### Changed
 - Refactor environment variables into config module
