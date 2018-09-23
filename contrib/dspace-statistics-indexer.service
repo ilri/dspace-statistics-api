@@ -1,13 +1,13 @@
 [Unit]
-Description=CGSpace Statistics Indexer
+Description=DSpace Statistics Indexer
 After=tomcat7.target
 
 [Service]
 Environment=SOLR_SERVER=http://localhost:8081/solr
 User=nobody
 Group=nogroup
-WorkingDirectory=/opt/ilri/cgspace-statistics-api
-ExecStart=/opt/ilri/cgspace-statistics-api/venv/bin/python indexer.py
+WorkingDirectory=/opt/ilri/dspace-statistics-api
+ExecStart=/opt/ilri/dspace-statistics-api/venv/bin/python indexer.py
 
 [Install]
 WantedBy=multi-user.target

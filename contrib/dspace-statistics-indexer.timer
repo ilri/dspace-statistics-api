@@ -1,5 +1,5 @@
 [Unit]
-Description=CGSpace Statistics Indexer
+Description=DSpace Statistics Indexer
 
 [Timer]
 # twice a day, at 6AM and 6PM
