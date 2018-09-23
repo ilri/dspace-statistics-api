@@ -17,6 +17,7 @@ Create a virtual environment and run it:
 - Add API documentation
 - Close up DB connection when gunicorn shuts down gracefully
 - Better logging
+- Return HTTP 404 when item_id is nonexistent
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
