@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Rename project to "DSpace Statistics API"
+- Use read-only database connection in API
+- Update systemd units for CGSpace→DSpace rename
 
 ### Added
 - Example systemd service and timer unit for indexer service
+
+### Removed
+- Ability to customize SOLR_CORE variable
 
 ## [0.0.4] - 2018-09-23
 ### Added
