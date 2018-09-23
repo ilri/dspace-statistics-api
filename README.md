@@ -14,6 +14,7 @@ Create a virtual environment and run it:
 ## Todo
 
 - Ability to return a paginated list of items (on a different route?)
+- Add API documentation
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
