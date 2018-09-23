@@ -8,10 +8,8 @@ from solr import solr_connection
 
 
 class ItemResource:
-    def on_get(self, req, resp):
+    def on_get(self, req, resp, item_id):
         """Handles GET requests"""
-        # Return HTTPBadRequest if id parameter is not present and valid
-        item_id = req.get_param_as_int("id", required=True, min=0)
 
         # Get views
         res = solr.query(SOLR_CORE, {
@@ -38,6 +36,6 @@ class ItemResource:
         resp.media = statistics
 
 api = falcon.API()
-api.add_route('/item', ItemResource())
+api.add_route('/item/{item_id:int}', ItemResource())
 
 # vim: set sw=4 ts=4 expandtab:
