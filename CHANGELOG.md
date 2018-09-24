@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename project to "DSpace Statistics API"
 - Use read-only database connection in API
 - Update systemd units for CGSpace→DSpace rename
+- Use UPSERT to simplify database schema and Python logic
 
 ### Added
 - Example systemd service and timer unit for indexer service
