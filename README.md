@@ -13,7 +13,6 @@ Create a virtual environment and run it:
 
 ## Todo
 
-- Ability to return a paginated list of items (on a different route?)
 - Add API documentation
 - Close up DB connection when gunicorn shuts down gracefully
 - Better logging
