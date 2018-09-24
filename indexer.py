@@ -70,7 +70,9 @@ def index_views():
             views = res.get_facets()
             # in this case iterate over the 'id' dict and get the item ids and views
             for item_id, item_views in views['id'].items():
-                db.execute('''REPLACE INTO itemviews VALUES (?, ?)''', (item_id, item_views))
+                db.execute('''INSERT INTO items(id, views) VALUES(?, ?)
+                               ON CONFLICT(id) DO UPDATE SET downloads=excluded.views''',
+                               (item_id, item_views))
 
         db.commit()
 
@@ -111,7 +113,9 @@ def index_downloads():
             downloads = res.get_facets()
             # in this case iterate over the 'owningItem' dict and get the item ids and downloads
             for item_id, item_downloads in downloads['owningItem'].items():
-                db.execute('''REPLACE INTO itemdownloads VALUES (?, ?)''', (item_id, item_downloads))
+                db.execute('''INSERT INTO items(id, downloads) VALUES(?, ?)
+                               ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads''',
+                               (item_id, item_downloads))
 
         db.commit()
 
@@ -120,11 +124,9 @@ def index_downloads():
 db = database_connection_rw()
 solr = solr_connection()
 
-# use separate views and downloads tables so we can REPLACE INTO carelessly (ie, item may have views but no downloads)
-db.execute('''CREATE TABLE IF NOT EXISTS itemviews
-                  (id integer primary key, views integer)''')
-db.execute('''CREATE TABLE IF NOT EXISTS itemdownloads
-                  (id integer primary key, downloads integer)''')
+# create table to store item views and downloads
+db.execute('''CREATE TABLE IF NOT EXISTS items
+                  (id INT PRIMARY KEY, views INT DEFAULT 0, downloads INT DEFAULT 0)''')
 index_views()
 index_downloads()
 
