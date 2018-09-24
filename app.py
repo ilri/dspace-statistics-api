@@ -14,26 +14,14 @@ class ItemResource:
         """Handles GET requests"""
 
         cursor = db.cursor()
-        # get item views (and catch the TypeError if item doesn't have any views)
-        cursor.execute('SELECT views FROM itemviews WHERE id={0}'.format(item_id))
-        try:
-            views = cursor.fetchone()['views']
-        except:
-            views = 0
-
-        # get item downloads (and catch the TypeError if item doesn't have any downloads)
-        cursor.execute('SELECT downloads FROM itemdownloads WHERE id={0}'.format(item_id))
-        try:
-            downloads = cursor.fetchone()['downloads']
-        except:
-            downloads = 0
-
+        cursor.execute('SELECT views, downloads FROM items WHERE id={0}'.format(item_id))
+        results = cursor.fetchone()
         cursor.close()
 
         statistics = {
             'id': item_id,
-            'views': views,
-            'downloads': downloads
+            'views': results['views'],
+            'downloads': results['downloads']
         }
 
         resp.media = statistics
