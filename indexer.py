@@ -20,7 +20,7 @@
 # ---
 #
 # Connects to a DSpace Solr statistics core and ingests item views and downloads
-# into a SQLite database for use with other applications (an API, for example).
+# into a Postgres database for use with other applications (an API, for example).
 #
 # This script is written for Python 3 and requires several modules that you can
 # install with pip (I recommend setting up a Python virtual environment first):

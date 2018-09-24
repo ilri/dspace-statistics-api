@@ -1,14 +1,14 @@
 # DSpace Statistics API
 A quick and dirty REST API to expose Solr view and download statistics for items in a DSpace repository.
 
-Written and tested in Python 3.6. SolrClient (0.2.1) does not currently run in Python 3.7.0. Requires SQLite version 3.24.0 or greater for [`UPSERT` support](https://www.sqlite.org/lang_UPSERT.html).
+Written and tested in Python 3.6. SolrClient (0.2.1) does not currently run in Python 3.7.0. Requires PostgreSQL version 9.5 or greater for [`UPSERT` support](https://wiki.postgresql.org/wiki/UPSERT).
 
 ## Installation
 Create a virtual environment and run it:
 
     $ virtualenv -p /usr/bin/python3.6 venv
     $ . venv/bin/activate
-    $ pip install falcon gunicorn SolrClient
+    $ pip install falcon gunicorn SolrClient psycopg2-binary
     $ gunicorn app:api
 
 ## Todo
