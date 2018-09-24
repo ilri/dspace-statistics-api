@@ -3,9 +3,10 @@ from config import DATABASE_USER
 from config import DATABASE_PASS
 from config import DATABASE_HOST
 import psycopg2
+import psycopg2.extras
 
 def database_connection():
-    connection = psycopg2.connect("dbname={} user={} password={} host='{}'".format(DATABASE_NAME, DATABASE_USER, DATABASE_PASS, DATABASE_HOST))
+    connection = psycopg2.connect("dbname={} user={} password={} host='{}'".format(DATABASE_NAME, DATABASE_USER, DATABASE_PASS, DATABASE_HOST), cursor_factory=psycopg2.extras.DictCursor)
 
     return connection
 
