@@ -32,7 +32,7 @@
 #
 # Tested with Python 3.5 and 3.6.
 
-from database import database_connection_rw
+from database import database_connection
 from solr import solr_connection
 
 def index_views():
@@ -52,6 +52,8 @@ def index_views():
     results_num_pages = round(results_numFound / results_per_page)
     results_current_page = 0
 
+    cursor = db.cursor()
+
     while results_current_page <= results_num_pages:
         print('Page {0} of {1}.'.format(results_current_page, results_num_pages))
 
@@ -70,13 +72,15 @@ def index_views():
             views = res.get_facets()
             # in this case iterate over the 'id' dict and get the item ids and views
             for item_id, item_views in views['id'].items():
-                db.execute('''INSERT INTO items(id, views) VALUES(?, ?)
+                cursor.execute('''INSERT INTO items(id, views) VALUES(%s, %s)
                                ON CONFLICT(id) DO UPDATE SET downloads=excluded.views''',
                                (item_id, item_views))
 
         db.commit()
 
         results_current_page += 1
+
+    cursor.close()
 
 def index_downloads():
     print("Populating database with item downloads.")
@@ -94,6 +98,8 @@ def index_downloads():
     results_per_page = 100
     results_num_pages = round(results_numFound / results_per_page)
     results_current_page = 0
+
+    cursor = db.cursor()
 
     while results_current_page <= results_num_pages:
         print('Page {0} of {1}.'.format(results_current_page, results_num_pages))
@@ -113,7 +119,7 @@ def index_downloads():
             downloads = res.get_facets()
             # in this case iterate over the 'owningItem' dict and get the item ids and downloads
             for item_id, item_downloads in downloads['owningItem'].items():
-                db.execute('''INSERT INTO items(id, downloads) VALUES(?, ?)
+                cursor.execute('''INSERT INTO items(id, downloads) VALUES(%s, %s)
                                ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads''',
                                (item_id, item_downloads))
 
@@ -121,11 +127,14 @@ def index_downloads():
 
         results_current_page += 1
 
-db = database_connection_rw()
+    cursor.close()
+
+db = database_connection()
 solr = solr_connection()
 
 # create table to store item views and downloads
-db.execute('''CREATE TABLE IF NOT EXISTS items
+cursor = db.cursor()
+cursor.execute('''CREATE TABLE IF NOT EXISTS items
                   (id INT PRIMARY KEY, views INT DEFAULT 0, downloads INT DEFAULT 0)''')
 index_views()
 index_downloads()

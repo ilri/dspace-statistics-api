@@ -1,17 +1,11 @@
-from config import SQLITE_DB
-import sqlite3
+from config import DATABASE_NAME
+from config import DATABASE_USER
+from config import DATABASE_PASS
+from config import DATABASE_HOST
+import psycopg2
 
-def database_connection_rw():
-    connection = sqlite3.connect(SQLITE_DB)
-    # allow iterating over row results by column key
-    connection.row_factory = sqlite3.Row
-
-    return connection
-
-def database_connection_ro():
-    connection = sqlite3.connect('file:{0}?mode=ro'.format(SQLITE_DB), uri=True)
-    # allow iterating over row results by column key
-    connection.row_factory = sqlite3.Row
+def database_connection():
+    connection = psycopg2.connect("dbname={} user={} password={} host='{}'".format(DATABASE_NAME, DATABASE_USER, DATABASE_PASS, DATABASE_HOST))
 
     return connection
 

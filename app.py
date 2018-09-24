@@ -2,11 +2,12 @@
 # See DSpace Solr docs for tips about parameters
 # https://wiki.duraspace.org/display/DSPACE/Solr
 
-from database import database_connection_ro
+from database import database_connection
 import falcon
 from solr import solr_connection
 
-db = database_connection_ro()
+db = database_connection()
+db.set_session(readonly=True)
 solr = solr_connection()
 
 class AllItemsResource:
