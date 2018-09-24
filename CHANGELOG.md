@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] - 2018-09-24
+### Changed
+- Environment settings in example systemd unit files
+
 ## [0.2.0] - 2018-09-24
 ### Changed
 - Use PostgreSQL instead of SQLite because UPSERT support needs a very new libsqlite3 whereas it's already in PostgreSQL 9.5+
