@@ -1,7 +1,3 @@
-# Tested with Python 3.6
-# See DSpace Solr docs for tips about parameters
-# https://wiki.duraspace.org/display/DSPACE/Solr
-
 from database import database_connection
 import falcon
 from solr import solr_connection
