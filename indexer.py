@@ -55,7 +55,7 @@ def index_views():
     cursor = db.cursor()
 
     while results_current_page <= results_num_pages:
-        print('Page {0} of {1}.'.format(results_current_page, results_num_pages))
+        print('Page {} of {}.'.format(results_current_page, results_num_pages))
 
         res = solr.query('statistics', {
             'q':'type:2',
@@ -102,7 +102,7 @@ def index_downloads():
     cursor = db.cursor()
 
     while results_current_page <= results_num_pages:
-        print('Page {0} of {1}.'.format(results_current_page, results_num_pages))
+        print('Page {} of {}.'.format(results_current_page, results_num_pages))
 
         res = solr.query('statistics', {
             'q':'type:0',

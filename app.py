@@ -25,7 +25,7 @@ class AllItemsResource:
         pages = round(cursor.fetchone()[0] / limit)
 
         # get statistics, ordered by id, and use limit and offset to page through results
-        cursor.execute('SELECT id, views, downloads FROM items ORDER BY id ASC LIMIT {0} OFFSET {1}'.format(limit, offset))
+        cursor.execute('SELECT id, views, downloads FROM items ORDER BY id ASC LIMIT {} OFFSET {}'.format(limit, offset))
         results = cursor.fetchmany(limit)
         cursor.close()
 
@@ -50,7 +50,7 @@ class ItemResource:
         """Handles GET requests"""
 
         cursor = db.cursor()
-        cursor.execute('SELECT views, downloads FROM items WHERE id={0}'.format(item_id))
+        cursor.execute('SELECT views, downloads FROM items WHERE id={}'.format(item_id))
         results = cursor.fetchone()
         cursor.close()
 
