@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Example systemd service and timer unit for indexer service
+- Add top-level route to expose all item statistics
 
 ### Removed
 - Ability to customize SOLR_CORE variable
