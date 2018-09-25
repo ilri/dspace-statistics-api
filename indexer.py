@@ -20,17 +20,15 @@
 # ---
 #
 # Connects to a DSpace Solr statistics core and ingests item views and downloads
-# into a Postgres database for use with other applications (an API, for example).
+# into a PostgreSQL database for use by other applications (like an API).
 #
-# This script is written for Python 3 and requires several modules that you can
-# install with pip (I recommend setting up a Python virtual environment first):
+# This script is written for Python 3.5+ and requires several modules that you
+# can install with pip (I recommend using a Python virtual environment):
 #
-#   $ pip install SolrClient
+#   $ pip install SolrClient psycopg2-binary
 #
 # See: https://solrclient.readthedocs.io/en/latest/SolrClient.html
 # See: https://wiki.duraspace.org/display/DSPACE/Solr
-#
-# Tested with Python 3.5 and 3.6.
 
 from database import database_connection
 from solr import solr_connection
