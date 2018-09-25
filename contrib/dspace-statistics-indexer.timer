@@ -3,7 +3,7 @@ Description=DSpace Statistics Indexer
 
 [Timer]
 # twice a day, at 6AM and 6PM
-OnCalendar=*-*-* 06:00:00,18:00:00
+OnCalendar=*-*-* 06,18:00:00
 # Add a random delay of 0–3600 seconds
 RandomizedDelaySec=3600
 Persistent=true
