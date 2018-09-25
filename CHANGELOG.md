@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - requirements.txt for pip
 - Travis CI build configuration for Python 3.6 and 3.7
+- Documentation on using the API
+
+### Changed
+- The "all items" route from / to /items
 
 ## [0.2.1] - 2018-09-24
 ### Changed
