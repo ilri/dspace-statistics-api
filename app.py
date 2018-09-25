@@ -59,7 +59,7 @@ class ItemResource:
         resp.media = statistics
 
 api = falcon.API()
-api.add_route('/', AllItemsResource())
+api.add_route('/items', AllItemsResource())
 api.add_route('/item/{item_id:int}', ItemResource())
 
 # vim: set sw=4 ts=4 expandtab:
