@@ -47,16 +47,23 @@ class ItemResource:
 
         cursor = db.cursor()
         cursor.execute('SELECT views, downloads FROM items WHERE id={}'.format(item_id))
-        results = cursor.fetchone()
+        if cursor.rowcount == 0:
+            raise falcon.HTTPNotFound(
+                    title='Item not found',
+                    description='The item with id "{}" was not found.'.format(item_id)
+            )
+        else:
+            results = cursor.fetchone()
+
+            statistics = {
+                'id': item_id,
+                'views': results['views'],
+                'downloads': results['downloads']
+            }
+
+            resp.media = statistics
+
         cursor.close()
-
-        statistics = {
-            'id': item_id,
-            'views': results['views'],
-            'downloads': results['downloads']
-        }
-
-        resp.media = statistics
 
 api = falcon.API()
 api.add_route('/items', AllItemsResource())

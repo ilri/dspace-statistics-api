@@ -15,7 +15,7 @@ Create a virtual environment and run it:
 The API exposes the following endpoints:
 
   - GET `/items` — return views and downloads for all items that Solr knows about¹. Accepts `limit` and `page` query parameters for pagination of results.
-  - GET `/item/id` — return views and downloads for a single item (*id* must be a positive integer).
+  - GET `/item/id` — return views and downloads for a single item (*id* must be a positive integer). Returns HTTP 404 if an item id is not found.
 
 ¹ We are querying the Solr statistics core, which technically only knows about items that have either views or downloads.
 
@@ -24,7 +24,6 @@ The API exposes the following endpoints:
 - Add API documentation
 - Close up DB connection when gunicorn shuts down gracefully
 - Better logging
-- Return HTTP 404 when item_id is nonexistent
 - Tests
 
 ## License
