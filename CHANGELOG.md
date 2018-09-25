@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.0] - 2018-09-25
 ### Added
 - requirements.txt for pip
-- Travis CI build configuration for Python 3.6 and 3.7
+- Travis CI build configuration for Python 3.5 and 3.6
 - Documentation on using the API
 
 ### Changed
