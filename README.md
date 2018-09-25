@@ -8,7 +8,7 @@ Create a virtual environment and run it:
 
     $ virtualenv -p /usr/bin/python3.6 venv
     $ . venv/bin/activate
-    $ pip install falcon gunicorn SolrClient psycopg2-binary
+    $ pip install -r requirements.txt
     $ gunicorn app:api
 
 ## Todo
