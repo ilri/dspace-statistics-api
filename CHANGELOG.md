@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Force SolrClient's kazoo dependency to version 2.5.0 to work with Python 3.7
+- Add Python 3.7 to Travis CI configuration
 
 ## [0.3.0] - 2018-09-25
 ### Added
