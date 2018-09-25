@@ -11,12 +11,21 @@ Create a virtual environment and run it:
     $ pip install -r requirements.txt
     $ gunicorn app:api
 
+## Using the API
+The API exposes the following endpoints:
+
+  - GET `/` — return views and downloads for all items that Solr knows about¹. Accepts `limit` and `page` query parameters for pagination of results.
+  - GET `/item/id` — return views and downloads for a single item (*id* must be a positive integer).
+
+¹ We are querying the Solr statistics core, which technically only knows about all items that have either views or downloads.
+
 ## Todo
 
 - Add API documentation
 - Close up DB connection when gunicorn shuts down gracefully
 - Better logging
 - Return HTTP 404 when item_id is nonexistent
+- Tests
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
