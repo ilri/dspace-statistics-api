@@ -31,48 +31,62 @@
 # See: https://wiki.duraspace.org/display/DSPACE/Solr
 
 from database import database_connection
+import json
 from solr import solr_connection
 
 def index_views():
-    print("Populating database with item views.")
-
-    # determine the total number of items with views (aka Solr's numFound)
+    # get total number of distinct facets for items with a minimum of 1 view,
+    # otherwise Solr returns all kinds of weird ids that are actually not in
+    # the database. Also, stats are expensive, but we need stats.calcdistinct
+    # so we can get the countDistinct summary.
+    #
+    # see: https://lucene.apache.org/solr/guide/6_6/the-stats-component.html
     res = solr.query('statistics', {
         'q':'type:2',
         'fq':'isBot:false AND statistics_type:view',
         'facet':True,
         'facet.field':'id',
+        'facet.mincount':1,
+        'facet.limit':1,
+        'facet.offset':0,
+        'stats':True,
+        'stats.field':'id',
+        'stats.calcdistinct':True
     }, rows=0)
 
-    # divide results into "pages" (numFound / 100)
-    results_numFound = res.get_num_found()
+    # get total number of distinct facets (countDistinct)
+    results_totalNumFacets = json.loads(res.get_json())['stats']['stats_fields']['id']['countDistinct']
+
+    # divide results into "pages" (cast to int to effectively round down)
     results_per_page = 100
-    results_num_pages = round(results_numFound / results_per_page)
+    results_num_pages = int(results_totalNumFacets / results_per_page)
     results_current_page = 0
 
     cursor = db.cursor()
 
     while results_current_page <= results_num_pages:
-        print('Page {} of {}.'.format(results_current_page, results_num_pages))
+        print('Indexing item views (page {} of {})'.format(results_current_page, results_num_pages))
 
         res = solr.query('statistics', {
             'q':'type:2',
             'fq':'isBot:false AND statistics_type:view',
             'facet':True,
             'facet.field':'id',
+            'facet.mincount':1,
             'facet.limit':results_per_page,
             'facet.offset':results_current_page * results_per_page
-        })
+        }, rows=0)
 
-        # make sure total number of results > 0
-        if res.get_num_found() > 0:
-            # SolrClient's get_facets() returns a dict of dicts
-            views = res.get_facets()
-            # in this case iterate over the 'id' dict and get the item ids and views
-            for item_id, item_views in views['id'].items():
-                cursor.execute('''INSERT INTO items(id, views) VALUES(%s, %s)
-                               ON CONFLICT(id) DO UPDATE SET downloads=excluded.views''',
-                               (item_id, item_views))
+        # check number of facets returned in the last query
+        #results_currentNumFacets = len(res.get_facets()['id'])
+
+        # SolrClient's get_facets() returns a dict of dicts
+        views = res.get_facets()
+        # in this case iterate over the 'id' dict and get the item ids and views
+        for item_id, item_views in views['id'].items():
+            cursor.execute('''INSERT INTO items(id, views) VALUES(%s, %s)
+                           ON CONFLICT(id) DO UPDATE SET downloads=excluded.views''',
+                           (item_id, item_views))
 
         db.commit()
 
@@ -81,45 +95,50 @@ def index_views():
     cursor.close()
 
 def index_downloads():
-    print("Populating database with item downloads.")
-
-    # determine the total number of items with downloads (aka Solr's numFound)
+    # get the total number of distinct facets for items with at least 1 download
     res = solr.query('statistics', {
         'q':'type:0',
         'fq':'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
         'facet':True,
         'facet.field':'owningItem',
+        'facet.mincount':1,
+        'facet.limit':1,
+        'facet.offset':0,
+        'stats':True,
+        'stats.field':'owningItem',
+        'stats.calcdistinct':True
     }, rows=0)
 
-    # divide results into "pages" (numFound / 100)
-    results_numFound = res.get_num_found()
+    # get total number of distinct facets (countDistinct)
+    results_totalNumFacets = json.loads(res.get_json())['stats']['stats_fields']['owningItem']['countDistinct']
+
+    # divide results into "pages" (cast to int to effectively round down)
     results_per_page = 100
-    results_num_pages = round(results_numFound / results_per_page)
+    results_num_pages = int(results_totalNumFacets / results_per_page)
     results_current_page = 0
 
     cursor = db.cursor()
 
     while results_current_page <= results_num_pages:
-        print('Page {} of {}.'.format(results_current_page, results_num_pages))
+        print('Indexing item downloads (page {} of {})'.format(results_current_page, results_num_pages))
 
         res = solr.query('statistics', {
             'q':'type:0',
             'fq':'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
             'facet':True,
             'facet.field':'owningItem',
+            'facet.mincount':1,
             'facet.limit':results_per_page,
             'facet.offset':results_current_page * results_per_page
-        })
+        }, rows=0)
 
-        # make sure total number of results > 0
-        if res.get_num_found() > 0:
-            # SolrClient's get_facets() returns a dict of dicts
-            downloads = res.get_facets()
-            # in this case iterate over the 'owningItem' dict and get the item ids and downloads
-            for item_id, item_downloads in downloads['owningItem'].items():
-                cursor.execute('''INSERT INTO items(id, downloads) VALUES(%s, %s)
-                               ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads''',
-                               (item_id, item_downloads))
+        # SolrClient's get_facets() returns a dict of dicts
+        downloads = res.get_facets()
+        # in this case iterate over the 'owningItem' dict and get the item ids and downloads
+        for item_id, item_downloads in downloads['owningItem'].items():
+            cursor.execute('''INSERT INTO items(id, downloads) VALUES(%s, %s)
+                           ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads''',
+                           (item_id, item_downloads))
 
         db.commit()
 
