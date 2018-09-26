@@ -81,9 +81,6 @@ def index_views():
             'facet.offset':results_current_page * results_per_page
         }, rows=0)
 
-        # check number of facets returned in the last query
-        #results_currentNumFacets = len(res.get_facets()['id'])
-
         # SolrClient's get_facets() returns a dict of dicts
         views = res.get_facets()
         # in this case iterate over the 'id' dict and get the item ids and views
