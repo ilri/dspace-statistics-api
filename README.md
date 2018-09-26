@@ -25,6 +25,7 @@ The API exposes the following endpoints:
 - Close up DB connection when gunicorn shuts down gracefully
 - Better logging
 - Tests
+- Use batch inserts to the DB
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
