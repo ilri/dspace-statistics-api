@@ -32,6 +32,7 @@
 
 from database import database_connection
 import json
+import psycopg2.extras
 from solr import solr_connection
 
 def index_views():
@@ -64,6 +65,9 @@ def index_views():
 
     cursor = db.cursor()
 
+    # create an empty list to store values for batch insertion
+    data = []
+
     while results_current_page <= results_num_pages:
         print('Indexing item views (page {} of {})'.format(results_current_page, results_num_pages))
 
@@ -84,11 +88,15 @@ def index_views():
         views = res.get_facets()
         # in this case iterate over the 'id' dict and get the item ids and views
         for item_id, item_views in views['id'].items():
-            cursor.execute('''INSERT INTO items(id, views) VALUES(%s, %s)
-                           ON CONFLICT(id) DO UPDATE SET downloads=excluded.views''',
-                           (item_id, item_views))
+            data.append((item_id, item_views))
 
+        # do a batch insert of values from the current "page" of results
+        sql = 'INSERT INTO items(id, views) VALUES %s ON CONFLICT(id) DO UPDATE SET downloads=excluded.views'
+        psycopg2.extras.execute_values(cursor, sql, data, template='(%s, %s)')
         db.commit()
+
+        # clear all items from the list so we can populate it with the next batch
+        data.clear()
 
         results_current_page += 1
 
@@ -119,6 +127,9 @@ def index_downloads():
 
     cursor = db.cursor()
 
+    # create an empty list to store values for batch insertion
+    data = []
+
     while results_current_page <= results_num_pages:
         print('Indexing item downloads (page {} of {})'.format(results_current_page, results_num_pages))
 
@@ -136,11 +147,15 @@ def index_downloads():
         downloads = res.get_facets()
         # in this case iterate over the 'owningItem' dict and get the item ids and downloads
         for item_id, item_downloads in downloads['owningItem'].items():
-            cursor.execute('''INSERT INTO items(id, downloads) VALUES(%s, %s)
-                           ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads''',
-                           (item_id, item_downloads))
+            data.append((item_id, item_downloads))
 
+        # do a batch insert of values from the current "page" of results
+        sql = 'INSERT INTO items(id, downloads) VALUES %s ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads'
+        psycopg2.extras.execute_values(cursor, sql, data, template='(%s, %s)')
         db.commit()
+
+        # clear all items from the list so we can populate it with the next batch
+        data.clear()
 
         results_current_page += 1
 
