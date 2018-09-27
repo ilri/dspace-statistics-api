@@ -22,15 +22,15 @@ class AllItemsResource:
 
         # get statistics, ordered by id, and use limit and offset to page through results
         cursor.execute('SELECT id, views, downloads FROM items ORDER BY id ASC LIMIT {} OFFSET {}'.format(limit, offset))
-        results = cursor.fetchmany(limit)
-        cursor.close()
 
         # create a list to hold dicts of item stats
         statistics = list()
 
         # iterate over results and build statistics object
-        for item in results:
+        for item in cursor:
             statistics.append({ 'id': item['id'], 'views': item['views'], 'downloads': item['downloads'] })
+
+        cursor.close()
 
         message = {
                 'currentPage': page,
