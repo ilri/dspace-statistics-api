@@ -15,6 +15,9 @@ Create a virtual environment and run it:
     $ pip install -r requirements.txt
     $ gunicorn app:api
 
+## Deployment
+There are example systemd service and timer units in the `contrib` directory.
+
 ## Using the API
 The API exposes the following endpoints:
 
