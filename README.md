@@ -1,5 +1,5 @@
 # DSpace Statistics API
-A simple REST API to expose Solr view and download statistics for items in a DSpace repository.
+A simple REST API to expose Solr view and download statistics for items in a DSpace repository. This project contains a standalone indexing component and a WSGI application.
 
 ## Requirements
 
