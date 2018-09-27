@@ -4,7 +4,7 @@ A simple REST API to expose Solr view and download statistics for items in a DSp
 ## Requirements
 
 - Python 3.5+
-- PostgreSQL version 9.5+ (due to [`UPSERT` support](https://wiki.postgresql.org/wiki/UPSERT)).
+- PostgreSQL version 9.5+ (due to [`UPSERT` support](https://wiki.postgresql.org/wiki/UPSERT))
 - DSpace 4+ with [Solr usage statistics enabled](https://wiki.duraspace.org/display/DSDOC5x/SOLR+Statistics)
 
 ## Installation
