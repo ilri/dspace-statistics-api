@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - README.md introduction and requirements
+- Use ujson instead of json
 
 ## [0.4.1] - 2018-09-26
 ### Changed
