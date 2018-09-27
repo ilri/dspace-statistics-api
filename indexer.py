@@ -31,7 +31,7 @@
 # See: https://wiki.duraspace.org/display/DSPACE/Solr
 
 from database import database_connection
-import json
+import ujson
 import psycopg2.extras
 from solr import solr_connection
 
@@ -56,7 +56,7 @@ def index_views():
     }, rows=0)
 
     # get total number of distinct facets (countDistinct)
-    results_totalNumFacets = json.loads(res.get_json())['stats']['stats_fields']['id']['countDistinct']
+    results_totalNumFacets = ujson.loads(res.get_json())['stats']['stats_fields']['id']['countDistinct']
 
     # divide results into "pages" (cast to int to effectively round down)
     results_per_page = 100
@@ -115,7 +115,7 @@ def index_downloads():
     }, rows=0)
 
     # get total number of distinct facets (countDistinct)
-    results_totalNumFacets = json.loads(res.get_json())['stats']['stats_fields']['owningItem']['countDistinct']
+    results_totalNumFacets = ujson.loads(res.get_json())['stats']['stats_fields']['owningItem']['countDistinct']
 
     # divide results into "pages" (cast to int to effectively round down)
     results_per_page = 100
