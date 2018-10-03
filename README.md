@@ -39,6 +39,7 @@ The API exposes the following endpoints:
 - Tests
 - Check if database exists (try/except)
 - Version API
+- Use JSON in PostgreSQL
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
