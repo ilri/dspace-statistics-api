@@ -7,12 +7,17 @@ A simple REST API to expose Solr view and download statistics for items in a DSp
 - PostgreSQL version 9.5+ (due to [`UPSERT` support](https://wiki.postgresql.org/wiki/UPSERT))
 - DSpace 4+ with [Solr usage statistics enabled](https://wiki.duraspace.org/display/DSDOC5x/SOLR+Statistics)
 
-## Installation
-Create a virtual environment and run it:
+## Installation and Testing
+Create a Python virtual environment and install the dependencies:
 
     $ python -m venv venv
     $ . venv/bin/activate
     $ pip install -r requirements.txt
+
+Set up the environment variables Solr and PostgreSQL:
+
+    $ export SOLR_SERVER=http://localhost:8080/solr
+    $ 
     $ gunicorn app:api
 
 ## Deployment
@@ -33,6 +38,7 @@ The API exposes the following endpoints:
 - Better logging
 - Tests
 - Check if database exists (try/except)
+- Version API
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
