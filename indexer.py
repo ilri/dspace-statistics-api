@@ -88,7 +88,7 @@ def index_views():
             data.append((item_id, item_views))
 
         # do a batch insert of values from the current "page" of results
-        sql = 'INSERT INTO items(id, views) VALUES %s ON CONFLICT(id) DO UPDATE SET downloads=excluded.views'
+        sql = 'INSERT INTO items(id, views) VALUES %s ON CONFLICT(id) DO UPDATE SET views=excluded.views'
         psycopg2.extras.execute_values(cursor, sql, data, template='(%s, %s)')
         db.commit()
 
