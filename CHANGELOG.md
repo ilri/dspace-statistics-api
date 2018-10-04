@@ -4,11 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.4.2] - 2018-10-04
 ### Changed
 - README.md introduction and requirements
 - Use ujson instead of json
 - Iterate directly on SQL cursor in `/items` route
+
+### Fixed
+- Logic error in SQL for item views
 
 ## [0.4.1] - 2018-09-26
 ### Changed
