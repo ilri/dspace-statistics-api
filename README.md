@@ -14,10 +14,13 @@ Create a Python virtual environment and install the dependencies:
     $ . venv/bin/activate
     $ pip install -r requirements.txt
 
-Set up the environment variables Solr and PostgreSQL:
+Set up the environment variables for Solr and PostgreSQL:
 
     $ export SOLR_SERVER=http://localhost:8080/solr
-    $ 
+    $ export DATABASE_NAME=dspacestatistics
+    $ export DATABASE_USER=dspacestatistics
+    $ export DATABASE_PASS=dspacestatistics
+    $ export DATABASE_HOST=localhost
     $ gunicorn app:api
 
 ## Deployment
