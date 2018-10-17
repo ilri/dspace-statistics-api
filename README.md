@@ -48,7 +48,7 @@ The API exposes the following endpoints:
 ## Todo
 
 - Add API documentation
-- Close up DB connection when gunicorn shuts down gracefully
+- Close DB connection when gunicorn shuts down gracefully
 - Better logging
 - Tests
 - Check if database exists (try/except)
