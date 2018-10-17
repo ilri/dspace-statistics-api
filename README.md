@@ -21,7 +21,18 @@ Set up the environment variables for Solr and PostgreSQL:
     $ export DATABASE_USER=dspacestatistics
     $ export DATABASE_PASS=dspacestatistics
     $ export DATABASE_HOST=localhost
+
+Index the Solr statistics core to populate the PostgreSQL database:
+
+    $ ./indexer.py
+
+Run the REST API:
+
     $ gunicorn app:api
+
+Test to see if there are any statistics:
+
+    $ curl 'http://localhost:8000/items?limit=1'
 
 ## Deployment
 There are example systemd service and timer units in the `contrib` directory.
