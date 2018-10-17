@@ -43,6 +43,7 @@ The API exposes the following endpoints:
 - Check if database exists (try/except)
 - Version API
 - Use JSON in PostgreSQL
+- Switch to [Python 3.6+ f-string syntax](https://realpython.com/python-f-strings/)
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
