@@ -35,7 +35,26 @@ Test to see if there are any statistics:
     $ curl 'http://localhost:8000/items?limit=1'
 
 ## Deployment
-There are example systemd service and timer units in the `contrib` directory.
+There are example systemd service and timer units in the `contrib` directory. The API service listens on localhost by default so you will need to expose it publicly using a web server like nginx.
+
+An example nginx configuration is:
+
+```
+server {
+    #...
+
+    location ~ /rest/statistics/?(.*) {
+        access_log /var/log/nginx/statistics.log;
+        proxy_pass http://statistics_api/$1$is_args$args;
+    }
+}
+
+upstream statistics_api {
+    server 127.0.0.1:5000;
+}
+```
+
+This would expose the API at `/rest/statistics`.
 
 ## Using the API
 The API exposes the following endpoints:
