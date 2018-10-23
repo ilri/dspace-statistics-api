@@ -9,8 +9,8 @@ Environment=DATABASE_PASS=dspacestatistics
 Environment=DATABASE_HOST=localhost
 User=nobody
 Group=nogroup
-WorkingDirectory=/opt/ilri/dspace-statistics-api
-ExecStart=/opt/ilri/dspace-statistics-api/venv/bin/gunicorn \
+WorkingDirectory=/var/lib/dspace-statistics-api
+ExecStart=/var/lib/dspace-statistics-api/venv/bin/gunicorn \
           --bind 127.0.0.1:5000                             \
           app:api
 ExecReload=/bin/kill -s HUP $MAINPID
