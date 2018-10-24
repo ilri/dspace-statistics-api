@@ -1,10 +1,8 @@
 from database import database_connection
 import falcon
-from solr import solr_connection
 
 db = database_connection()
 db.set_session(readonly=True)
-solr = solr_connection()
 
 class AllItemsResource:
     def on_get(self, req, resp):
@@ -64,6 +62,9 @@ class ItemResource:
             resp.media = statistics
 
         cursor.close()
+
+def on_exit(api):
+    print("Shutting down DB")
 
 api = falcon.API()
 api.add_route('/items', AllItemsResource())
