@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 - Example nginx configuration to README.md
 
+## Changed
+- Don't initialize Solr connection in API
+
 ### [0.4.3] - 2018-10-17
 ## Changed
 - Use pip install as script for Travis CI
