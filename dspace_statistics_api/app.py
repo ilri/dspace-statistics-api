@@ -66,7 +66,7 @@ class ItemResource:
 def on_exit(api):
     print("Shutting down DB")
 
-api = falcon.API()
+api = application = falcon.API()
 api.add_route('/items', AllItemsResource())
 api.add_route('/item/{item_id:int}', ItemResource())
 

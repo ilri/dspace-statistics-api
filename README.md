@@ -28,7 +28,7 @@ Index the Solr statistics core to populate the PostgreSQL database:
 
 Run the REST API:
 
-    $ gunicorn dspace_statistics_api.app:api
+    $ gunicorn dspace_statistics_api.app
 
 Test to see if there are any statistics:
 
