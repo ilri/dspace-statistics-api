@@ -1,7 +1,7 @@
-from config import DATABASE_NAME
-from config import DATABASE_USER
-from config import DATABASE_PASS
-from config import DATABASE_HOST
+from .config import DATABASE_NAME
+from .config import DATABASE_USER
+from .config import DATABASE_PASS
+from .config import DATABASE_HOST
 import psycopg2, psycopg2.extras
 
 def database_connection():

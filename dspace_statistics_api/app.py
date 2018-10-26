@@ -1,4 +1,4 @@
-from database import database_connection
+from .database import database_connection
 import falcon
 
 db = database_connection()

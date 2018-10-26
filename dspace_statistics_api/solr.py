@@ -1,4 +1,4 @@
-from config import SOLR_SERVER
+from .config import SOLR_SERVER
 from SolrClient import SolrClient
 
 def solr_connection():

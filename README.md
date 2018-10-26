@@ -24,11 +24,11 @@ Set up the environment variables for Solr and PostgreSQL:
 
 Index the Solr statistics core to populate the PostgreSQL database:
 
-    $ ./indexer.py
+    $ python -m dspace_statistics_api.indexer
 
 Run the REST API:
 
-    $ gunicorn app:api
+    $ gunicorn dspace_statistics_api.app:api
 
 Test to see if there are any statistics:
 

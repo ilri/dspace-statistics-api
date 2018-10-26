@@ -30,10 +30,10 @@
 # See: https://solrclient.readthedocs.io/en/latest/SolrClient.html
 # See: https://wiki.duraspace.org/display/DSPACE/Solr
 
-from database import database_connection
+from .database import database_connection
 import json
 import psycopg2.extras
-from solr import solr_connection
+from .solr import solr_connection
 
 def index_views():
     # get total number of distinct facets for items with a minimum of 1 view,
