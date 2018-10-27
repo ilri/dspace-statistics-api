@@ -12,7 +12,7 @@ Group=nogroup
 WorkingDirectory=/var/lib/dspace-statistics-api
 ExecStart=/var/lib/dspace-statistics-api/venv/bin/gunicorn \
           --bind 127.0.0.1:5000                             \
-          app:api
+          dspace_statistics_api.app
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 

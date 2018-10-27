@@ -11,7 +11,7 @@ Environment=DATABASE_HOST=localhost
 User=nobody
 Group=nogroup
 WorkingDirectory=/var/lib/dspace-statistics-api
-ExecStart=/var/lib/dspace-statistics-api/venv/bin/python indexer.py
+ExecStart=/var/lib/dspace-statistics-api/venv/bin/python -m dspace_statistics_api.indexer
 
 [Install]
 WantedBy=multi-user.target
