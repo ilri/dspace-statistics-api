@@ -67,7 +67,7 @@ The API exposes the following endpoints:
 
 The item id is the *internal* id for an item. You can get these from the standard DSpace REST API.
 
-¹ We are querying the Solr statistics core, which technically only knows about items that have either views or downloads. If an item is not present here you can assume it has zero views and zero downloads, but not necessarily that it does not exist.
+¹ We are querying the Solr statistics core, which technically only knows about items that have either views or downloads. If an item is not present here you can assume it has zero views and zero downloads, but not necessarily that it does not exist in the repository.
 
 ## Todo
 
