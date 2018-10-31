@@ -4,6 +4,13 @@ import falcon
 db = database_connection()
 db.set_session(readonly=True)
 
+class RootResource:
+    def on_get(self, req, resp):
+        resp.status = falcon.HTTP_200
+        resp.content_type = 'text/html'
+        with open('dspace_statistics_api/docs/index.html', 'r') as f:
+            resp.body = f.read()
+
 class AllItemsResource:
     def on_get(self, req, resp):
         """Handles GET requests"""
@@ -64,6 +71,7 @@ class ItemResource:
         cursor.close()
 
 api = application = falcon.API()
+api.add_route('/', RootResource())
 api.add_route('/items', AllItemsResource())
 api.add_route('/item/{item_id:int}', ItemResource())
 

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <title>DSpace Statistics API</title>
+    </head>
+    <body>
+        <h1>DSpace Statistics API</h1>
+        <p>This site is running the <a href="https://github.com/ilri/dspace-statistics-api" title="DSpace Statistics API project">DSpace Statistics API</a>. The following endpoints are available:</p>
+        <ul>
+            <li>GET <code>/</code> — return a basic API documentation page.</li>
+            <li>GET <code>/items</code> — return views and downloads for all items that Solr knows about¹. Accepts <code>limit</code> and <code>page</code> query parameters for pagination of results.</li>
+            <li>GET <code>/item/id</code> — return views and downloads for a single item (<code>id</code> must be a positive integer). Returns HTTP 404 if an item id is not found.</li>
+        </ul>
+        <p>¹ The API is querying the Solr statistics core, which technically only knows about items that have either views or downloads.</p>
+    </body>
+</html>
