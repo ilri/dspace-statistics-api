@@ -61,6 +61,7 @@ This would expose the API at `/rest/statistics`.
 ## Using the API
 The API exposes the following endpoints:
 
+  - GET `/` — return a basic API documentation page.
   - GET `/items` — return views and downloads for all items that Solr knows about¹. Accepts `limit` and `page` query parameters for pagination of results.
   - GET `/item/id` — return views and downloads for a single item (*id* must be a positive integer). Returns HTTP 404 if an item id is not found.
 
@@ -68,7 +69,6 @@ The API exposes the following endpoints:
 
 ## Todo
 
-- Add API documentation
 - Close DB connection when gunicorn shuts down gracefully
 - Better logging
 - Tests
