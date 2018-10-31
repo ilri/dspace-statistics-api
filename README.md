@@ -1,4 +1,4 @@
-# DSpace Statistics API [![Build Status](https://travis-ci.org/alanorth/dspace-statistics-api.svg?branch=master)](https://travis-ci.org/alanorth/dspace-statistics-api)
+# DSpace Statistics API [![Build Status](https://travis-ci.org/ilri/dspace-statistics-api.svg?branch=master)](https://travis-ci.org/ilri/dspace-statistics-api)
 A simple REST API to expose Solr view and download statistics for items in a DSpace repository. This project contains an indexing component and a WSGI application. The Solr queries used to gather the statistics in this project were modeled on those found on the [DSpace wiki](https://wiki.duraspace.org/display/DSPACE/Solr).
 
 ## Requirements
