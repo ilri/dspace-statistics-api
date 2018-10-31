@@ -62,10 +62,12 @@ This would expose the API at `/rest/statistics`.
 The API exposes the following endpoints:
 
   - GET `/` — return a basic API documentation page.
-  - GET `/items` — return views and downloads for all items that Solr knows about¹. Accepts `limit` and `page` query parameters for pagination of results.
-  - GET `/item/id` — return views and downloads for a single item (*id* must be a positive integer). Returns HTTP 404 if an item id is not found.
+  - GET `/items` — return views and downloads for all items that Solr knows about¹. Accepts `limit` and `page` query parameters for pagination of results (`limit` must be an integer between 1 and 100, and `page` must be an integer greater than or equal to 0).
+  - GET `/item/id` — return views and downloads for a single item (`id` must be a positive integer). Returns HTTP 404 if an item id is not found.
 
-¹ We are querying the Solr statistics core, which technically only knows about items that have either views or downloads.
+The item id is the *internal* id for an item. You can get these from the standard DSpace REST API.
+
+¹ We are querying the Solr statistics core, which technically only knows about items that have either views or downloads. If an item is not present here you can assume it has zero views and zero downloads, but not necessarily that it does not exist.
 
 ## Todo
 
