@@ -7,7 +7,7 @@ This project contains an indexer and a [Falcon-based](https://falcon.readthedocs
 
 - Python 3.5+
 - PostgreSQL version 9.5+ (due to [`UPSERT` support](https://wiki.postgresql.org/wiki/UPSERT))
-- DSpace 4/5/6 with [Solr usage statistics enabled](https://wiki.duraspace.org/display/DSDOC5x/SOLR+Statistics) (might work with others)
+- DSpace with [Solr usage statistics enabled](https://wiki.duraspace.org/display/DSDOC5x/SOLR+Statistics) (tested with 5.x)
 
 ## Installation and Testing
 Create a Python virtual environment and install the dependencies:
