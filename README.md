@@ -1,5 +1,5 @@
 # DSpace Statistics API [![Build Status](https://travis-ci.org/ilri/dspace-statistics-api.svg?branch=master)](https://travis-ci.org/ilri/dspace-statistics-api)
-DSpace versions 4.0 and up include a [REST API](https://wiki.duraspace.org/display/DSDOC5x/REST+API) that allows the repository to be queried programmatically. The API exposes information about communities, collections, items, and bitstreams, but not item views or downloads. This project contains a lightweight indexer and a [Falcon-based web application](https://falcon.readthedocs.io/en/stable/) to make the view and download statistics available via a simple REST API that can be deployed simultaneously with DSpace's own.
+DSpace stores item view and download statistics in a Solr core for use in its user interfaces, but does not expose this information externally via any APIs. The DSpace 4+ [REST API](https://wiki.duraspace.org/display/DSDOC5x/REST+API), for example, only exposes information about communities, collections, item metadata, and bitstreams. This project contains an indexer and a [Falcon-based](https://falcon.readthedocs.io/) web application to make the statistics available via simple, fast REST API.
 
 You can read more about the Solr queries used to gather the item view and download statistics on the [DSpace wiki](https://wiki.duraspace.org/display/DSPACE/Solr).
 
@@ -7,7 +7,7 @@ You can read more about the Solr queries used to gather the item view and downlo
 
 - Python 3.5+
 - PostgreSQL version 9.5+ (due to [`UPSERT` support](https://wiki.postgresql.org/wiki/UPSERT))
-- DSpace 4+ with [Solr usage statistics enabled](https://wiki.duraspace.org/display/DSDOC5x/SOLR+Statistics)
+- DSpace 4/5/6 with [Solr usage statistics enabled](https://wiki.duraspace.org/display/DSDOC5x/SOLR+Statistics) (might work with others)
 
 ## Installation and Testing
 Create a Python virtual environment and install the dependencies:
