@@ -1,5 +1,5 @@
 # DSpace Statistics API [![Build Status](https://travis-ci.org/ilri/dspace-statistics-api.svg?branch=master)](https://travis-ci.org/ilri/dspace-statistics-api)
-DSpace versions 4.0 and up include a [REST API](https://wiki.duraspace.org/display/DSDOC5x/REST+API) that allows the repository to be queried programmatically. The API exposes information about communities, collections, items, and bitstreams, but not item views or downloads. This project contains a lightweight indexer and a web application to make the view and download statistics available via a simple REST API that can be deployed simultaneously with DSpace's own.
+DSpace versions 4.0 and up include a [REST API](https://wiki.duraspace.org/display/DSDOC5x/REST+API) that allows the repository to be queried programmatically. The API exposes information about communities, collections, items, and bitstreams, but not item views or downloads. This project contains a lightweight indexer and a [Falcon-based web application](https://falcon.readthedocs.io/en/stable/) to make the view and download statistics available via a simple REST API that can be deployed simultaneously with DSpace's own.
 
 You can read more about the Solr queries used to gather the item view and download statistics on the [DSpace wiki](https://wiki.duraspace.org/display/DSPACE/Solr).
 
