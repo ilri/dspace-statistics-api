@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Added
 - Ability to configure PostgreSQL database port with DATABASE_PORT environment variable (defaults to 5432)
 
+## Changed
+- Validate code against PEP 8 style guide with Flake8
+
 ### [0.6.1] - 2018-10-31
 ## Added
 - API documentation at root path (/)
