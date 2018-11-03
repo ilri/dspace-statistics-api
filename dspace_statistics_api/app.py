@@ -12,7 +12,6 @@ class RootResource:
         with open('dspace_statistics_api/docs/index.html', 'r') as f:
             resp.body = f.read()
 
-
 class AllItemsResource:
     def on_get(self, req, resp):
         """Handles GET requests"""
