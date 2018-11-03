@@ -23,7 +23,7 @@ class AllItemsResource:
         cursor = db.cursor()
 
         # get total number of items so we can estimate the pages
-        cursor.execute('SELECT COUNT(id) FROM items')
+        cursor.execute( 'SELECT COUNT(id) FROM items')
         pages = round(cursor.fetchone()[0] / limit)
 
         # get statistics, ordered by id, and use limit and offset to page through results
