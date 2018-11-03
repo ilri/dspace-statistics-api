@@ -47,7 +47,6 @@ class AllItemsResource:
 
         resp.media = message
 
-
 class ItemResource:
     def on_get(self, req, resp, item_id):
         """Handles GET requests"""
