@@ -7,5 +7,6 @@ DATABASE_NAME = os.environ.get('DATABASE_NAME', 'dspacestatistics')
 DATABASE_USER = os.environ.get('DATABASE_USER', 'dspacestatistics')
 DATABASE_PASS = os.environ.get('DATABASE_PASS', 'dspacestatistics')
 DATABASE_HOST = os.environ.get('DATABASE_HOST', 'localhost')
+DATABASE_PORT = os.environ.get('DATABASE_PORT', '5432')
 
 # vim: set sw=4 ts=4 expandtab:
