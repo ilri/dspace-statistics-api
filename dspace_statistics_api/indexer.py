@@ -34,6 +34,7 @@ import json
 import psycopg2.extras
 from .solr import solr_connection
 
+
 def index_views():
     # get total number of distinct facets for items with a minimum of 1 view,
     # otherwise Solr returns all kinds of weird ids that are actually not in
@@ -42,16 +43,16 @@ def index_views():
     #
     # see: https://lucene.apache.org/solr/guide/6_6/the-stats-component.html
     res = solr.query('statistics', {
-        'q':'type:2',
-        'fq':'isBot:false AND statistics_type:view',
-        'facet':True,
-        'facet.field':'id',
-        'facet.mincount':1,
-        'facet.limit':1,
-        'facet.offset':0,
-        'stats':True,
-        'stats.field':'id',
-        'stats.calcdistinct':True
+        'q': 'type:2',
+        'fq': 'isBot:false AND statistics_type:view',
+        'facet': True,
+        'facet.field': 'id',
+        'facet.mincount': 1,
+        'facet.limit': 1,
+        'facet.offset': 0,
+        'stats': True,
+        'stats.field': 'id',
+        'stats.calcdistinct': True
     }, rows=0)
 
     # get total number of distinct facets (countDistinct)
@@ -71,13 +72,13 @@ def index_views():
         print('Indexing item views (page {} of {})'.format(results_current_page, results_num_pages))
 
         res = solr.query('statistics', {
-            'q':'type:2',
-            'fq':'isBot:false AND statistics_type:view',
-            'facet':True,
-            'facet.field':'id',
-            'facet.mincount':1,
-            'facet.limit':results_per_page,
-            'facet.offset':results_current_page * results_per_page
+            'q': 'type:2',
+            'fq': 'isBot:false AND statistics_type:view',
+            'facet': True,
+            'facet.field': 'id',
+            'facet.mincount': 1,
+            'facet.limit': results_per_page,
+            'facet.offset': results_current_page * results_per_page
         }, rows=0)
 
         # SolrClient's get_facets() returns a dict of dicts
@@ -98,19 +99,20 @@ def index_views():
 
     cursor.close()
 
+
 def index_downloads():
     # get the total number of distinct facets for items with at least 1 download
     res = solr.query('statistics', {
-        'q':'type:0',
-        'fq':'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
-        'facet':True,
-        'facet.field':'owningItem',
-        'facet.mincount':1,
-        'facet.limit':1,
-        'facet.offset':0,
-        'stats':True,
-        'stats.field':'owningItem',
-        'stats.calcdistinct':True
+        'q': 'type:0',
+        'fq': 'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
+        'facet': True,
+        'facet.field': 'owningItem',
+        'facet.mincount': 1,
+        'facet.limit': 1,
+        'facet.offset': 0,
+        'stats': True,
+        'stats.field': 'owningItem',
+        'stats.calcdistinct': True
     }, rows=0)
 
     # get total number of distinct facets (countDistinct)
@@ -130,13 +132,13 @@ def index_downloads():
         print('Indexing item downloads (page {} of {})'.format(results_current_page, results_num_pages))
 
         res = solr.query('statistics', {
-            'q':'type:0',
-            'fq':'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
-            'facet':True,
-            'facet.field':'owningItem',
-            'facet.mincount':1,
-            'facet.limit':results_per_page,
-            'facet.offset':results_current_page * results_per_page
+            'q': 'type:0',
+            'fq': 'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
+            'facet': True,
+            'facet.field': 'owningItem',
+            'facet.mincount': 1,
+            'facet.limit': results_per_page,
+            'facet.offset': results_current_page * results_per_page
         }, rows=0)
 
         # SolrClient's get_facets() returns a dict of dicts
@@ -156,6 +158,7 @@ def index_downloads():
         results_current_page += 1
 
     cursor.close()
+
 
 db = database_connection()
 solr = solr_connection()

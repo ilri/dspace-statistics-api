@@ -4,12 +4,14 @@ import falcon
 db = database_connection()
 db.set_session(readonly=True)
 
+
 class RootResource:
     def on_get(self, req, resp):
         resp.status = falcon.HTTP_200
         resp.content_type = 'text/html'
         with open('dspace_statistics_api/docs/index.html', 'r') as f:
             resp.body = f.read()
+
 
 class AllItemsResource:
     def on_get(self, req, resp):
@@ -33,18 +35,19 @@ class AllItemsResource:
 
         # iterate over results and build statistics object
         for item in cursor:
-            statistics.append({ 'id': item['id'], 'views': item['views'], 'downloads': item['downloads'] })
+            statistics.append({'id': item['id'], 'views': item['views'], 'downloads': item['downloads']})
 
         cursor.close()
 
         message = {
-                'currentPage': page,
-                'totalPages': pages,
-                'limit': limit,
-                'statistics': statistics
+            'currentPage': page,
+            'totalPages': pages,
+            'limit': limit,
+            'statistics': statistics
         }
 
         resp.media = message
+
 
 class ItemResource:
     def on_get(self, req, resp, item_id):
@@ -54,8 +57,8 @@ class ItemResource:
         cursor.execute('SELECT views, downloads FROM items WHERE id={}'.format(item_id))
         if cursor.rowcount == 0:
             raise falcon.HTTPNotFound(
-                    title='Item not found',
-                    description='The item with id "{}" was not found.'.format(item_id)
+                title='Item not found',
+                description='The item with id "{}" was not found.'.format(item_id)
             )
         else:
             results = cursor.fetchone()
@@ -69,6 +72,7 @@ class ItemResource:
             resp.media = statistics
 
         cursor.close()
+
 
 api = application = falcon.API()
 api.add_route('/', RootResource())

@@ -3,7 +3,9 @@ from .config import DATABASE_USER
 from .config import DATABASE_PASS
 from .config import DATABASE_HOST
 from .config import DATABASE_PORT
-import psycopg2, psycopg2.extras
+import psycopg2
+import psycopg2.extras
+
 
 def database_connection():
     connection = psycopg2.connect("dbname={} user={} password={} host={} port={}".format(DATABASE_NAME, DATABASE_USER, DATABASE_PASS, DATABASE_HOST, DATABASE_PORT), cursor_factory=psycopg2.extras.DictCursor)
