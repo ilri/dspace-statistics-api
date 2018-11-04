@@ -14,11 +14,11 @@ kazoo = "==2.5.0"
 python-mimeparse = "==1.6.0"
 requests = "==2.20.0"
 six = "==1.11.0"
-solrclient = {editable = true, ref = "c629e3475be37c82770b2be61748be7e29882648", git = "git://github.com/alanorth/SolrClient.git"}
+solrclient = {ref = "kazoo-2.5.0", git = "https://github.com/alanorth/SolrClient.git"}
 "urllib3" = "==1.24"
-"flake8" = "*"
 
 [dev-packages]
+"flake8" = "*"
 
 [requires]
 python_version = "3.6"
