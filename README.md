@@ -10,11 +10,10 @@ This project contains an indexer and a [Falcon-based](https://falcon.readthedocs
 - DSpace with [Solr usage statistics enabled](https://wiki.duraspace.org/display/DSDOC5x/SOLR+Statistics) (tested with 5.x)
 
 ## Installation and Testing
-Create a Python virtual environment and install the dependencies:
+Create a Python virtual environment and install the dependencies using [`pipenv`](https://github.com/pypa/pipenv):
 
-    $ python -m venv venv
-    $ . venv/bin/activate
-    $ pip install -r requirements.txt
+    $ pipenv install --dev
+    $ pipenv shell
 
 Set up the environment variables for Solr and PostgreSQL:
 
