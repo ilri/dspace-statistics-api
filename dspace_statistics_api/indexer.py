@@ -158,8 +158,6 @@ def index_downloads():
 
 solr = solr_connection()
 
-print("gonna create the table")
-
 with DatabaseManager() as db:
     with db.cursor() as cursor:
         # create table to store item views and downloads
