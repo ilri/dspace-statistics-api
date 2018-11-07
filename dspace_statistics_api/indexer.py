@@ -29,7 +29,7 @@
 # See: https://solrclient.readthedocs.io/en/latest/SolrClient.html
 # See: https://wiki.duraspace.org/display/DSPACE/Solr
 
-from .database import database_connection
+from .database import DatabaseManager
 import json
 import psycopg2.extras
 from .solr import solr_connection
@@ -63,41 +63,39 @@ def index_views():
     results_num_pages = int(results_totalNumFacets / results_per_page)
     results_current_page = 0
 
-    cursor = db.cursor()
+    with DatabaseManager() as db:
+        with db.cursor() as cursor:
+            # create an empty list to store values for batch insertion
+            data = []
 
-    # create an empty list to store values for batch insertion
-    data = []
+            while results_current_page <= results_num_pages:
+                print('Indexing item views (page {} of {})'.format(results_current_page, results_num_pages))
 
-    while results_current_page <= results_num_pages:
-        print('Indexing item views (page {} of {})'.format(results_current_page, results_num_pages))
+                res = solr.query('statistics', {
+                    'q': 'type:2',
+                    'fq': 'isBot:false AND statistics_type:view',
+                    'facet': True,
+                    'facet.field': 'id',
+                    'facet.mincount': 1,
+                    'facet.limit': results_per_page,
+                    'facet.offset': results_current_page * results_per_page
+                }, rows=0)
 
-        res = solr.query('statistics', {
-            'q': 'type:2',
-            'fq': 'isBot:false AND statistics_type:view',
-            'facet': True,
-            'facet.field': 'id',
-            'facet.mincount': 1,
-            'facet.limit': results_per_page,
-            'facet.offset': results_current_page * results_per_page
-        }, rows=0)
+                # SolrClient's get_facets() returns a dict of dicts
+                views = res.get_facets()
+                # in this case iterate over the 'id' dict and get the item ids and views
+                for item_id, item_views in views['id'].items():
+                    data.append((item_id, item_views))
 
-        # SolrClient's get_facets() returns a dict of dicts
-        views = res.get_facets()
-        # in this case iterate over the 'id' dict and get the item ids and views
-        for item_id, item_views in views['id'].items():
-            data.append((item_id, item_views))
+                # do a batch insert of values from the current "page" of results
+                sql = 'INSERT INTO items(id, views) VALUES %s ON CONFLICT(id) DO UPDATE SET views=excluded.views'
+                psycopg2.extras.execute_values(cursor, sql, data, template='(%s, %s)')
+                db.commit()
 
-        # do a batch insert of values from the current "page" of results
-        sql = 'INSERT INTO items(id, views) VALUES %s ON CONFLICT(id) DO UPDATE SET views=excluded.views'
-        psycopg2.extras.execute_values(cursor, sql, data, template='(%s, %s)')
-        db.commit()
+                # clear all items from the list so we can populate it with the next batch
+                data.clear()
 
-        # clear all items from the list so we can populate it with the next batch
-        data.clear()
-
-        results_current_page += 1
-
-    cursor.close()
+                results_current_page += 1
 
 
 def index_downloads():
@@ -123,53 +121,55 @@ def index_downloads():
     results_num_pages = int(results_totalNumFacets / results_per_page)
     results_current_page = 0
 
-    cursor = db.cursor()
+    with DatabaseManager() as db:
+        with db.cursor() as cursor:
+            # create an empty list to store values for batch insertion
+            data = []
 
-    # create an empty list to store values for batch insertion
-    data = []
+            while results_current_page <= results_num_pages:
+                print('Indexing item downloads (page {} of {})'.format(results_current_page, results_num_pages))
 
-    while results_current_page <= results_num_pages:
-        print('Indexing item downloads (page {} of {})'.format(results_current_page, results_num_pages))
+                res = solr.query('statistics', {
+                    'q': 'type:0',
+                    'fq': 'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
+                    'facet': True,
+                    'facet.field': 'owningItem',
+                    'facet.mincount': 1,
+                    'facet.limit': results_per_page,
+                    'facet.offset': results_current_page * results_per_page
+                }, rows=0)
 
-        res = solr.query('statistics', {
-            'q': 'type:0',
-            'fq': 'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
-            'facet': True,
-            'facet.field': 'owningItem',
-            'facet.mincount': 1,
-            'facet.limit': results_per_page,
-            'facet.offset': results_current_page * results_per_page
-        }, rows=0)
+                # SolrClient's get_facets() returns a dict of dicts
+                downloads = res.get_facets()
+                # in this case iterate over the 'owningItem' dict and get the item ids and downloads
+                for item_id, item_downloads in downloads['owningItem'].items():
+                    data.append((item_id, item_downloads))
 
-        # SolrClient's get_facets() returns a dict of dicts
-        downloads = res.get_facets()
-        # in this case iterate over the 'owningItem' dict and get the item ids and downloads
-        for item_id, item_downloads in downloads['owningItem'].items():
-            data.append((item_id, item_downloads))
+                # do a batch insert of values from the current "page" of results
+                sql = 'INSERT INTO items(id, downloads) VALUES %s ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads'
+                psycopg2.extras.execute_values(cursor, sql, data, template='(%s, %s)')
+                db.commit()
 
-        # do a batch insert of values from the current "page" of results
-        sql = 'INSERT INTO items(id, downloads) VALUES %s ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads'
-        psycopg2.extras.execute_values(cursor, sql, data, template='(%s, %s)')
-        db.commit()
+                # clear all items from the list so we can populate it with the next batch
+                data.clear()
 
-        # clear all items from the list so we can populate it with the next batch
-        data.clear()
-
-        results_current_page += 1
-
-    cursor.close()
+                results_current_page += 1
 
 
-db = database_connection()
 solr = solr_connection()
 
-# create table to store item views and downloads
-cursor = db.cursor()
-cursor.execute('''CREATE TABLE IF NOT EXISTS items
+print("gonna create the table")
+
+with DatabaseManager() as db:
+    with db.cursor() as cursor:
+        # create table to store item views and downloads
+        cursor.execute('''CREATE TABLE IF NOT EXISTS items
                   (id INT PRIMARY KEY, views INT DEFAULT 0, downloads INT DEFAULT 0)''')
+
+    # commit the table creation before closing the database connection
+    db.commit()
+
 index_views()
 index_downloads()
-
-db.close()
 
 # vim: set sw=4 ts=4 expandtab:
