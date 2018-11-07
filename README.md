@@ -70,7 +70,6 @@ The item id is the *internal* id for an item. You can get these from the standar
 
 ## Todo
 
-- Close DB connection when gunicorn shuts down gracefully
 - Better logging
 - Tests
 - Check if database exists (try/except)
