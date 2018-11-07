@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configuration for [pipenv](https://pipenv.readthedocs.io/en/latest/)
 
 ## Changed
+- Use a database management class with Python context management to automatically open/close connections and cursors
+
+## Changed
 - Validate code against PEP 8 style guide with Flake8
 
 ### [0.6.1] - 2018-10-31
