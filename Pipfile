@@ -19,6 +19,7 @@ solrclient = {ref = "kazoo-2.5.0", git = "https://github.com/alanorth/SolrClient
 
 [dev-packages]
 "flake8" = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.6"
