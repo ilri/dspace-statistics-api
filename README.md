@@ -72,7 +72,6 @@ The item id is the *internal* id for an item. You can get these from the standar
 
 - Better logging
 - Tests
-- Check if database exists (try/except)
 - Version API
 - Use JSON in PostgreSQL
 - Switch to [Python 3.6+ f-string syntax](https://realpython.com/python-f-strings/)
