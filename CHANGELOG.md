@@ -8,46 +8,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Properly handle database connection errors
 
-### [0.7.0] - 2018-11-07
-## Added
+## [0.7.0] - 2018-11-07
+### Added
 - Ability to configure PostgreSQL database port with DATABASE_PORT environment variable (defaults to 5432)
 - Hound CI configuration to validate pull requests against PEP 8 code style with Flake8
 - Configuration for [pipenv](https://pipenv.readthedocs.io/en/latest/)
 
-## Changed
+### Changed
 - Use a database management class with Python context management to automatically open/close connections and cursors
 
-## Changed
+### Changed
 - Validate code against PEP 8 style guide with Flake8
 
-### [0.6.1] - 2018-10-31
-## Added
+## [0.6.1] - 2018-10-31
+### Added
 - API documentation at root path (/)
 
-### [0.6.0] - 2018-10-31
-## Changed
+## [0.6.0] - 2018-10-31
+### Changed
 - Refactor project structure (note breaking changes to API and indexing invocation, see contrib and README.md)
 
-### [0.5.2] - 2018-10-28
-## Changed
+## [0.5.2] - 2018-10-28
+### Changed
 - Update library versions in requirements.txt
 
-### [0.5.1] - 2018-10-24
-## Changed
+## [0.5.1] - 2018-10-24
+### Changed
 - Use Python's native json instead of ujson
 
-### [0.5.0] - 2018-10-24
-## Added
+## [0.5.0] - 2018-10-24
+### Added
 - Example nginx configuration to README.md
 
-## Changed
+### Changed
 - Don't initialize Solr connection in API
 
-### [0.4.3] - 2018-10-17
-## Changed
+## [0.4.3] - 2018-10-17
+### Changed
 - Use pip install as script for Travis CI
 
-## Improved
+### Improved
 - Documentation for deployment and testing
 
 ## [0.4.2] - 2018-10-04
@@ -61,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.1] - 2018-09-26
 ### Changed
-- Use execute_values() to batch insert records to PostgreSQL
+- Use `execute_values()` to batch insert records to PostgreSQL
 
 ## [0.4.0] - 2018-09-25
 ### Fixed
