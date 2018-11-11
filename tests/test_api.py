@@ -43,7 +43,7 @@ def test_get_items(client):
     '''Test requesting 100 items.'''
 
     response = client.simulate_get('/items', query_string='limit=100')
-    response_doc = json.loads(response.content)
+    response_doc = json.loads(response.text)
 
     assert isinstance(response_doc['currentPage'], int)
     assert isinstance(response_doc['totalPages'], int)
