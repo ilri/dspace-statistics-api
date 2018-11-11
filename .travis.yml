@@ -3,6 +3,17 @@ python:
   - "3.5"
   - "3.6"
   - "3.7-dev"
-script: pip install -r requirements.txt
+addons:
+  postgresql: "9.5"
+before_script:
+  - psql --version
+  - createuser -U postgres dspacestatistics
+  - psql -U postgres -c "ALTER USER dspacestatistics WITH PASSWORD 'dspacestatistics'"
+  - createdb -U postgres -O dspacestatistics --encoding=UNICODE dspacestatistics
+  - psql -U postgres -d dspacestatistics < tests/dspacestatistics.sql
+install:
+  - "pip install pipenv --upgrade-strategy=only-if-needed"
+  - "pipenv install --dev"
+script: pytest
 
 # vim: ts=2 sw=2 et
