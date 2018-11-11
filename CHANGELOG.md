@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Properly handle database connection errors
 
 ### Added
-- API tests
+- API tests with pytest
 
 ## [0.7.0] - 2018-11-07
 ### Added
