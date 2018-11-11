@@ -4,8 +4,5 @@ python:
   - "3.6"
   - "3.7-dev"
 script: pip install -r requirements.txt
-branches:
-  only:
-    - master
 
 # vim: ts=2 sw=2 et
