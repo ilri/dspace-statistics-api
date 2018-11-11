@@ -35,6 +35,10 @@ Test to see if there are any statistics:
 
     $ curl 'http://localhost:8000/items?limit=1'
 
+Run tests:
+
+    $ pytest
+
 ## Deployment
 There are example systemd service and timer units in the `contrib` directory. The API service listens on localhost by default so you will need to expose it publicly using a web server like nginx.
 
@@ -71,7 +75,6 @@ The item id is the *internal* id for an item. You can get these from the standar
 ## Todo
 
 - Better logging
-- Tests
 - Version API
 - Use JSON in PostgreSQL
 - Switch to [Python 3.6+ f-string syntax](https://realpython.com/python-f-strings/)
