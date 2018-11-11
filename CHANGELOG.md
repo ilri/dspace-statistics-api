@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Properly handle database connection errors
 
+### Added
+- API tests
+
 ## [0.7.0] - 2018-11-07
 ### Added
 - Ability to configure PostgreSQL database port with DATABASE_PORT environment variable (defaults to 5432)
