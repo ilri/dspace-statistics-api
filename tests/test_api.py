@@ -23,7 +23,12 @@ def test_get_item(client):
     '''Test requesting a single item.'''
 
     response = client.simulate_get('/item/17')
-    response_doc = json.loads(response.content)
+
+    # response.content is a bytes in Python 3.5
+    if isinstance(response.content, bytes):
+        response_doc = json.loads(response.content.decode('utf-8'))
+    else:
+        response_doc = json.loads(response.content)
 
     assert isinstance(response_doc['downloads'], int)
     assert isinstance(response_doc['id'], int)
