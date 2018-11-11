@@ -4,16 +4,13 @@ python:
   - "3.6"
   - "3.7-dev"
 sudo: required
-services: docker
-before_install:
-  - docker pull postgres:9.5-alpine
-  - docker run -d --name dspacestatistics -p 127.0.0.1:5432:5432 postgres:9.5-alpine
-  - docker ps -a
-  - docker exec dspacestatistics createuser -U postgres dspacestatistics
-  - docker exec dspacestatistics psql -U postgres -c "ALTER USER dspacestatistics WITH PASSWORD 'dspacestatistics'"
-  - docker exec dspacestatistics createdb -U postgres -O dspacestatistics --encoding=UNICODE dspacestatistics
-  - docker cp tests/dspacestatistics.sql dspacestatistics:/tmp
-  - docker exec dspacestatistics sh -c 'psql -U postgres -d dspacestatistics < /tmp/dspacestatistics.sql'
+services: postgresql
+before_script:
+  - psql --version
+  - createuser -U postgres dspacestatistics
+  - psql -U postgres -c "ALTER USER dspacestatistics WITH PASSWORD 'dspacestatistics'"
+  - createdb -U postgres -O dspacestatistics --encoding=UNICODE dspacestatistics
+  - psql -U postgres -d dspacestatistics < tests/dspacestatistics.sql
 install:
   - "pip install pipenv --upgrade-strategy=only-if-needed"
   - "pipenv install --dev"
