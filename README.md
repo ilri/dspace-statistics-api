@@ -9,11 +9,14 @@ This project contains an indexer and a [Falcon-based](https://falcon.readthedocs
 - PostgreSQL version 9.5+ (due to [`UPSERT` support](https://wiki.postgresql.org/wiki/UPSERT))
 - DSpace with [Solr usage statistics enabled](https://wiki.duraspace.org/display/DSDOC5x/SOLR+Statistics) (tested with 5.x)
 
-## Installation and Testing
-Create a Python virtual environment and install the dependencies using [`pipenv`](https://github.com/pypa/pipenv):
+## Installation
+Create a Python virtual environment and install the dependencies:
 
-    $ pipenv install --dev
-    $ pipenv shell
+    $ python3 -m venv venv
+    $ source venv/bin/activate
+    $ pip install -r requirements.txt
+
+## Running
 
 Set up the environment variables for Solr and PostgreSQL:
 
@@ -34,6 +37,11 @@ Run the REST API:
 Test to see if there are any statistics:
 
     $ curl 'http://localhost:8000/items?limit=1'
+
+## Testing
+Install development packages using pip:
+
+    $ pip install -r requirements-dev.txt
 
 Run tests:
 
