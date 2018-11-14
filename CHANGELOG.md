@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ## Changed
 - README.md to recommend using vanilla Python virtual environments and pip instead of pipenv
+- Regenerate pipenv environment to capture only direct dependencies
 
 ## Added
 - `requirements-dev.txt` for installing development packages with pip
