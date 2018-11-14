@@ -4,22 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-certifi = "==2018.10.15"
-chardet = "==3.0.4"
-falcon = "==1.4.1"
-gunicorn = "==19.9.0"
-idna = "==2.7"
-kazoo = "==2.5.0"
-"psycopg2-binary" = "==2.7.5"
-python-mimeparse = "==1.6.0"
-requests = "==2.20.0"
-six = "==1.11.0"
+gunicorn = "*"
+falcon = "*"
+"psycopg2-binary" = "*"
 solrclient = {ref = "kazoo-2.5.0", git = "https://github.com/alanorth/SolrClient.git"}
-"urllib3" = "==1.24"
 
 [dev-packages]
-"flake8" = "*"
 ipython = "*"
+"flake8" = "*"
 pytest = "*"
 
 [requires]
