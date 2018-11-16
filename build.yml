@@ -1,0 +1,12 @@
+image: archlinux
+packages:
+  - python-pipenv
+sources:
+  - https://git.sr.ht/~alanorth/dspace-statistics-api
+tasks:
+  - setup: |
+      cd dspace-statistics-api
+      pipenv install
+  - build: |
+      cd dspace-statistics-api
+      pipenv run pytest
