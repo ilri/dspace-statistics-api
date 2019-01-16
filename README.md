@@ -85,6 +85,7 @@ The item id is the *internal* id for an item. You can get these from the standar
 - Better logging
 - Version API
 - Use JSON in PostgreSQL
+- Make community and collection stats available
 - Switch to [Python 3.6+ f-string syntax](https://realpython.com/python-f-strings/)
 
 ## License
