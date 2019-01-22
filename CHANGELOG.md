@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Updated
 - pytest version 4.0.0
+- Fix indexing of sharded statistics cores ([#10))
 
 ## [0.8.1] - 2018-11-14
 ### Changed
