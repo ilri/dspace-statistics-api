@@ -103,8 +103,13 @@ def index_views():
         'shards': shards
     }, rows=0)
 
-    # get total number of distinct facets (countDistinct)
-    results_totalNumFacets = json.loads(res.get_json())['stats']['stats_fields']['id']['countDistinct']
+    try:
+        # get total number of distinct facets (countDistinct)
+        results_totalNumFacets = json.loads(res.get_json())['stats']['stats_fields']['id']['countDistinct']
+    except TypeError:
+        print('No item views to index, exiting.')
+
+        exit(0)
 
     # divide results into "pages" (cast to int to effectively round down)
     results_per_page = 100
@@ -163,8 +168,13 @@ def index_downloads():
         'shards': shards
     }, rows=0)
 
-    # get total number of distinct facets (countDistinct)
-    results_totalNumFacets = json.loads(res.get_json())['stats']['stats_fields']['owningItem']['countDistinct']
+    try:
+        # get total number of distinct facets (countDistinct)
+        results_totalNumFacets = json.loads(res.get_json())['stats']['stats_fields']['owningItem']['countDistinct']
+    except TypeError:
+        print('No item downloads to index, exiting.')
+
+        exit(0)
 
     # divide results into "pages" (cast to int to effectively round down)
     results_per_page = 100
