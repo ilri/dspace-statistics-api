@@ -1,7 +1,7 @@
 # DSpace Statistics API [![Build Status](https://travis-ci.org/ilri/dspace-statistics-api.svg?branch=master)](https://travis-ci.org/ilri/dspace-statistics-api)
 DSpace stores item view and download events in a Solr "statistics" core. This information is available for use in the various DSpace user interfaces, but is not exposed externally via any APIs. The DSpace 4+ [REST API](https://wiki.duraspace.org/display/DSDOC5x/REST+API), for example, only exposes information about communities, collections, item metadata, and bitstreams.
 
-This project contains an indexer and a [Falcon-based](https://falcon.readthedocs.io/) web application to make the statistics available via simple REST API. You can read more about the Solr queries used to gather the item view and download statistics on the [DSpace wiki](https://wiki.duraspace.org/display/DSPACE/Solr).
+This project contains an indexer and a [Falcon-based](https://falcon.readthedocs.io/) web application to make the statistics available via a simple REST API. You can read more about the Solr queries used to gather the item view and download statistics on the [DSpace wiki](https://wiki.duraspace.org/display/DSPACE/Solr).
 
 ## Requirements
 
