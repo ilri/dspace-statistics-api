@@ -32,7 +32,54 @@
 from .database import DatabaseManager
 import json
 import psycopg2.extras
+import re
+import requests
 from .solr import solr_connection
+
+
+# Enumerate the cores in Solr to determine if statistics have been sharded into
+# yearly shards by DSpace's stats-util or not (for example: statistics-2018).
+def get_statistics_shards():
+    # Initialize an empty list for statistics core years
+    statistics_core_years = []
+
+    # URL for Solr status to check active cores
+    solr_url = solr.host + '/admin/cores?action=STATUS&wt=json'
+    res = requests.get(solr_url)
+
+    if res.status_code == requests.codes.ok:
+        data = res.json()
+
+        # Iterate over active cores from Solr's STATUS response (cores are in
+        # the status array of this response).
+        for core in data['status']:
+            # Pattern to match, for example: statistics-2018
+            pattern = re.compile('^statistics-[0-9]{4}$')
+
+            if not pattern.match(core):
+                continue
+
+            # Append current core to list
+            statistics_core_years.append(core)
+
+    # Initialize a string to hold our shards (may end up being empty if the Solr
+    # core has not been processed by stats-util).
+    shards = str()
+
+    if len(statistics_core_years) > 0:
+        # Begin building a string of shards starting with the default one
+        shards = '{}/statistics'.format(solr.host)
+
+        for core in statistics_core_years:
+            # Create a comma-separated list of shards to pass to our Solr query
+            #
+            # See: https://wiki.apache.org/solr/DistributedSearch
+            shards += ',{}/{}'.format(solr.host, core)
+
+    # Return the string of shards, which may actually be empty. Solr doesn't
+    # seem to mind if the shards query parameter is empty and I haven't seen
+    # any negative performance impact so this should be fine.
+    return shards
 
 
 def index_views():
@@ -52,7 +99,8 @@ def index_views():
         'facet.offset': 0,
         'stats': True,
         'stats.field': 'id',
-        'stats.calcdistinct': True
+        'stats.calcdistinct': True,
+        'shards': shards
     }, rows=0)
 
     # get total number of distinct facets (countDistinct)
@@ -78,7 +126,8 @@ def index_views():
                     'facet.field': 'id',
                     'facet.mincount': 1,
                     'facet.limit': results_per_page,
-                    'facet.offset': results_current_page * results_per_page
+                    'facet.offset': results_current_page * results_per_page,
+                    'shards': shards
                 }, rows=0)
 
                 # SolrClient's get_facets() returns a dict of dicts
@@ -110,7 +159,8 @@ def index_downloads():
         'facet.offset': 0,
         'stats': True,
         'stats.field': 'owningItem',
-        'stats.calcdistinct': True
+        'stats.calcdistinct': True,
+        'shards': shards
     }, rows=0)
 
     # get total number of distinct facets (countDistinct)
@@ -136,7 +186,8 @@ def index_downloads():
                     'facet.field': 'owningItem',
                     'facet.mincount': 1,
                     'facet.limit': results_per_page,
-                    'facet.offset': results_current_page * results_per_page
+                    'facet.offset': results_current_page * results_per_page,
+                    'shards': shards
                 }, rows=0)
 
                 # SolrClient's get_facets() returns a dict of dicts
@@ -166,6 +217,8 @@ with DatabaseManager() as db:
 
     # commit the table creation before closing the database connection
     db.commit()
+
+shards = get_statistics_shards()
 
 index_views()
 index_downloads()
