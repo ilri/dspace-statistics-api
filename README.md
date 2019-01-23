@@ -3,6 +3,10 @@ DSpace stores item view and download events in a Solr "statistics" core. This in
 
 This project contains an indexer and a [Falcon-based](https://falcon.readthedocs.io/) web application to make the statistics available via a simple REST API. You can read more about the Solr queries used to gather the item view and download statistics on the [DSpace wiki](https://wiki.duraspace.org/display/DSPACE/Solr).
 
+If you use the DSpace Statistics API please cite:
+
+*Orth, A. 2018. DSpace statistics API. Nairobi, Kenya: ILRI. https://hdl.handle.net/10568/99143.*
+
 ## Requirements
 
 - Python 3.5+
