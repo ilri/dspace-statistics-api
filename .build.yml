@@ -13,8 +13,8 @@ tasks:
       createuser -U postgres dspacestatistics
       psql -U postgres -c "ALTER USER dspacestatistics WITH PASSWORD 'dspacestatistics'"
       createdb -U postgres -O dspacestatistics --encoding=UNICODE dspacestatistics
-      psql -U postgres -d dspacestatistics < tests/dspacestatistics.sql
       cd dspace-statistics-api
+      psql -U postgres -d dspacestatistics < tests/dspacestatistics.sql
       pipenv install --dev
   - test: |
       cd dspace-statistics-api
