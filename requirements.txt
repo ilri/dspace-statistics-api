@@ -2,6 +2,6 @@
 falcon==1.4.1
 git+https://github.com/alanorth/SolrClient.git@c629e3475be37c82770b2be61748be7e29882648#egg=solrclient
 gunicorn==19.9.0
-psycopg2-binary==2.7.6.1
+psycopg2-binary==2.7.7
 python-mimeparse==1.6.0
 six==1.12.0
