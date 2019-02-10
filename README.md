@@ -89,6 +89,7 @@ The item id is the *internal* id for an item. You can get these from the standar
 - Better logging
 - Version API
 - Use JSON in PostgreSQL
+- Add top items endpoint, perhaps `/top/items` or `/items/top`?
 - Make community and collection stats available
 - Support [DSpace 6 UUIDs](https://jira.duraspace.org/browse/DS-1782)
 - Switch to [Python 3.6+ f-string syntax](https://realpython.com/python-f-strings/)
