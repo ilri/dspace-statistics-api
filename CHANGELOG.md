@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Build configuration for build.sr.ht
 
 ### Updated
-- Run pipenv update, bringing pytest version 4.2.0, psycopg-binary 2.7.7, etc
+- Run pipenv update, bringing pytest version 4.3.1, psycopg-binary 2.7.7, etc
 
 ## [0.9.0] - 2019-01-22
 ### Updated
