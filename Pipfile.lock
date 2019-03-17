@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d18369b55f85594f6acfa49779909334a794a4002656508fc85acea43df2521d"
+            "sha256": "8e62fde0f14f3f0090d32678593eec6e4b87f56e8f428ea68eba88b112df76bf"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -32,11 +32,11 @@
         },
         "falcon": {
             "hashes": [
-                "sha256:0a66b33458fab9c1e400a9be1a68056abda178eb02a8cb4b8f795e9df20b053b",
-                "sha256:3981f609c0358a9fcdb25b0e7fab3d9e23019356fb429c635ce4133135ae1bc4"
+                "sha256:0ead81121347ee4e1556f36460a93b2bdbae6c381d91f4d548b96b50e9b678a4",
+                "sha256:91a6ed1805c43d2b593f4068296f894aca6a2cdf073fb84a7467bb0bc31bf942"
             ],
             "index": "pypi",
-            "version": "==1.4.1"
+            "version": "==2.0.0b1"
         },
         "gunicorn": {
             "hashes": [
@@ -87,6 +87,7 @@
             "index": "pypi",
             "version": "==2.8.2"
         },
+<<<<<<< HEAD
         "python-mimeparse": {
             "hashes": [
                 "sha256:76e4b03d700a641fd7761d3cd4fdbbdcd787eade1ebfac43f877016328334f78",

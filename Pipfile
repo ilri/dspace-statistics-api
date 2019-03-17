@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 gunicorn = "*"
-falcon = "*"
+falcon = "==2.0.0b1"
 "psycopg2-binary" = "*"
 requests = "*"
 
