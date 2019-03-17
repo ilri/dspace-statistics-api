@@ -19,3 +19,6 @@ tasks:
   - test: |
       cd dspace-statistics-api
       pipenv run pytest
+environment:
+  PIPENV_NOSPIN: 'True'
+  PIPENV_HIDE_EMOJIS: 'True'

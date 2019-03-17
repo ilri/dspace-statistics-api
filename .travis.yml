@@ -16,5 +16,8 @@ install:
   - "pip install pipenv --upgrade-strategy=only-if-needed"
   - "pipenv install --dev"
 script: pytest
+env:
+  - PIPENV_NOSPIN=True
+  - PIPENV_HIDE_EMOJIS=True
 
 # vim: ts=2 sw=2 et
