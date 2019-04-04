@@ -94,6 +94,7 @@ The item id is the *internal* id for an item. You can get these from the standar
 - Support [DSpace 6 UUIDs](https://jira.duraspace.org/browse/DS-1782)
 - Migrate away from SolrClient dependency
 - Switch to [Python 3.6+ f-string syntax](https://realpython.com/python-f-strings/)
+- Check IDs in database to see if they are deleted...
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
