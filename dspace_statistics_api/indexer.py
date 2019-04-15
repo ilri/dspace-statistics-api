@@ -132,7 +132,8 @@ def index_views():
             data = []
 
             while results_current_page <= results_num_pages:
-                print('Indexing item views (page {} of {})'.format(results_current_page, results_num_pages))
+                # "pages" are zero based, but one based is more human readable
+                print('Indexing item views (page {} of {})'.format(results_current_page + 1, results_num_pages + 1))
 
                 solr_query_params = {
                     'q': 'type:2',
@@ -210,7 +211,8 @@ def index_downloads():
             data = []
 
             while results_current_page <= results_num_pages:
-                print('Indexing item downloads (page {} of {})'.format(results_current_page, results_num_pages))
+                # "pages" are zero based, but one based is more human readable
+                print('Indexing item downloads (page {} of {})'.format(results_current_page + 1, results_num_pages + 1))
 
                 solr_query_params = {
                     'q': 'type:0',

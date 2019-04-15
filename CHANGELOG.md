@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Use vanilla requests library instead of SolrClient
+- Use one-based paging in indexer output (for human readability)
 
 ## [0.9.0] - 2019-01-22
 ### Updated
