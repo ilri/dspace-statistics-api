@@ -7,7 +7,7 @@ name = "pypi"
 gunicorn = "*"
 falcon = "*"
 "psycopg2-binary" = "*"
-solrclient = {ref = "kazoo-2.5.0", git = "https://github.com/alanorth/SolrClient.git"}
+requests = "*"
 
 [dev-packages]
 ipython = "*"
