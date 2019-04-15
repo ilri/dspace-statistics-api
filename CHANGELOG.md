@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Build configuration for build.sr.ht
 
 ### Updated
-- Run pipenv update, bringing pytest version 4.3.1, psycopg-binary 2.7.7, etc
+- Run pipenv update, bringing pytest version 4.4.0, psycopg-binary 2.8.2, etc
 - sr.ht and TravisCI configuration to disable emojis and animation to keep logs clean
 
 ### Changed
