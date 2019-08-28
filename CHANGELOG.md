@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+### Updated
+- Run pipenve update, bringing psycogpg 2.8.3, requests 2.22.0, and pytest 5.1.1
+
 ## [1.1.0] - 2019-05-05
 ## Updated
 - Falcon 2.0.0 (@alanorth)
