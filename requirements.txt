@@ -1,9 +1,9 @@
 -i https://pypi.org/simple
-certifi==2019.3.9
+certifi==2019.6.16
 chardet==3.0.4
 falcon==2.0.0
 gunicorn==19.9.0
 idna==2.8
-psycopg2-binary==2.8.2
-requests==2.21.0
-urllib3==1.24.3
+psycopg2-binary==2.8.3
+requests==2.22.0
+urllib3==1.25.3

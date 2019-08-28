@@ -4,23 +4,27 @@ attrs==19.1.0
 backcall==0.1.0
 decorator==4.4.0
 entrypoints==0.3
-flake8==3.7.7
+flake8==3.7.8
+importlib-metadata==0.19 ; python_version < '3.8'
 ipython-genutils==0.2.0
-ipython==7.5.0
-jedi==0.13.3
+ipython==7.7.0
+jedi==0.15.1
 mccabe==0.6.1
-more-itertools==7.0.0 ; python_version > '2.7'
-parso==0.4.0
+more-itertools==7.2.0
+packaging==19.1
+parso==0.5.1
 pexpect==4.7.0 ; sys_platform != 'win32'
 pickleshare==0.7.5
-pluggy==0.9.0
+pluggy==0.12.0
 prompt-toolkit==2.0.9
 ptyprocess==0.6.0
 py==1.8.0
 pycodestyle==2.5.0
 pyflakes==2.1.1
-pygments==2.3.1
-pytest==4.4.1
+pygments==2.4.2
+pyparsing==2.4.2
+pytest==5.1.1
 six==1.12.0
 traitlets==4.3.2
 wcwidth==0.1.7
+zipp==0.6.0
