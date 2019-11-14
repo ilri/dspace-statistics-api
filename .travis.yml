@@ -17,8 +17,5 @@ install:
   - "pip install -r requirements.txt"
   - "pip install -r requirements-dev.txt"
 script: pytest
-env:
-  - PIPENV_NOSPIN=True
-  - PIPENV_HIDE_EMOJIS=True
 
 # vim: ts=2 sw=2 et
