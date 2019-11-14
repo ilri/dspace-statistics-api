@@ -14,8 +14,8 @@ before_script:
   - createdb -U postgres -O dspacestatistics --encoding=UNICODE dspacestatistics
   - psql -U postgres -d dspacestatistics < tests/dspacestatistics.sql
 install:
-  - "pip install pipenv --upgrade-strategy=only-if-needed"
-  - "pipenv install --dev"
+  - "pip install -r requirements.txt"
+  - "pip install -r requirements-dev.txt"
 script: pytest
 env:
   - PIPENV_NOSPIN=True
