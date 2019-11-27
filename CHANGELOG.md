@@ -6,11 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Updated
-- Run pipenv update, bringing psycogpg 2.8.3, requests 2.22.0, and pytest 5.1.1
+- Run pipenv update, bringing psycogpg 2.8.3, requests 2.22.0, pytest 5.3.1,
+and gunicorn 20.0.4
 
 ### Changed
 - Use Ubuntu 18.04 "Bionic" for TravisCI builds
 - Use Python 3.8.0 for pipenv
+- Minor syntax issues highlighted by flake8
 
 ## [1.1.0] - 2019-05-05
 ## Updated
