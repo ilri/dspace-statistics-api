@@ -43,11 +43,8 @@ def get_statistics_shards():
     statistics_core_years = []
 
     # URL for Solr status to check active cores
-    solr_query_params = {
-        'action': 'STATUS',
-        'wt': 'json'
-    }
-    solr_url = SOLR_SERVER + '/admin/cores'
+    solr_query_params = {"action": "STATUS", "wt": "json"}
+    solr_url = SOLR_SERVER + "/admin/cores"
     res = requests.get(solr_url, params=solr_query_params)
 
     if res.status_code == requests.codes.ok:
@@ -55,9 +52,9 @@ def get_statistics_shards():
 
         # Iterate over active cores from Solr's STATUS response (cores are in
         # the status array of this response).
-        for core in data['status']:
+        for core in data["status"]:
             # Pattern to match, for example: statistics-2018
-            pattern = re.compile('^statistics-[0-9]{4}$')
+            pattern = re.compile("^statistics-[0-9]{4}$")
 
             if not pattern.match(core):
                 continue
@@ -71,13 +68,13 @@ def get_statistics_shards():
 
     if len(statistics_core_years) > 0:
         # Begin building a string of shards starting with the default one
-        shards = '{}/statistics'.format(SOLR_SERVER)
+        shards = "{}/statistics".format(SOLR_SERVER)
 
         for core in statistics_core_years:
             # Create a comma-separated list of shards to pass to our Solr query
             #
             # See: https://wiki.apache.org/solr/DistributedSearch
-            shards += ',{}/{}'.format(SOLR_SERVER, core)
+            shards += ",{}/{}".format(SOLR_SERVER, core)
 
     # Return the string of shards, which may actually be empty. Solr doesn't
     # seem to mind if the shards query parameter is empty and I haven't seen
@@ -93,30 +90,32 @@ def index_views():
     #
     # see: https://lucene.apache.org/solr/guide/6_6/the-stats-component.html
     solr_query_params = {
-        'q': 'type:2',
-        'fq': 'isBot:false AND statistics_type:view',
-        'facet': 'true',
-        'facet.field': 'id',
-        'facet.mincount': 1,
-        'facet.limit': 1,
-        'facet.offset': 0,
-        'stats': 'true',
-        'stats.field': 'id',
-        'stats.calcdistinct': 'true',
-        'shards': shards,
-        'rows': 0,
-        'wt': 'json'
+        "q": "type:2",
+        "fq": "isBot:false AND statistics_type:view",
+        "facet": "true",
+        "facet.field": "id",
+        "facet.mincount": 1,
+        "facet.limit": 1,
+        "facet.offset": 0,
+        "stats": "true",
+        "stats.field": "id",
+        "stats.calcdistinct": "true",
+        "shards": shards,
+        "rows": 0,
+        "wt": "json",
     }
 
-    solr_url = SOLR_SERVER + '/statistics/select'
+    solr_url = SOLR_SERVER + "/statistics/select"
 
     res = requests.get(solr_url, params=solr_query_params)
 
     try:
         # get total number of distinct facets (countDistinct)
-        results_totalNumFacets = res.json()['stats']['stats_fields']['id']['countDistinct']
+        results_totalNumFacets = res.json()["stats"]["stats_fields"]["id"][
+            "countDistinct"
+        ]
     except TypeError:
-        print('No item views to index, exiting.')
+        print("No item views to index, exiting.")
 
         exit(0)
 
@@ -132,35 +131,39 @@ def index_views():
 
             while results_current_page <= results_num_pages:
                 # "pages" are zero based, but one based is more human readable
-                print('Indexing item views (page {} of {})'.format(results_current_page + 1, results_num_pages + 1))
+                print(
+                    "Indexing item views (page {} of {})".format(
+                        results_current_page + 1, results_num_pages + 1
+                    )
+                )
 
                 solr_query_params = {
-                    'q': 'type:2',
-                    'fq': 'isBot:false AND statistics_type:view',
-                    'facet': 'true',
-                    'facet.field': 'id',
-                    'facet.mincount': 1,
-                    'facet.limit': results_per_page,
-                    'facet.offset': results_current_page * results_per_page,
-                    'shards': shards,
-                    'rows': 0,
-                    'wt': 'json',
-                    'json.nl': 'map'  # return facets as a dict instead of a flat list
+                    "q": "type:2",
+                    "fq": "isBot:false AND statistics_type:view",
+                    "facet": "true",
+                    "facet.field": "id",
+                    "facet.mincount": 1,
+                    "facet.limit": results_per_page,
+                    "facet.offset": results_current_page * results_per_page,
+                    "shards": shards,
+                    "rows": 0,
+                    "wt": "json",
+                    "json.nl": "map",  # return facets as a dict instead of a flat list
                 }
 
-                solr_url = SOLR_SERVER + '/statistics/select'
+                solr_url = SOLR_SERVER + "/statistics/select"
 
                 res = requests.get(solr_url, params=solr_query_params)
 
                 # Solr returns facets as a dict of dicts (see json.nl parameter)
-                views = res.json()['facet_counts']['facet_fields']
+                views = res.json()["facet_counts"]["facet_fields"]
                 # iterate over the 'id' dict and get the item ids and views
-                for item_id, item_views in views['id'].items():
+                for item_id, item_views in views["id"].items():
                     data.append((item_id, item_views))
 
                 # do a batch insert of values from the current "page" of results
-                sql = 'INSERT INTO items(id, views) VALUES %s ON CONFLICT(id) DO UPDATE SET views=excluded.views'
-                psycopg2.extras.execute_values(cursor, sql, data, template='(%s, %s)')
+                sql = "INSERT INTO items(id, views) VALUES %s ON CONFLICT(id) DO UPDATE SET views=excluded.views"
+                psycopg2.extras.execute_values(cursor, sql, data, template="(%s, %s)")
                 db.commit()
 
                 # clear all items from the list so we can populate it with the next batch
@@ -172,30 +175,32 @@ def index_views():
 def index_downloads():
     # get the total number of distinct facets for items with at least 1 download
     solr_query_params = {
-        'q': 'type:0',
-        'fq': 'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
-        'facet': 'true',
-        'facet.field': 'owningItem',
-        'facet.mincount': 1,
-        'facet.limit': 1,
-        'facet.offset': 0,
-        'stats': 'true',
-        'stats.field': 'owningItem',
-        'stats.calcdistinct': 'true',
-        'shards': shards,
-        'rows': 0,
-        'wt': 'json'
+        "q": "type:0",
+        "fq": "isBot:false AND statistics_type:view AND bundleName:ORIGINAL",
+        "facet": "true",
+        "facet.field": "owningItem",
+        "facet.mincount": 1,
+        "facet.limit": 1,
+        "facet.offset": 0,
+        "stats": "true",
+        "stats.field": "owningItem",
+        "stats.calcdistinct": "true",
+        "shards": shards,
+        "rows": 0,
+        "wt": "json",
     }
 
-    solr_url = SOLR_SERVER + '/statistics/select'
+    solr_url = SOLR_SERVER + "/statistics/select"
 
     res = requests.get(solr_url, params=solr_query_params)
 
     try:
         # get total number of distinct facets (countDistinct)
-        results_totalNumFacets = res.json()['stats']['stats_fields']['owningItem']['countDistinct']
+        results_totalNumFacets = res.json()["stats"]["stats_fields"]["owningItem"][
+            "countDistinct"
+        ]
     except TypeError:
-        print('No item downloads to index, exiting.')
+        print("No item downloads to index, exiting.")
 
         exit(0)
 
@@ -211,35 +216,39 @@ def index_downloads():
 
             while results_current_page <= results_num_pages:
                 # "pages" are zero based, but one based is more human readable
-                print('Indexing item downloads (page {} of {})'.format(results_current_page + 1, results_num_pages + 1))
+                print(
+                    "Indexing item downloads (page {} of {})".format(
+                        results_current_page + 1, results_num_pages + 1
+                    )
+                )
 
                 solr_query_params = {
-                    'q': 'type:0',
-                    'fq': 'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
-                    'facet': 'true',
-                    'facet.field': 'owningItem',
-                    'facet.mincount': 1,
-                    'facet.limit': results_per_page,
-                    'facet.offset': results_current_page * results_per_page,
-                    'shards': shards,
-                    'rows': 0,
-                    'wt': 'json',
-                    'json.nl': 'map'  # return facets as a dict instead of a flat list
+                    "q": "type:0",
+                    "fq": "isBot:false AND statistics_type:view AND bundleName:ORIGINAL",
+                    "facet": "true",
+                    "facet.field": "owningItem",
+                    "facet.mincount": 1,
+                    "facet.limit": results_per_page,
+                    "facet.offset": results_current_page * results_per_page,
+                    "shards": shards,
+                    "rows": 0,
+                    "wt": "json",
+                    "json.nl": "map",  # return facets as a dict instead of a flat list
                 }
 
-                solr_url = SOLR_SERVER + '/statistics/select'
+                solr_url = SOLR_SERVER + "/statistics/select"
 
                 res = requests.get(solr_url, params=solr_query_params)
 
                 # Solr returns facets as a dict of dicts (see json.nl parameter)
-                downloads = res.json()['facet_counts']['facet_fields']
+                downloads = res.json()["facet_counts"]["facet_fields"]
                 # iterate over the 'owningItem' dict and get the item ids and downloads
-                for item_id, item_downloads in downloads['owningItem'].items():
+                for item_id, item_downloads in downloads["owningItem"].items():
                     data.append((item_id, item_downloads))
 
                 # do a batch insert of values from the current "page" of results
-                sql = 'INSERT INTO items(id, downloads) VALUES %s ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads'
-                psycopg2.extras.execute_values(cursor, sql, data, template='(%s, %s)')
+                sql = "INSERT INTO items(id, downloads) VALUES %s ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads"
+                psycopg2.extras.execute_values(cursor, sql, data, template="(%s, %s)")
                 db.commit()
 
                 # clear all items from the list so we can populate it with the next batch
@@ -251,8 +260,10 @@ def index_downloads():
 with DatabaseManager() as db:
     with db.cursor() as cursor:
         # create table to store item views and downloads
-        cursor.execute('''CREATE TABLE IF NOT EXISTS items
-                  (id INT PRIMARY KEY, views INT DEFAULT 0, downloads INT DEFAULT 0)''')
+        cursor.execute(
+            """CREATE TABLE IF NOT EXISTS items
+                  (id INT PRIMARY KEY, views INT DEFAULT 0, downloads INT DEFAULT 0)"""
+        )
 
     # commit the table creation before closing the database connection
     db.commit()
