@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Configuration for automatic code formatting with black
 
 ### Updated
-- Run pipenv update, bringing psycogpg 2.8.3, requests 2.22.0, pytest 5.3.1,
+- Run pipenv update, bringing psycopg2 2.8.4, requests 2.22.0, pytest 5.3.1,
 and gunicorn 20.0.4
 
 ### Changed
