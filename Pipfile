@@ -13,6 +13,8 @@ requests = "*"
 ipython = "*"
 "flake8" = "*"
 pytest = "*"
+isort = "*"
+black = "*"
 
 [requires]
 python_version = "3.8"
