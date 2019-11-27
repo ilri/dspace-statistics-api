@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Use Ubuntu 18.04 "Bionic" for TravisCI builds
+- Use Python 3.8.0 for pipenv
 
 ## [1.1.0] - 2019-05-05
 ## Updated
