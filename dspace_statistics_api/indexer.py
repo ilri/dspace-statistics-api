@@ -31,7 +31,6 @@
 
 from .config import SOLR_SERVER
 from .database import DatabaseManager
-import json
 import psycopg2.extras
 import re
 import requests
@@ -146,7 +145,7 @@ def index_views():
                     'shards': shards,
                     'rows': 0,
                     'wt': 'json',
-                    'json.nl': 'map' # return facets as a dict instead of a flat list
+                    'json.nl': 'map'  # return facets as a dict instead of a flat list
                 }
 
                 solr_url = SOLR_SERVER + '/statistics/select'
@@ -172,7 +171,7 @@ def index_views():
 
 def index_downloads():
     # get the total number of distinct facets for items with at least 1 download
-    solr_query_params= {
+    solr_query_params = {
         'q': 'type:0',
         'fq': 'isBot:false AND statistics_type:view AND bundleName:ORIGINAL',
         'facet': 'true',
@@ -225,7 +224,7 @@ def index_downloads():
                     'shards': shards,
                     'rows': 0,
                     'wt': 'json',
-                    'json.nl': 'map' # return facets as a dict instead of a flat list
+                    'json.nl': 'map'  # return facets as a dict instead of a flat list
                 }
 
                 solr_url = SOLR_SERVER + '/statistics/select'
