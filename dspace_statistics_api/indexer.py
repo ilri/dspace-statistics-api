@@ -29,11 +29,13 @@
 # See: https://solrclient.readthedocs.io/en/latest/SolrClient.html
 # See: https://wiki.duraspace.org/display/DSPACE/Solr
 
+import re
+
+import psycopg2.extras
+import requests
+
 from .config import SOLR_SERVER
 from .database import DatabaseManager
-import psycopg2.extras
-import re
-import requests
 
 
 # Enumerate the cores in Solr to determine if statistics have been sharded into

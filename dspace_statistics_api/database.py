@@ -1,11 +1,14 @@
-from .config import DATABASE_NAME
-from .config import DATABASE_USER
-from .config import DATABASE_PASS
-from .config import DATABASE_HOST
-from .config import DATABASE_PORT
 import falcon
 import psycopg2
 import psycopg2.extras
+
+from .config import (
+    DATABASE_HOST,
+    DATABASE_NAME,
+    DATABASE_PASS,
+    DATABASE_PORT,
+    DATABASE_USER,
+)
 
 
 class DatabaseManager:

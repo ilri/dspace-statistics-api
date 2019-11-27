@@ -1,5 +1,6 @@
-from .database import DatabaseManager
 import falcon
+
+from .database import DatabaseManager
 
 
 class RootResource:
