@@ -14,7 +14,7 @@ ipython = "*"
 "flake8" = "*"
 pytest = "*"
 isort = "*"
-black = "*"
+black = "==19.10b0"
 
 [requires]
 python_version = "3.8"
