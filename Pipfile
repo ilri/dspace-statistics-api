@@ -15,6 +15,7 @@ ipython = "*"
 pytest = "*"
 isort = "*"
 black = "==19.10b0"
+pytest-clarity = "==0.3.0a0"
 
 [requires]
 python_version = "3.8"
