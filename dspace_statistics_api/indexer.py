@@ -264,7 +264,7 @@ with DatabaseManager() as db:
         # create table to store item views and downloads
         cursor.execute(
             """CREATE TABLE IF NOT EXISTS items
-                  (id INT PRIMARY KEY, views INT DEFAULT 0, downloads INT DEFAULT 0)"""
+                  (id UUID PRIMARY KEY, views INT DEFAULT 0, downloads INT DEFAULT 0)"""
         )
 
     # commit the table creation before closing the database connection
