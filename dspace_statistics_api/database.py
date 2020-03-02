@@ -15,9 +15,7 @@ class DatabaseManager:
     """Manage database connection."""
 
     def __init__(self):
-        self._connection_uri = "dbname={} user={} password={} host={} port={}".format(
-            DATABASE_NAME, DATABASE_USER, DATABASE_PASS, DATABASE_HOST, DATABASE_PORT
-        )
+        self._connection_uri = f"dbname={DATABASE_NAME} user={DATABASE_USER} password={DATABASE_PASS} host={DATABASE_HOST} port={DATABASE_PORT}"
 
     def __enter__(self):
         try:

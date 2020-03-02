@@ -77,9 +77,7 @@ class ItemResource:
                 if cursor.rowcount == 0:
                     raise falcon.HTTPNotFound(
                         title="Item not found",
-                        description='The item with id "{}" was not found.'.format(
-                            str(item_id)
-                        ),
+                        description=f'The item with id "{str(item_id)}" was not found.',
                     )
                 else:
                     results = cursor.fetchone()

@@ -70,13 +70,13 @@ def get_statistics_shards():
 
     if len(statistics_core_years) > 0:
         # Begin building a string of shards starting with the default one
-        shards = "{}/statistics".format(SOLR_SERVER)
+        shards = f"{SOLR_SERVER}/statistics"
 
         for core in statistics_core_years:
             # Create a comma-separated list of shards to pass to our Solr query
             #
             # See: https://wiki.apache.org/solr/DistributedSearch
-            shards += ",{}/{}".format(SOLR_SERVER, core)
+            shards += f",{SOLR_SERVER}/{core}"
 
     # Return the string of shards, which may actually be empty. Solr doesn't
     # seem to mind if the shards query parameter is empty and I haven't seen
@@ -134,9 +134,7 @@ def index_views():
             while results_current_page <= results_num_pages:
                 # "pages" are zero based, but one based is more human readable
                 print(
-                    "Indexing item views (page {} of {})".format(
-                        results_current_page + 1, results_num_pages + 1
-                    )
+                    f"Indexing item views (page {results_current_page + 1} of {results_num_pages + 1})"
                 )
 
                 solr_query_params = {
@@ -219,9 +217,7 @@ def index_downloads():
             while results_current_page <= results_num_pages:
                 # "pages" are zero based, but one based is more human readable
                 print(
-                    "Indexing item downloads (page {} of {})".format(
-                        results_current_page + 1, results_num_pages + 1
-                    )
+                    f"Indexing item downloads (page {results_current_page + 1} of {results_num_pages + 1})"
                 )
 
                 solr_query_params = {
