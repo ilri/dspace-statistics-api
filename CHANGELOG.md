@@ -4,13 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2020-03-02
+### Changed
+- Help text in API docs should reference UUIDs
+- Sample SQL file for tests should use UUIDs
+
 ## [1.2.0] - 2020-03-02
-## Changed
+### Changed
 - Remove Python 3.5 from TravisCI because black requires Python >= 3.6
 - Adapt API for DSpace 6+ UUIDs
   - This requires dropping the statistics database and re-indexing
 
-## Updated
+### Updated
 - Run pipenv update, bringing requests 2.23.0 and pytest 5.3.5
 
 ## [1.1.1] - 2019-11-27
