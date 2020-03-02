@@ -10,10 +10,10 @@
         <ul>
             <li>GET <code>/</code> — return a basic API documentation page.</li>
             <li>GET <code>/items</code> — return views and downloads for all items that Solr knows about¹. Accepts <code>limit</code> and <code>page</code> query parameters for pagination of results (<code>limit</code> must be an integer between 1 and 100, and <code>page</code> must be an integer greater than or equal to 0).</li>
-            <li>GET <code>/item/id</code> — return views and downloads for a single item (<code>id</code> must be a positive integer). Returns HTTP 404 if an item id is not found.</li>
+            <li>GET <code>/item/id</code> — return views and downloads for a single item (<code>id</code> must be a UUID). Returns HTTP 404 if an item id is not found.</li>
         </ul>
 
-        <p>The item id is the <em>internal</em> id for an item. You can get these from the standard DSpace REST API.</p>
+        <p>The item id is the <em>internal</em> uuid for an item. You can get these from the standard DSpace REST API.</p>
 
         <p>¹ We are querying the Solr statistics core, which technically only knows about items that have either views or downloads. If an item is not present here you can assume it has zero views and zero downloads, but not necessarily that it does not exist in the repository.</code>
     </body>
