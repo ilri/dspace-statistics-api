@@ -29,9 +29,8 @@ class AllItemsResource:
 
                 # get statistics and use limit and offset to page through results
                 cursor.execute(
-                    "SELECT id, views, downloads FROM items LIMIT {} OFFSET {}".format(
-                        limit, offset
-                    )
+                    "SELECT id, views, downloads FROM items LIMIT %s OFFSET %s",
+                    [limit, offset],
                 )
 
                 # create a list to hold dicts of item stats
