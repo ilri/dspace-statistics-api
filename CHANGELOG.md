@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ## Changed
 - Remove Python 3.5 from TravisCI because black requires Python >= 3.6
+- Adapt API for DSpace 6+ UUIDs
+  - This requires droping the statistics database and re-indexing
 
 ## [1.1.1] - 2019-11-27
 ### Added
