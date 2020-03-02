@@ -22,11 +22,11 @@ def test_get_docs(client):
 def test_get_item(client):
     """Test requesting a single item."""
 
-    response = client.simulate_get("/item/17")
+    response = client.simulate_get("/item/c3910974-c3a5-4053-9dce-104aa7bb1621")
     response_doc = json.loads(response.text)
 
     assert isinstance(response_doc["downloads"], int)
-    assert isinstance(response_doc["id"], int)
+    assert isinstance(response_doc["id"], str)
     assert isinstance(response_doc["views"], int)
     assert response.status_code == 200
 
@@ -34,7 +34,7 @@ def test_get_item(client):
 def test_get_missing_item(client):
     """Test requesting a single non-existing item."""
 
-    response = client.simulate_get("/item/1")
+    response = client.simulate_get("/item/c3910974-c3a5-4053-9dce-104aa7bb1620")
 
     assert response.status_code == 404
 
