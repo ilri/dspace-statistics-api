@@ -27,9 +27,9 @@ class AllItemsResource:
                 cursor.execute("SELECT COUNT(id) FROM items")
                 pages = round(cursor.fetchone()[0] / limit)
 
-                # get statistics, ordered by id, and use limit and offset to page through results
+                # get statistics and use limit and offset to page through results
                 cursor.execute(
-                    "SELECT id, views, downloads FROM items ORDER BY id ASC LIMIT {} OFFSET {}".format(
+                    "SELECT id, views, downloads FROM items LIMIT {} OFFSET {}".format(
                         limit, offset
                     )
                 )
@@ -41,7 +41,7 @@ class AllItemsResource:
                 for item in cursor:
                     statistics.append(
                         {
-                            "id": item["id"],
+                            "id": str(item["id"]),
                             "views": item["views"],
                             "downloads": item["downloads"],
                         }
@@ -61,26 +61,32 @@ class ItemResource:
     def on_get(self, req, resp, item_id):
         """Handles GET requests"""
 
+        import psycopg2.extras
+
+        # Adapt Python’s uuid.UUID type to PostgreSQL’s uuid
+        # See: https://www.psycopg.org/docs/extras.html
+        psycopg2.extras.register_uuid()
+
         with DatabaseManager() as db:
             db.set_session(readonly=True)
 
             with db.cursor() as cursor:
                 cursor = db.cursor()
                 cursor.execute(
-                    "SELECT views, downloads FROM items WHERE id={}".format(item_id)
+                    "SELECT views, downloads FROM items WHERE id=%s", [str(item_id)]
                 )
                 if cursor.rowcount == 0:
                     raise falcon.HTTPNotFound(
                         title="Item not found",
                         description='The item with id "{}" was not found.'.format(
-                            item_id
+                            str(item_id)
                         ),
                     )
                 else:
                     results = cursor.fetchone()
 
                     statistics = {
-                        "id": item_id,
+                        "id": str(item_id),
                         "views": results["views"],
                         "downloads": results["downloads"],
                     }
@@ -91,6 +97,6 @@ class ItemResource:
 api = application = falcon.API()
 api.add_route("/", RootResource())
 api.add_route("/items", AllItemsResource())
-api.add_route("/item/{item_id:int}", ItemResource())
+api.add_route("/item/{item_id:uuid}", ItemResource())
 
 # vim: set sw=4 ts=4 expandtab:
