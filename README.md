@@ -1,5 +1,5 @@
 # DSpace Statistics API [![Build Status](https://travis-ci.org/ilri/dspace-statistics-api.svg?branch=master)](https://travis-ci.org/ilri/dspace-statistics-api) [![builds.sr.ht status](https://builds.sr.ht/~alanorth/dspace-statistics-api.svg)](https://builds.sr.ht/~alanorth/dspace-statistics-api?)
-DSpace stores item view and download events in a Solr "statistics" core. This information is available for use in the various DSpace user interfaces, but is not exposed externally via any APIs. The DSpace 4/5 [REST API](https://wiki.duraspace.org/display/DSDOC5x/REST+API), for example, only exposes information about communities, collections, item metadata, and bitstreams.
+DSpace stores item view and download events in a Solr "statistics" core. This information is available for use in the various DSpace user interfaces, but is not exposed externally via any APIs. The DSpace 4/5/6 [REST API](https://wiki.duraspace.org/display/DSDOC5x/REST+API), for example, only exposes information about communities, collections, item metadata, and bitstreams.
 
 This project contains an indexer and a [Falcon-based](https://falcon.readthedocs.io/) web application to make the statistics available via a simple REST API. You can read more about the Solr queries used to gather the item view and download statistics on the [DSpace wiki](https://wiki.duraspace.org/display/DSPACE/Solr).
 
@@ -91,8 +91,6 @@ The item id is the *internal* id for an item. You can get these from the standar
 - Use JSON in PostgreSQL
 - Add top items endpoint, perhaps `/top/items` or `/items/top`?
 - Make community and collection stats available
-- Support [DSpace 6 UUIDs](https://jira.duraspace.org/browse/DS-1782)
-- Switch to [Python 3.6+ f-string syntax](https://realpython.com/python-f-strings/)
 - Check IDs in database to see if they are deleted...
 
 ## License
