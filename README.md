@@ -9,7 +9,7 @@ If you use the DSpace Statistics API please cite:
 
 ## Requirements
 
-- Python 3.5+
+- Python 3.6+
 - PostgreSQL version 9.5+ (due to [`UPSERT` support](https://wiki.postgresql.org/wiki/UPSERT))
 - DSpace with [Solr usage statistics enabled](https://wiki.duraspace.org/display/DSDOC5x/SOLR+Statistics) (tested with 5.x)
 
