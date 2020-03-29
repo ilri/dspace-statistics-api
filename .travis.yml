@@ -9,7 +9,7 @@ jobs:
   allow_failures:
     - go: master
 addons:
-  postgresql: "9.6"
+  postgresql: "10.0"
 before_script:
   - psql --version
   - createuser -U postgres dspacestatistics
