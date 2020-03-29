@@ -4,6 +4,10 @@ python:
   - "3.6"
   - "3.7"
   - "3.8"
+  - master
+jobs:
+  allow_failures:
+    - go: master
 addons:
   postgresql: "9.6"
 before_script:
