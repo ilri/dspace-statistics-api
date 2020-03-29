@@ -9,7 +9,7 @@ python:
   - master
 jobs:
   allow_failures:
-    - go: master
+    - python: master
 addons:
   postgresql: "10"
 before_script:
