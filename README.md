@@ -1,10 +1,10 @@
 # DSpace Statistics API [![Build Status](https://travis-ci.org/ilri/dspace-statistics-api.svg?branch=master)](https://travis-ci.org/ilri/dspace-statistics-api) [![builds.sr.ht status](https://builds.sr.ht/~alanorth/dspace-statistics-api.svg)](https://builds.sr.ht/~alanorth/dspace-statistics-api?)
-DSpace stores item view and download events in a Solr "statistics" core. This information is available for use in the various DSpace user interfaces, but is not exposed externally via any APIs. The DSpace 4/5/6 [REST API](https://wiki.duraspace.org/display/DSDOC5x/REST+API), for example, only exposes information about communities, collections, item metadata, and bitstreams.
+DSpace stores item view and download events in a Solr "statistics" core. This information is available for use in the various DSpace user interfaces, but is not exposed externally via any APIs. The DSpace 4/5/6 [REST API](https://wiki.lyrasis.org/display/DSDOC5x/REST+API), for example, only exposes information about communities, collections, item metadata, and bitstreams.
 
 - If your DSpace is version 4 or 5, use [dspace-statistics-api v1.1.1](https://github.com/ilri/dspace-statistics-api/releases/tag/v1.1.1)
 - If your DSpace is version 6+, use [dspace-statistics-api v1.2.0 or greater](https://github.com/ilri/dspace-statistics-api/releases/tag/v1.2.0)
 
-This project contains an indexer and a [Falcon-based](https://falcon.readthedocs.io/) web application to make the statistics available via a simple REST API. You can read more about the Solr queries used to gather the item view and download statistics on the [DSpace wiki](https://wiki.duraspace.org/display/DSPACE/Solr).
+This project contains an indexer and a [Falcon-based](https://falcon.readthedocs.io/) web application to make the statistics available via a simple REST API. You can read more about the Solr queries used to gather the item view and download statistics on the [DSpace wiki](https://wiki.lyrasis.org/display/DSPACE/Solr).
 
 If you use the DSpace Statistics API please cite:
 
@@ -14,7 +14,7 @@ If you use the DSpace Statistics API please cite:
 
 - Python 3.6+
 - PostgreSQL version 9.5+ (due to [`UPSERT` support](https://wiki.postgresql.org/wiki/UPSERT))
-- DSpace with [Solr usage statistics enabled](https://wiki.duraspace.org/display/DSDOC5x/SOLR+Statistics) (tested with 5.x)
+- DSpace with [Solr usage statistics enabled](https://wiki.lyrasis.org/display/DSDOC5x/SOLR+Statistics) (tested with 5.x)
 
 ## Installation
 Create a Python virtual environment and install the dependencies:
