@@ -161,11 +161,50 @@ def index_views():
                 views = res.json()["facet_counts"]["facet_fields"]
                 # iterate over the 'id' dict and get the item ids and views
                 for item_id, item_views in views["id"].items():
-                    data.append((item_id, item_views))
+                    # Create a list with the item ID and total views
+                    item_row = [item_id, item_views]
+
+                    # Prepare query to get the item last 12 months views
+                    solr_query_params = {
+                        "q": "type:2 AND id:" + item_id,
+                        "fq": "isBot:false AND statistics_type:view",
+                        "facet": "true",
+                        "facet.date": "time",
+                        "facet.date.end": "NOW/MONTH+1MONTH",
+                        "facet.date.gap": "+1MONTH",
+                        "facet.date.start": "NOW/MONTH-11MONTHS",
+                        "shards": shards,
+                        "rows": 0,
+                        "wt": "json",
+                        "json.nl": "map"  # return facets as a dict instead of a flat list
+                    }
+                    res = requests.get(solr_url, params=solr_query_params)
+                    last_12_months = res.json()["facet_counts"]["facet_dates"]["time"]
+                    for time, time_item_views in last_12_months.items():
+                        # Exclude keys "start", "end" and "gap" from the response and add the views to the item list
+                        if time != "start" and time != "end" and time != "gap":
+                            item_row.append(time_item_views)
+
+                    data.append(item_row)
 
                 # do a batch insert of values from the current "page" of results
-                sql = "INSERT INTO items(id, views) VALUES %s ON CONFLICT(id) DO UPDATE SET views=excluded.views"
-                psycopg2.extras.execute_values(cursor, sql, data, template="(%s, %s)")
+                sql = "INSERT INTO items(id, views, views_1, views_2, views_3, views_4, views_5, views_6, views_7, views_8, views_9, views_10, views_11, views_12) " \
+                      "VALUES %s ON CONFLICT(id) " \
+                      "DO UPDATE SET " \
+                      "views=excluded.views," \
+                      "views_1=excluded.views_1," \
+                      "views_2=excluded.views_2," \
+                      "views_3=excluded.views_3," \
+                      "views_4=excluded.views_4," \
+                      "views_5=excluded.views_5," \
+                      "views_6=excluded.views_6," \
+                      "views_7=excluded.views_7," \
+                      "views_8=excluded.views_8," \
+                      "views_9=excluded.views_9," \
+                      "views_10=excluded.views_10," \
+                      "views_11=excluded.views_11," \
+                      "views_12=excluded.views_12"
+                psycopg2.extras.execute_values(cursor, sql, data, template="(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
                 db.commit()
 
                 # clear all items from the list so we can populate it with the next batch
@@ -246,11 +285,50 @@ def index_downloads():
                 downloads = res.json()["facet_counts"]["facet_fields"]
                 # iterate over the 'owningItem' dict and get the item ids and downloads
                 for item_id, item_downloads in downloads["owningItem"].items():
-                    data.append((item_id, item_downloads))
+                    # Create a list with the item ID and total views
+                    item_row = [item_id, item_downloads]
+
+                    # Prepare query to get the item last 12 months views
+                    solr_query_params = {
+                        "q": "type:0 AND owningItem:" + item_id,
+                        "fq": "isBot:false AND statistics_type:view AND bundleName:ORIGINAL",
+                        "facet": "true",
+                        "facet.date": "time",
+                        "facet.date.end": "NOW/MONTH+1MONTH",
+                        "facet.date.gap": "+1MONTH",
+                        "facet.date.start": "NOW/MONTH-11MONTHS",
+                        "shards": shards,
+                        "rows": 0,
+                        "wt": "json",
+                        "json.nl": "map"  # return facets as a dict instead of a flat list
+                    }
+                    res = requests.get(solr_url, params=solr_query_params)
+                    last_12_months = res.json()["facet_counts"]["facet_dates"]["time"]
+                    for time, time_item_downloads in last_12_months.items():
+                        # Exclude keys "start", "end" and "gap" from the response and add the downloads to the item list
+                        if time != "start" and time != "end" and time != "gap":
+                            item_row.append(time_item_downloads)
+
+                    data.append(item_row)
 
                 # do a batch insert of values from the current "page" of results
-                sql = "INSERT INTO items(id, downloads) VALUES %s ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads"
-                psycopg2.extras.execute_values(cursor, sql, data, template="(%s, %s)")
+                sql = "INSERT INTO items(id, downloads, downloads_1, downloads_2, downloads_3, downloads_4, downloads_5, downloads_6, downloads_7, downloads_8, downloads_9, downloads_10, downloads_11, downloads_12) " \
+                      "VALUES %s ON CONFLICT(id) " \
+                      "DO UPDATE SET " \
+                      "downloads=excluded.downloads," \
+                      "downloads_1=excluded.downloads_1," \
+                      "downloads_2=excluded.downloads_2," \
+                      "downloads_3=excluded.downloads_3," \
+                      "downloads_4=excluded.downloads_4," \
+                      "downloads_5=excluded.downloads_5," \
+                      "downloads_6=excluded.downloads_6," \
+                      "downloads_7=excluded.downloads_7," \
+                      "downloads_8=excluded.downloads_8," \
+                      "downloads_9=excluded.downloads_9," \
+                      "downloads_10=excluded.downloads_10," \
+                      "downloads_11=excluded.downloads_11," \
+                      "downloads_12=excluded.downloads_12"
+                psycopg2.extras.execute_values(cursor, sql, data, template="(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)")
                 db.commit()
 
                 # clear all items from the list so we can populate it with the next batch
@@ -264,7 +342,35 @@ with DatabaseManager() as db:
         # create table to store item views and downloads
         cursor.execute(
             """CREATE TABLE IF NOT EXISTS items
-                  (id INT PRIMARY KEY, views INT DEFAULT 0, downloads INT DEFAULT 0)"""
+                  (
+                  id INT PRIMARY KEY, 
+                  views INT DEFAULT 0, 
+                  downloads INT DEFAULT 0,
+                  views_1 INT DEFAULT 0, 
+                  views_2 INT DEFAULT 0, 
+                  views_3 INT DEFAULT 0, 
+                  views_4 INT DEFAULT 0, 
+                  views_5 INT DEFAULT 0, 
+                  views_6 INT DEFAULT 0, 
+                  views_7 INT DEFAULT 0, 
+                  views_8 INT DEFAULT 0, 
+                  views_9 INT DEFAULT 0, 
+                  views_10 INT DEFAULT 0, 
+                  views_11 INT DEFAULT 0, 
+                  views_12 INT DEFAULT 0, 
+                  downloads_1 INT DEFAULT 0, 
+                  downloads_2 INT DEFAULT 0, 
+                  downloads_3 INT DEFAULT 0, 
+                  downloads_4 INT DEFAULT 0, 
+                  downloads_5 INT DEFAULT 0, 
+                  downloads_6 INT DEFAULT 0, 
+                  downloads_7 INT DEFAULT 0,
+                  downloads_8 INT DEFAULT 0,
+                  downloads_9 INT DEFAULT 0,
+                  downloads_10 INT DEFAULT 0,
+                  downloads_11 INT DEFAULT 0,
+                  downloads_12 INT DEFAULT 0
+                  );"""
         )
 
     # commit the table creation before closing the database connection

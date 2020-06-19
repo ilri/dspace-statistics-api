@@ -9,8 +9,8 @@
         <p>This site is running the <a href="https://github.com/ilri/dspace-statistics-api" title="DSpace Statistics API project">DSpace Statistics API</a>. The following endpoints are available:</p>
         <ul>
             <li>GET <code>/</code> — return a basic API documentation page.</li>
-            <li>GET <code>/items</code> — return views and downloads for all items that Solr knows about¹. Accepts <code>limit</code> and <code>page</code> query parameters for pagination of results (<code>limit</code> must be an integer between 1 and 100, and <code>page</code> must be an integer greater than or equal to 0).</li>
-            <li>GET <code>/item/id</code> — return views and downloads for a single item (<code>id</code> must be a positive integer). Returns HTTP 404 if an item id is not found.</li>
+            <li>GET <code>/items</code> — return views and downloads for all items that Solr knows about¹. Accepts <code>period_range</code>, <code>limit</code> and <code>page</code> query parameters for pagination of results (<code>period_range</code> must be an integer between 0 and 12 <code>limit</code> must be an integer between 1 and 100, and <code>page</code> must be an integer greater than or equal to 0).</li>
+            <li>GET <code>/item/id</code> — return views and downloads for a single item (<code>id</code> must be a positive integer). Returns HTTP 404 if an item id is not found, <code>period_range</code> must be an integer between 0 and 12</li>
         </ul>
 
         <p>The item id is the <em>internal</em> id for an item. You can get these from the standard DSpace REST API.</p>

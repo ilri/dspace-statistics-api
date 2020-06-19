@@ -1,6 +1,34 @@
 import falcon
 
 from .database import DatabaseManager
+import datetime
+
+
+def get_last_12_months_dates():
+    # Current date
+    month = datetime.date.today()
+    dates = [month.strftime("%Y-%m")]
+
+    for i in range(11):
+        # Set to the 1st day in month then get the previous day (the last day in the previous month)
+        month = month.replace(day=1) - datetime.timedelta(days=1)
+        dates.append(month.strftime("%Y-%m"))
+
+        # The 1st of the previous month
+        month = month.replace(day=1)
+
+    dates = list(reversed(dates))
+    return dates
+
+
+def get_month_date(dates, text):
+    text_list = text.split("_")
+    if len(text_list) == 1:
+        return text
+    try:
+        return text_list[0] + "_" + dates[int(text_list[1]) - 1]
+    except:
+        return text
 
 
 class RootResource:
@@ -15,9 +43,16 @@ class AllItemsResource:
     def on_get(self, req, resp):
         """Handles GET requests"""
         # Return HTTPBadRequest if id parameter is not present and valid
+        period_range = req.get_param_as_int("period_range", min_value=0, max_value=12) or 0
         limit = req.get_param_as_int("limit", min_value=0, max_value=100) or 100
         page = req.get_param_as_int("page", min_value=0) or 0
         offset = limit * page
+
+        columns = ["id", "views", "downloads"]
+        if period_range > 0:
+            for i in range(period_range):
+                columns.append("views_" + str((12 - i)))
+                columns.append("downloads_" + str((12 - i)))
 
         with DatabaseManager() as db:
             db.set_session(readonly=True)
@@ -29,23 +64,24 @@ class AllItemsResource:
 
                 # get statistics, ordered by id, and use limit and offset to page through results
                 cursor.execute(
-                    "SELECT id, views, downloads FROM items ORDER BY id ASC LIMIT {} OFFSET {}".format(
+                    "SELECT " + ", ".join(columns) + " FROM items ORDER BY id ASC LIMIT {} OFFSET {}".format(
                         limit, offset
                     )
                 )
 
+                #Get last 12 months dates
+                dates = get_last_12_months_dates()
+
                 # create a list to hold dicts of item stats
-                statistics = list()
+                statistics = []
 
                 # iterate over results and build statistics object
                 for item in cursor:
-                    statistics.append(
-                        {
-                            "id": item["id"],
-                            "views": item["views"],
-                            "downloads": item["downloads"],
-                        }
-                    )
+                    item_data = {}
+                    for key, value in item.items():
+                        key = get_month_date(dates, key)
+                        item_data[key] = value
+                    statistics.append(item_data)
 
         message = {
             "currentPage": page,
@@ -60,6 +96,13 @@ class AllItemsResource:
 class ItemResource:
     def on_get(self, req, resp, item_id):
         """Handles GET requests"""
+        period_range = req.get_param_as_int("period_range", min_value=0, max_value=12) or 0
+
+        columns = ["id", "views", "downloads"]
+        if period_range > 0:
+            for i in range(period_range):
+                columns.append("views_" + str((12 - i)))
+                columns.append("downloads_" + str((12 - i)))
 
         with DatabaseManager() as db:
             db.set_session(readonly=True)
@@ -67,7 +110,7 @@ class ItemResource:
             with db.cursor() as cursor:
                 cursor = db.cursor()
                 cursor.execute(
-                    "SELECT views, downloads FROM items WHERE id={}".format(item_id)
+                    "SELECT " + ", ".join(columns) + " FROM items WHERE id={}".format(item_id)
                 )
                 if cursor.rowcount == 0:
                     raise falcon.HTTPNotFound(
@@ -77,14 +120,15 @@ class ItemResource:
                         ),
                     )
                 else:
-                    results = cursor.fetchone()
+                    result = cursor.fetchone()
 
-                    statistics = {
-                        "id": item_id,
-                        "views": results["views"],
-                        "downloads": results["downloads"],
-                    }
+                    #Get last 12 months dates
+                    dates = get_last_12_months_dates()
 
+                    statistics = {}
+                    for key, value in result.items():
+                        key = get_month_date(dates, key)
+                        statistics[key] = value
                     resp.media = statistics
 
 
