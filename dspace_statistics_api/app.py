@@ -317,6 +317,3 @@ api.add_route("/items/{item_id:int}", AllItemsResource())
 
 # vim: set sw=4 ts=4 expandtab:
 
-
-# TODO: return all the select period even if without data
-# TODO: check the posibility to update to solr 5.3
