@@ -95,7 +95,7 @@ class AllItemsResource:
 
         if item_id > 0:
             main_solr_views_query_params.update({"q": "type:2 AND id:" + str(item_id)})
-            main_solr_downloads_query_params.update({"q": "type:0 AND id:" + str(item_id)})
+            main_solr_downloads_query_params.update({"q": "type:2 AND owningItem:" + str(item_id)})
 
         if start_date is not None:
             # As the statistics will be returned by month, the period should start from the first day of the month
