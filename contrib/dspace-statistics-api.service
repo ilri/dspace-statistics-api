@@ -3,10 +3,6 @@ Description=DSpace Statistics API
 After=network.target
 
 [Service]
-Environment=DATABASE_NAME=dspacestatistics
-Environment=DATABASE_USER=dspacestatistics
-Environment=DATABASE_PASS=dspacestatistics
-Environment=DATABASE_HOST=localhost
 User=nobody
 Group=nogroup
 WorkingDirectory=/var/lib/dspace-statistics-api

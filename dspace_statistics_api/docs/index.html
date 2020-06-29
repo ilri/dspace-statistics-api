@@ -2,19 +2,69 @@
 <html lang="en-US">
     <head>
         <meta charset="UTF-8">
-        <title>DSpace Statistics API</title>
+        <title>DSpace Statistics API v5.2.0</title>
     </head>
     <body>
         <h1>DSpace Statistics API</h1>
-        <p>This site is running the <a href="https://github.com/ilri/dspace-statistics-api" title="DSpace Statistics API project">DSpace Statistics API</a>. The following endpoints are available:</p>
+        <p>This site is running the
+            <a href="https://github.com/ilri/dspace-statistics-api" title="DSpace Statistics API project">
+                DSpace Statistics API
+            </a>.
+            The following endpoints are available:
+        </p>
         <ul>
             <li>GET <code>/</code> — return a basic API documentation page.</li>
-            <li>GET <code>/items</code> — return views and downloads for all items that Solr knows about¹. Accepts <code>period_range</code>, <code>limit</code> and <code>page</code> query parameters for pagination of results (<code>period_range</code> must be an integer between 0 and 12 <code>limit</code> must be an integer between 1 and 100, and <code>page</code> must be an integer greater than or equal to 0).</li>
-            <li>GET <code>/item/id</code> — return views and downloads for a single item (<code>id</code> must be a positive integer). Returns HTTP 404 if an item id is not found, <code>period_range</code> must be an integer between 0 and 12</li>
+            <li>GET <code>/items</code> — return views and downloads for all items that Solr knows about¹.
+                <ul>
+                    <ul>
+                        <li>
+                            <code><b>limit</b> <i>Integer between 1 and 100</i></code> - Number of results per page.
+                        </li>
+                        <li>
+                            <code><b>page</b> <i>Integer greater than or equal to 0</i></code> - Page number.
+                        </li>
+                        <li>
+                            <code><b>start_date</b> <i>Date (ISO 8601)</i></code>
+                            — Start date for statistics tally by months (Ignores days)
+                        </li>
+                        <li>
+                            <code><b>end_date</b> <i>Date (ISO 8601)</i></code>
+                            — End date for statistics tally by months (Ignores days)
+                        </li>
+                        <li>
+                            <code><b>aggregate</b> <i>String (countries|cities)</i></code>
+                            — Items statistics disaggregated by country|city
+                        </li>
+                    </ul>
+                </ul>
+            <li>
+                GET <code>/items/{id}</code> 
+                — return views and downloads for a single item. <code>id <i>Integer</i></code>
+                <ul>
+                    <ul>
+                        <li>
+                            <code><b>start_date</b> <i>Date (ISO 8601)</i></code>
+                            — Start date for statistics tally by months (Ignores days)
+                        </li>
+                        <li>
+                            <code><b>end_date</b> <i>Date (ISO 8601)</i></code>
+                            — End date for statistics tally by months (Ignores days)
+                        </li>
+                        <li>
+                            <code><b>aggregate</b> <i>String (countries|cities)</i></code>
+                            — Item statistics disaggregated by country|city
+                        </li>
+                    </ul>
+                </ul>
         </ul>
 
-        <p>The item id is the <em>internal</em> id for an item. You can get these from the standard DSpace REST API.</p>
+        <p>
+            The item id is the <em>internal</em> id for an item. You can get these from the standard DSpace REST API.
+        </p>
 
-        <p>¹ We are querying the Solr statistics core, which technically only knows about items that have either views or downloads. If an item is not present here you can assume it has zero views and zero downloads, but not necessarily that it does not exist in the repository.</code>
+        <p>¹ We are querying the Solr statistics core, which technically only knows about items that have either views
+            or downloads. If an item is not present here you can assume it has zero views and zero downloads, but not
+            necessarily that it does not exist in the repository.
+        </p>
     </body>
 </html>
