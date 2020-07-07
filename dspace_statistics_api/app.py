@@ -51,6 +51,27 @@ def get_statistics_shards():
     return shards
 
 
+def get_period_months(start_date, end_date):
+    # Set `start_date` to the first day in the month
+    start_date = start_date.replace(day=1)
+    # Set `end_date` to the first day in the month
+    end_date = end_date.replace(day=1)
+
+    period_months = {}
+    while start_date <= end_date:
+        year = str(start_date.year)
+        month = str(start_date.month)
+        if len(month) == 1:
+            month = "0" + month
+        period_months[year + "-" + month] = 0
+        if start_date.month == 12:
+            start_date = start_date.replace(year=start_date.year + 1, month=1)
+        else:
+            start_date = start_date.replace(month=start_date.month + 1)
+
+    return period_months
+
+
 class RootResource:
     def on_get(self, req, resp):
         resp.status = falcon.HTTP_200
@@ -94,9 +115,9 @@ class AllItemsResource:
         })
 
         if item_id > 0:
-            main_solr_views_query_params.update({"q": "type:2 AND id:" + str(item_id)})
-            main_solr_downloads_query_params.update({"q": "type:0 AND owningItem:" + str(item_id)})
+            main_solr_views_query_params.update({"q": main_solr_views_query_params["q"] + " AND id:" + str(item_id)})
 
+        period_months = {}
         if start_date is not None:
             # As the statistics will be returned by month, the period should start from the first day of the month
             # from `start_date` and end with the last day of the month `end_date`
@@ -105,7 +126,10 @@ class AllItemsResource:
             start_date = start_date.replace(day=1)
 
             # Set `end_date` to the next month
-            end_date = end_date.replace(month=end_date.month + 1)
+            if end_date.month == 12:
+                end_date = end_date.replace(year=end_date.year + 1, month=1)
+            else:
+                end_date = end_date.replace(month=end_date.month + 1)
             # Set `end_date` to the last day of the previous month
             end_date = end_date.replace(day=1) - timedelta(days=1)
 
@@ -113,6 +137,8 @@ class AllItemsResource:
                 temp_start_date = start_date
                 start_date = end_date
                 end_date = temp_start_date
+
+            period_months = get_period_months(start_date, end_date)
 
             # Convert `start_date` to solr date format
             start_date = start_date.strftime("%Y-%m-%d") + "T00:00:00Z"
@@ -161,7 +187,8 @@ class AllItemsResource:
                 }
             else:
                 statistics = resp.media = get_counts(limit, page * limit, aggregate == "country", aggregate == "city",
-                                                     main_solr_views_query_params, main_solr_downloads_query_params)
+                                                     main_solr_views_query_params, main_solr_downloads_query_params,
+                                                     period_months)
                 if item_id > 0:
                     resp.media = statistics
                 else:
@@ -172,7 +199,8 @@ class AllItemsResource:
                     }
                     response.update(statistics)
                     resp.media = response
-        except TypeError:
+        except Exception as e:
+            print(e)
             if item_id > 0:
                 resp.media = []
             else:
@@ -185,7 +213,7 @@ class AllItemsResource:
 
 
 def get_counts(limit, offset, aggregate_country, aggregate_city, main_solr_views_query_params,
-               main_solr_downloads_query_params):
+               main_solr_downloads_query_params, period_months):
     solr_url = SOLR_SERVER + "/statistics/select"
 
     # Define the dict to fill statistics
@@ -219,9 +247,11 @@ def get_counts(limit, offset, aggregate_country, aggregate_city, main_solr_views
             date = date[0] + '-' + date[1]
             total_views_by_month[date] = count
 
+    items_ids = []
     for item in views:
         item_id = item["value"]
         if not item_id in data:
+            items_ids.append(str(item_id))
             data[item_id] = {"item_id": item_id, "views": 0, "downloads": 0}
             if aggregate_country:
                 data[item_id]["countries"] = {}
@@ -252,10 +282,14 @@ def get_counts(limit, offset, aggregate_country, aggregate_city, main_solr_views
     else:
         facet_pivot = "owningItem"
     solr_query_params = main_solr_downloads_query_params.copy()
+
+    # Get the downloads for items that have views.
+    # To fix: In case an item has downloads without views, the downloads will not appear!
+    solr_query_params.update(
+        {"q": solr_query_params["q"] + " AND (owningItem:" + " OR owningItem:".join(items_ids) + ")"})
+
     solr_query_params.update({
         "facet.pivot": facet_pivot,
-        "f.owningItem.facet.limit": limit,
-        "f.owningItem.facet.offset": offset,
     })
     res = requests.get(solr_url, params=solr_query_params)
     # Solr returns facets as a dict of dicts (see json.nl parameter)
@@ -303,10 +337,27 @@ def get_counts(limit, offset, aggregate_country, aggregate_city, main_solr_views
     final_data = {"statistics": final_data}
 
     if total_views_by_month is not None or total_downloads_by_month is not None:
-        if total_views_by_month is not None:
-            final_data["total_views_by_month"] = total_views_by_month
-        if total_downloads_by_month is not None:
-            final_data["total_downloads_by_month"] = total_downloads_by_month
+        if total_views_by_month is None:
+            total_views_by_month = {}
+        if total_downloads_by_month is None:
+            total_downloads_by_month = {}
+
+        period_months_views = {}
+        period_months_downloads = {}
+        for date in period_months:
+            views = 0
+            downloads = 0
+            if date in total_views_by_month.keys():
+                views = total_views_by_month[date]
+            if date in total_downloads_by_month.keys():
+                downloads = total_downloads_by_month[date]
+
+            period_months_views[date] = views
+            period_months_downloads[date] = downloads
+
+        final_data["total_views_by_month"] = period_months_views
+        final_data["total_downloads_by_month"] = period_months_downloads
+
     return final_data
 
 
