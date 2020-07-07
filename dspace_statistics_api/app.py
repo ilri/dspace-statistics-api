@@ -186,7 +186,7 @@ class AllItemsResource:
                     "statistics": [],
                 }
             else:
-                statistics = resp.media = get_counts(limit, page * limit, aggregate == "country", aggregate == "city",
+                statistics = resp.media = get_counts(item_id, limit, page * limit, aggregate == "country", aggregate == "city",
                                                      main_solr_views_query_params, main_solr_downloads_query_params,
                                                      period_months)
                 if item_id > 0:
@@ -212,7 +212,7 @@ class AllItemsResource:
                 }
 
 
-def get_counts(limit, offset, aggregate_country, aggregate_city, main_solr_views_query_params,
+def get_counts(single_item_id, limit, offset, aggregate_country, aggregate_city, main_solr_views_query_params,
                main_solr_downloads_query_params, period_months):
     solr_url = SOLR_SERVER + "/statistics/select"
 
@@ -281,12 +281,15 @@ def get_counts(limit, offset, aggregate_country, aggregate_city, main_solr_views
         facet_pivot = "owningItem,city"
     else:
         facet_pivot = "owningItem"
+
     solr_query_params = main_solr_downloads_query_params.copy()
 
-    # Get the downloads for items that have views.
-    # To fix: In case an item has downloads without views, the downloads will not appear!
-    solr_query_params.update(
-        {"q": solr_query_params["q"] + " AND (owningItem:" + " OR owningItem:".join(items_ids) + ")"})
+    if single_item_id > 0:
+        solr_query_params.update({"q": solr_query_params["q"] + " AND owningItem:" + str(single_item_id)})
+    else:
+        # Get the downloads for items that have views.
+        # To fix: In case an item has downloads without views, the downloads will not appear!
+        solr_query_params.update({"q": solr_query_params["q"] + " AND (owningItem:" + " OR owningItem:".join(items_ids) + ")"})
 
     solr_query_params.update({
         "facet.pivot": facet_pivot,
