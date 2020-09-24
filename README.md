@@ -93,6 +93,7 @@ The item id is the *internal* uuid for an item. You can get these from the stand
 - Version API
 - Use JSON in PostgreSQL
 - Add top items endpoint, perhaps `/top/items` or `/items/top`?
+  - Actually we could add `/items?limit=10&sort=views`
 - Make community and collection stats available
 - Check IDs in database to see if they are deleted...
 
