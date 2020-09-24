@@ -24,9 +24,8 @@
 # This script is written for Python 3.5+ and requires several modules that you
 # can install with pip (I recommend using a Python virtual environment):
 #
-#   $ pip install SolrClient psycopg2-binary
+#   $ pip install psycopg2-binary
 #
-# See: https://solrclient.readthedocs.io/en/latest/SolrClient.html
 # See: https://wiki.duraspace.org/display/DSPACE/Solr
 
 import re
