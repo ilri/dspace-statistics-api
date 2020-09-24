@@ -1,6 +1,10 @@
-# Enumerate the cores in Solr to determine if statistics have been sharded into
-# yearly shards by DSpace's stats-util or not (for example: statistics-2018).
 def get_statistics_shards():
+    """Enumerate the cores in Solr to determine if statistics have been sharded into
+    yearly shards by DSpace's stats-util or not (for example: statistics-2018).
+
+    Returns:
+        str:A list of Solr statistics shards separated by commas.
+    """
     from .config import SOLR_SERVER
 
     import re
