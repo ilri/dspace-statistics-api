@@ -150,8 +150,6 @@ def index_views():
                     "json.nl": "map",  # return facets as a dict instead of a flat list
                 }
 
-                solr_url = SOLR_SERVER + "/statistics/select"
-
                 res = requests.get(solr_url, params=solr_query_params)
 
                 # Solr returns facets as a dict of dicts (see json.nl parameter)
@@ -232,8 +230,6 @@ def index_downloads():
                     "wt": "json",
                     "json.nl": "map",  # return facets as a dict instead of a flat list
                 }
-
-                solr_url = SOLR_SERVER + "/statistics/select"
 
                 res = requests.get(solr_url, params=solr_query_params)
 
