@@ -21,7 +21,7 @@
 # Connects to a DSpace Solr statistics core and ingests item views and downloads
 # into a PostgreSQL database for use by other applications (like an API).
 #
-# This script is written for Python 3.5+ and requires several modules that you
+# This script is written for Python 3.6+ and requires several modules that you
 # can install with pip (I recommend using a Python virtual environment):
 #
 #   $ pip install psycopg2-binary
