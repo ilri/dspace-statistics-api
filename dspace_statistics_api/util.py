@@ -51,3 +51,20 @@ def get_statistics_shards():
     # seem to mind if the shards query parameter is empty and I haven't seen
     # any negative performance impact so this should be fine.
     return shards
+
+
+def is_valid_date(date):
+    import datetime
+    import falcon
+
+    try:
+        # Solr date format is: 2020-01-01T00:00:00Z
+        # See: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
+        datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%SZ")
+
+        return True
+    except ValueError:
+        raise falcon.HTTPBadRequest(
+            title="Invalid parameter",
+            description=f"Invalid date format: {date}. The value must be in format: 2020-01-01T00:00:00Z.",
+        )
