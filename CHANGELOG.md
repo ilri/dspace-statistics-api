@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Minor refactoring of indexer
 
 ### Added
-- Ability to get statistics for arbitrary items and date ranges by POSTing a JSON-formatted request to /items
+- Ability to get statistics for arbitrary items and date ranges by POSTing a JSON-formatted request to /items as opposed to the current `GET /items` which returns pre-indexed all-time stats for all items
 
 ## [1.2.1] - 2020-03-02
 ### Changed
