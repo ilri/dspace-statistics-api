@@ -81,16 +81,34 @@ The API exposes the following endpoints:
 
   - GET `/` — return a basic API documentation page.
   - GET `/items` — return views and downloads for all items that Solr knows about¹. Accepts `limit` and `page` query parameters for pagination of results (`limit` must be an integer between 1 and 100, and `page` must be an integer greater than or equal to 0).
+  - POST `/items` — return views and downloads for an arbitrary list of items. Accepts `limit`, `page`, `dateFrom`, and `dateTo` parameters².
   - GET `/item/id` — return views and downloads for a single item (`id` must be a UUID). Returns HTTP 404 if an item id is not found.
 
 The item id is the *internal* uuid for an item. You can get these from the standard DSpace REST API.
 
 ¹ We are querying the Solr statistics core, which technically only knows about items that have either views or downloads. If an item is not present here you can assume it has zero views and zero downloads, but not necessarily that it does not exist in the repository.
 
-## Todo
+² POST requests to `/items` should be in JSON format with the following parameters:
+
+```
+{
+    "limit": 100, // optional, integer between 0 and 100, default 100
+    "page": 0, // optional, integer greater than 0, default 0
+    "dateFrom": "2020-01-01T00:00:00Z", // optional, default *
+    "dateTo": "2020-09-09T00:00:00Z", // optional, default *
+    "items": [
+        "f44cf173-2344-4eb2-8f00-ee55df32c76f",
+        "2324aa41-e9de-4a2b-bc36-16241464683e",
+        "8542f9da-9ce1-4614-abf4-f2e3fdb4b305",
+        "0fe573e7-042a-4240-a4d9-753b61233908"
+    ]
+}
+```
+
+## TODO
 
 - Better logging
-- Version API
+- Version API (or at least include a /version endpoint?)
 - Use JSON in PostgreSQL
 - Add top items endpoint, perhaps `/top/items` or `/items/top`?
   - Actually we could add `/items?limit=10&sort=views`
