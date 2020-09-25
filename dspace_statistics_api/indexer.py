@@ -40,7 +40,8 @@ def index_views():
     # get total number of distinct facets for items with a minimum of 1 view,
     # otherwise Solr returns all kinds of weird ids that are actually not in
     # the database. Also, stats are expensive, but we need stats.calcdistinct
-    # so we can get the countDistinct summary.
+    # so we can get the countDistinct summary to calculate how many pages of
+    # results we have.
     #
     # see: https://lucene.apache.org/solr/guide/6_6/the-stats-component.html
     solr_query_params = {
