@@ -84,7 +84,7 @@ The API exposes the following endpoints:
   - POST `/items` — return views and downloads for an arbitrary list of items. Accepts `limit`, `page`, `dateFrom`, and `dateTo` parameters².
   - GET `/item/id` — return views and downloads for a single item (`id` must be a UUID). Returns HTTP 404 if an item id is not found.
 
-The item id is the *internal* uuid for an item. You can get these from the standard DSpace REST API.
+The item id is the *internal* UUID for an item. You can get these from the standard DSpace REST API.
 
 ¹ We are querying the Solr statistics core, which technically only knows about items that have either views or downloads. If an item is not present here you can assume it has zero views and zero downloads, but not necessarily that it does not exist in the repository.
 
