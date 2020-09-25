@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Minor refactoring of indexer
 
+### Added
+- Ability to get statistics for arbitrary items and date ranges by POSTing a JSON-formatted request to /items
+
 ## [1.2.1] - 2020-03-02
 ### Changed
 - Help text in API docs should reference UUIDs
