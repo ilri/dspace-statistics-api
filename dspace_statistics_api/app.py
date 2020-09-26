@@ -66,7 +66,7 @@ class AllItemsResource:
         # Only attempt to read the POSTed request if its length is not 0 (or
         # rather, in the Python sense, if length is not a False-y value).
         if req.content_length:
-            doc = json.load(req.stream)
+            doc = json.load(req.bounded_stream)
         else:
             raise falcon.HTTPBadRequest(
                 title="Invalid request", description=f"Request body is empty."
