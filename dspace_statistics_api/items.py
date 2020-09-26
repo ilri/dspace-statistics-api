@@ -13,7 +13,7 @@ def get_views(solr_date_string: str, items: list):
     :returns: A dict of item IDs and views
     """
     # Join the UUIDs with "OR" and escape the hyphens for Solr
-    solr_items_string: str = " OR ".join(items).replace("-", "\-")
+    solr_items_string: str = " OR ".join(items).replace("-", r"\-")
 
     solr_query_params = {
         "q": f"id:({solr_items_string})",
@@ -60,7 +60,7 @@ def get_downloads(solr_date_string: str, items: list):
     :returns: A dict of item IDs and downloads
     """
     # Join the UUIDs with "OR" and escape the hyphens for Solr
-    solr_items_string: str = " OR ".join(items).replace("-", "\-")
+    solr_items_string: str = " OR ".join(items).replace("-", r"\-")
 
     solr_query_params = {
         "q": f"owningItem:({solr_items_string})",
