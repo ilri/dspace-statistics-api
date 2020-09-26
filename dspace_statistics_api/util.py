@@ -1,3 +1,6 @@
+import falcon
+
+
 def get_statistics_shards():
     """Enumerate the cores in Solr to determine if statistics have been sharded into
     yearly shards by DSpace's stats-util or not (for example: statistics-2018).
@@ -55,7 +58,6 @@ def get_statistics_shards():
 
 def is_valid_date(date):
     import datetime
-    import falcon
 
     try:
         # Solr date format is: 2020-01-01T00:00:00Z
@@ -68,3 +70,68 @@ def is_valid_date(date):
             title="Invalid parameter",
             description=f"Invalid date format: {date}. The value must be in format: 2020-01-01T00:00:00Z.",
         )
+
+
+def validate_items_post_parameters(req, resp, resource, params):
+    """Check the POSTed request parameters for the `/items` endpoint.
+
+    Meant to be used as a `before` hook.
+    """
+    import json
+
+    # Only attempt to read the POSTed request if its length is not 0 (or
+    # rather, in the Python sense, if length is not a False-y value).
+    if req.content_length:
+        doc = json.load(req.bounded_stream)
+    else:
+        raise falcon.HTTPBadRequest(
+            title="Invalid request", description=f"Request body is empty."
+        )
+
+    # Parse date parameters from request body (will raise an HTTPBadRequest
+    # from is_valid_date() if any parameters are invalid)
+    if "dateFrom" in doc and is_valid_date(doc["dateFrom"]):
+        req.context.dateFrom = doc["dateFrom"]
+    else:
+        req.context.dateFrom = None
+
+    if "dateTo" in doc and is_valid_date(doc["dateTo"]):
+        req.context.dateTo = doc["dateTo"]
+    else:
+        req.context.dateTo = None
+
+    # Parse the limit parameter from the POST request body
+    if "limit" in doc:
+        if isinstance(doc["limit"], int) and 0 < doc["limit"] < 100:
+            req.context.limit = doc["limit"]
+        else:
+            raise falcon.HTTPBadRequest(
+                title="Invalid parameter",
+                description=f'The "limit" parameter is invalid. The value must be an integer between 0 and 100.',
+            )
+    else:
+        req.context.limit = 100
+
+    # Parse the page parameter from the POST request body
+    if "page" in doc:
+        if isinstance(doc["page"], int) and doc["page"] >= 0:
+            req.context.page = doc["page"]
+        else:
+            raise falcon.HTTPBadRequest(
+                title="Invalid parameter",
+                description=f'The "page" parameter is invalid. The value must be at least 0.',
+            )
+    else:
+        req.context.page = 0
+
+    # Parse the list of items from the POST request body
+    if "items" in doc:
+        if isinstance(doc["items"], list) and len(doc["items"]) > 0:
+            req.context.items = doc["items"]
+        else:
+            raise falcon.HTTPBadRequest(
+                title="Invalid parameter",
+                description=f'The "items" parameter is invalid. The value must be a comma-separated list of item UUIDs.',
+            )
+    else:
+        req.context.items = list()
