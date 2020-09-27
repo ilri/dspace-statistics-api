@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Ability to get statistics for arbitrary items and date ranges by POSTing a JSON-formatted request to /items as opposed to the current `GET /items` which returns pre-indexed all-time stats for all items
 
+### Updated
+- Run pipenv update, bringing minor updates to pytest, psycopg2-binary, etc
+
 ## [1.2.1] - 2020-03-02
 ### Changed
 - Help text in API docs should reference UUIDs
