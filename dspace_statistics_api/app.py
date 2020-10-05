@@ -1,6 +1,8 @@
 import falcon
 
 from .database import DatabaseManager
+from .items import get_views
+from .items import get_downloads
 from .util import validate_items_post_parameters
 
 
@@ -59,9 +61,6 @@ class AllItemsResource:
     @falcon.before(validate_items_post_parameters)
     def on_post(self, req, resp):
         """Handles POST requests"""
-
-        from .items import get_views
-        from .items import get_downloads
 
         # Build the Solr date string, ie: [* TO *]
         if req.context.dateFrom and req.context.dateTo:
