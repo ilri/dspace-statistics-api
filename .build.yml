@@ -1,6 +1,6 @@
 image: archlinux
 packages:
-  - python-pipenv
+  - python-poetry
   - postgresql
 sources:
   - https://git.sr.ht/~alanorth/dspace-statistics-api
@@ -15,10 +15,7 @@ tasks:
       createdb -U postgres -O dspacestatistics --encoding=UNICODE dspacestatistics
       cd dspace-statistics-api
       psql -U postgres -d dspacestatistics < tests/dspacestatistics.sql
-      pipenv install --dev
+      poetry install --no-root
   - test: |
       cd dspace-statistics-api
-      pipenv run pytest
-environment:
-  PIPENV_NOSPIN: 'True'
-  PIPENV_HIDE_EMOJIS: 'True'
+      poetry run pytest
