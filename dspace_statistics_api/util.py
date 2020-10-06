@@ -8,10 +8,11 @@ def get_statistics_shards():
     Returns:
         str:A list of Solr statistics shards separated by commas.
     """
-    from .config import SOLR_SERVER
-
     import re
+
     import requests
+
+    from .config import SOLR_SERVER
 
     # Initialize an empty list for statistics core years
     statistics_core_years = []

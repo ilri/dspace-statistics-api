@@ -1,8 +1,7 @@
 import falcon
 
 from .database import DatabaseManager
-from .items import get_views
-from .items import get_downloads
+from .items import get_downloads, get_views
 from .util import validate_items_post_parameters
 
 
