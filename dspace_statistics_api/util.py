@@ -85,7 +85,7 @@ def validate_items_post_parameters(req, resp, resource, params):
         doc = json.load(req.bounded_stream)
     else:
         raise falcon.HTTPBadRequest(
-            title="Invalid request", description=f"Request body is empty."
+            title="Invalid request", description="Request body is empty."
         )
 
     # Parse date parameters from request body (will raise an HTTPBadRequest
@@ -107,7 +107,7 @@ def validate_items_post_parameters(req, resp, resource, params):
         else:
             raise falcon.HTTPBadRequest(
                 title="Invalid parameter",
-                description=f'The "limit" parameter is invalid. The value must be an integer between 0 and 100.',
+                description='The "limit" parameter is invalid. The value must be an integer between 0 and 100.',
             )
     else:
         req.context.limit = 100
@@ -119,7 +119,7 @@ def validate_items_post_parameters(req, resp, resource, params):
         else:
             raise falcon.HTTPBadRequest(
                 title="Invalid parameter",
-                description=f'The "page" parameter is invalid. The value must be at least 0.',
+                description='The "page" parameter is invalid. The value must be at least 0.',
             )
     else:
         req.context.page = 0
@@ -131,7 +131,7 @@ def validate_items_post_parameters(req, resp, resource, params):
         else:
             raise falcon.HTTPBadRequest(
                 title="Invalid parameter",
-                description=f'The "items" parameter is invalid. The value must be a comma-separated list of item UUIDs.',
+                description='The "items" parameter is invalid. The value must be a comma-separated list of item UUIDs.',
             )
     else:
         req.context.items = list()
