@@ -1,7 +1,6 @@
 import requests
 
 from .config import SOLR_SERVER
-from .util import get_statistics_shards
 
 
 def get_views(solr_date_string: str, items: list):
@@ -12,6 +11,9 @@ def get_views(solr_date_string: str, items: list):
     :parameter items (list): a list of item IDs
     :returns: A dict of item IDs and views
     """
+    from .util import get_statistics_shards
+    shards = get_statistics_shards()
+
     # Join the UUIDs with "OR" and escape the hyphens for Solr
     solr_items_string: str = " OR ".join(items).replace("-", r"\-")
 
@@ -59,6 +61,9 @@ def get_downloads(solr_date_string: str, items: list):
     :parameter items (list): a list of item IDs
     :returns: A dict of item IDs and downloads
     """
+    from .util import get_statistics_shards
+    shards = get_statistics_shards()
+
     # Join the UUIDs with "OR" and escape the hyphens for Solr
     solr_items_string: str = " OR ".join(items).replace("-", r"\-")
 
@@ -96,8 +101,5 @@ def get_downloads(solr_date_string: str, items: list):
                 continue
 
     return data
-
-
-shards = get_statistics_shards()
 
 # vim: set sw=4 ts=4 expandtab:
