@@ -17,7 +17,7 @@ class AllItemsResource:
     def on_get(self, req, resp):
         """Handles GET requests"""
         # Return HTTPBadRequest if id parameter is not present and valid
-        limit = req.get_param_as_int("limit", min_value=0, max_value=100) or 100
+        limit = req.get_param_as_int("limit", min_value=1, max_value=100) or 100
         page = req.get_param_as_int("page", min_value=0) or 0
         offset = limit * page
 

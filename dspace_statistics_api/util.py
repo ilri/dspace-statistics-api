@@ -108,7 +108,7 @@ def validate_items_post_parameters(req, resp, resource, params):
         else:
             raise falcon.HTTPBadRequest(
                 title="Invalid parameter",
-                description='The "limit" parameter is invalid. The value must be an integer between 0 and 100.',
+                description='The "limit" parameter is invalid. The value must be an integer between 1 and 100.',
             )
     else:
         req.context.limit = 100
