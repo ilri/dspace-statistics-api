@@ -21,7 +21,7 @@
         <p>¹ We are querying the Solr statistics core, which technically only knows about items that have either views or downloads. If an item is not present here you can assume it has zero views and zero downloads, but not necessarily that it does not exist in the repository.</p>
         <p>² POST requests to <code>/items</code> should be in JSON format with the following parameters:
 			<pre><code>{
-	"limit": 100, // optional, integer between 0 and 100, default 100
+	"limit": 100, // optional, integer between 1 and 100, default 100
 	"page": 0, // optional, integer greater than 0, default 0
 	"dateFrom": "2020-01-01T00:00:00Z", // optional, default *
 	"dateTo": "2020-09-09T00:00:00Z", // optional, default *
