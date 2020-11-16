@@ -14,7 +14,7 @@ If you use the DSpace Statistics API please cite:
 
 - Python 3.6+
 - PostgreSQL version 9.5+ (due to [`UPSERT` support](https://wiki.postgresql.org/wiki/UPSERT))
-- DSpace with [Solr usage statistics enabled](https://wiki.lyrasis.org/display/DSDOC5x/SOLR+Statistics) (tested with 5.x)
+- DSpace with [Solr usage statistics enabled](https://wiki.lyrasis.org/display/DSDOC5x/SOLR+Statistics) (tested with 5.8+ and 6.3)
 
 ## Installation
 Create a Python virtual environment and install the dependencies:
