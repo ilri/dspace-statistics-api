@@ -46,7 +46,7 @@ def index_views():
     # see: https://lucene.apache.org/solr/guide/6_6/the-stats-component.html
     solr_query_params = {
         "q": "type:2",
-        "fq": "isBot:false AND statistics_type:view",
+        "fq": "-isBot:true AND statistics_type:view",
         "facet": "true",
         "facet.field": "id",
         "facet.mincount": 1,
@@ -92,7 +92,7 @@ def index_views():
 
                 solr_query_params = {
                     "q": "type:2",
-                    "fq": "isBot:false AND statistics_type:view",
+                    "fq": "-isBot:true AND statistics_type:view",
                     "facet": "true",
                     "facet.field": "id",
                     "facet.mincount": 1,
@@ -127,7 +127,7 @@ def index_downloads():
     # get the total number of distinct facets for items with at least 1 download
     solr_query_params = {
         "q": "type:0",
-        "fq": "isBot:false AND statistics_type:view AND bundleName:ORIGINAL",
+        "fq": "-isBot:true AND statistics_type:view AND bundleName:ORIGINAL",
         "facet": "true",
         "facet.field": "owningItem",
         "facet.mincount": 1,
@@ -173,7 +173,7 @@ def index_downloads():
 
                 solr_query_params = {
                     "q": "type:0",
-                    "fq": "isBot:false AND statistics_type:view AND bundleName:ORIGINAL",
+                    "fq": "-isBot:true AND statistics_type:view AND bundleName:ORIGINAL",
                     "facet": "true",
                     "facet.field": "owningItem",
                     "facet.mincount": 1,
