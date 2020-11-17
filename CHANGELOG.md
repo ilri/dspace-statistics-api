@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Minor issue with limit parameter
 
+### Changed
+- Minor refactor in Solr bot filtering
+
 ### Updated
 - Run poetry update
 
