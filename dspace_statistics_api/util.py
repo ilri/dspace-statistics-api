@@ -103,7 +103,7 @@ def validate_items_post_parameters(req, resp, resource, params):
 
     # Parse the limit parameter from the POST request body
     if "limit" in doc:
-        if isinstance(doc["limit"], int) and 0 < doc["limit"] < 100:
+        if isinstance(doc["limit"], int) and 0 < doc["limit"] <= 100:
             req.context.limit = doc["limit"]
         else:
             raise falcon.HTTPBadRequest(
