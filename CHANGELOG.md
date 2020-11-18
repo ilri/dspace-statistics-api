@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Fixed
-- Minor issue with limit parameter
+- Minor issue with limit parameter (> 0)
+- Minor issue with limit parameter (<= 100)
 
 ### Changed
 - Minor refactor in Solr bot filtering
