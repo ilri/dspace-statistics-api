@@ -23,7 +23,7 @@ def test_get_docs(client):
 def test_get_item(client):
     """Test requesting a single item."""
 
-    response = client.simulate_get("/item/c3910974-c3a5-4053-9dce-104aa7bb1621")
+    response = client.simulate_get("/item/fd8a46d5-1480-4e69-b187-cd3db96d8e4d")
     response_doc = json.loads(response.text)
 
     assert isinstance(response_doc["downloads"], int)
@@ -75,8 +75,8 @@ def test_post_items_valid_dateFrom(client):
     request_body = {
         "dateFrom": "2020-01-01T00:00:00Z",
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
@@ -99,18 +99,18 @@ def test_post_items_valid_dateFrom_mocked(client):
     request_body = {
         "dateFrom": "2020-01-01T00:00:00Z",
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
     get_views_return_value = {
-        "c3910974-c3a5-4053-9dce-104aa7bb1620": 21,
-        "887cc5f8-b5e7-4a2f-9053-49c91ab81313": 0,
+        "fd8a46d5-1480-4e69-b187-cd3db96d8e4d": 21,
+        "e53a2eab-1e31-448d-907b-3656ca4e86c1": 0,
     }
     get_downloads_return_value = {
-        "c3910974-c3a5-4053-9dce-104aa7bb1620": 575,
-        "887cc5f8-b5e7-4a2f-9053-49c91ab81313": 899,
+        "fd8a46d5-1480-4e69-b187-cd3db96d8e4d": 575,
+        "e53a2eab-1e31-448d-907b-3656ca4e86c1": 899,
     }
 
     with patch(
@@ -139,8 +139,8 @@ def test_post_items_invalid_dateFrom(client):
     request_body = {
         "dateFrom": "2020-01-01T00:00:00",
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
@@ -156,8 +156,8 @@ def test_post_items_valid_dateTo(client):
     request_body = {
         "dateTo": "2020-01-01T00:00:00Z",
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
@@ -180,18 +180,18 @@ def test_post_items_valid_dateTo_mocked(client):
     request_body = {
         "dateTo": "2020-01-01T00:00:00Z",
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
     get_views_return_value = {
-        "c3910974-c3a5-4053-9dce-104aa7bb1620": 21,
-        "887cc5f8-b5e7-4a2f-9053-49c91ab81313": 0,
+        "fd8a46d5-1480-4e69-b187-cd3db96d8e4d": 21,
+        "e53a2eab-1e31-448d-907b-3656ca4e86c1": 0,
     }
     get_downloads_return_value = {
-        "c3910974-c3a5-4053-9dce-104aa7bb1620": 575,
-        "887cc5f8-b5e7-4a2f-9053-49c91ab81313": 899,
+        "fd8a46d5-1480-4e69-b187-cd3db96d8e4d": 575,
+        "e53a2eab-1e31-448d-907b-3656ca4e86c1": 899,
     }
 
     with patch(
@@ -220,8 +220,8 @@ def test_post_items_invalid_dateTo(client):
     request_body = {
         "dateFrom": "2020-01-01T00:00:00",
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
@@ -237,8 +237,8 @@ def test_post_items_valid_limit(client):
     request_body = {
         "limit": 1,
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
@@ -259,13 +259,13 @@ def test_post_items_valid_limit_mocked(client):
     request_body = {
         "limit": 1,
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
-    get_views_return_value = {"c3910974-c3a5-4053-9dce-104aa7bb1620": 21}
-    get_downloads_return_value = {"c3910974-c3a5-4053-9dce-104aa7bb1620": 575}
+    get_views_return_value = {"fd8a46d5-1480-4e69-b187-cd3db96d8e4d": 21}
+    get_downloads_return_value = {"fd8a46d5-1480-4e69-b187-cd3db96d8e4d": 575}
 
     with patch(
         "dspace_statistics_api.app.get_views", return_value=get_views_return_value
@@ -291,8 +291,8 @@ def test_post_items_invalid_limit(client):
     request_body = {
         "limit": -1,
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
@@ -308,8 +308,8 @@ def test_post_items_valid_page(client):
     request_body = {
         "page": 0,
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
@@ -332,18 +332,18 @@ def test_post_items_valid_page_mocked(client):
     request_body = {
         "page": 0,
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
     get_views_return_value = {
-        "c3910974-c3a5-4053-9dce-104aa7bb1620": 21,
-        "887cc5f8-b5e7-4a2f-9053-49c91ab81313": 0,
+        "fd8a46d5-1480-4e69-b187-cd3db96d8e4d": 21,
+        "e53a2eab-1e31-448d-907b-3656ca4e86c1": 0,
     }
     get_downloads_return_value = {
-        "c3910974-c3a5-4053-9dce-104aa7bb1620": 575,
-        "887cc5f8-b5e7-4a2f-9053-49c91ab81313": 899,
+        "fd8a46d5-1480-4e69-b187-cd3db96d8e4d": 575,
+        "e53a2eab-1e31-448d-907b-3656ca4e86c1": 899,
     }
 
     with patch(
@@ -372,8 +372,8 @@ def test_post_items_invalid_page(client):
     request_body = {
         "page": -1,
         "items": [
-            "c3910974-c3a5-4053-9dce-104aa7bb1620",
-            "887cc5f8-b5e7-4a2f-9053-49c91ab81313",
+            "fd8a46d5-1480-4e69-b187-cd3db96d8e4d",
+            "e53a2eab-1e31-448d-907b-3656ca4e86c1",
         ],
     }
 
