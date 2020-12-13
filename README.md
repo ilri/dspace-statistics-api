@@ -81,7 +81,7 @@ The API exposes the following endpoints:
 
   - GET `/` — return a basic API documentation page.
   - GET `/items` — return views and downloads for all items that Solr knows about¹. Accepts `limit` and `page` query parameters for pagination of results (`limit` must be an integer between 1 and 100, and `page` must be an integer greater than or equal to 0).
-  - POST `/items` — return views and downloads for an arbitrary list of items. Accepts `limit`, `page`, `dateFrom`, and `dateTo` parameters².
+  - POST `/items` — return views and downloads for an arbitrary list of items with an optional date range. Accepts `limit`, `page`, `dateFrom`, and `dateTo` parameters².
   - GET `/item/id` — return views and downloads for a single item (`id` must be a UUID). Returns HTTP 404 if an item id is not found.
 
 The item id is the *internal* UUID for an item. You can get these from the standard DSpace REST API.
