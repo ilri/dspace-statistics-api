@@ -1,4 +1,4 @@
-# DSpace Statistics API [![Build Status](https://travis-ci.com/ilri/dspace-statistics-api.svg?branch=master)](https://travis-ci.com/ilri/dspace-statistics-api) [![builds.sr.ht status](https://builds.sr.ht/~alanorth/dspace-statistics-api.svg)](https://builds.sr.ht/~alanorth/dspace-statistics-api?)
+# DSpace Statistics API [![Build Status](https://ci.mjanja.ch/api/badges/alanorth/dspace-statistics-api/status.svg?ref=refs/heads/v6_x)](https://ci.mjanja.ch/alanorth/dspace-statistics-api) [![builds.sr.ht status](https://builds.sr.ht/~alanorth/dspace-statistics-api.svg)](https://builds.sr.ht/~alanorth/dspace-statistics-api?)
 DSpace stores item view and download events in a Solr "statistics" core. This information is available for use in the various DSpace user interfaces, but is not exposed externally via any APIs. The DSpace 4/5/6 [REST API](https://wiki.lyrasis.org/display/DSDOC5x/REST+API), for example, only exposes information about communities, collections, item metadata, and bitstreams.
 
 - If your DSpace is version 4 or 5, use [dspace-statistics-api v1.1.1](https://github.com/ilri/dspace-statistics-api/releases/tag/v1.1.1)
