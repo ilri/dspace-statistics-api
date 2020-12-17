@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Add ORDER BY to /items resource to make sure results are returned
 deterministically
+- Use `fl` parameter in indexer to return only the id field
 
 ## [1.3.2] - 2020-11-18
 ### Fixed
