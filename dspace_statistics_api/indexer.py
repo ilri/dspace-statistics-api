@@ -36,7 +36,7 @@ from .database import DatabaseManager
 from .util import get_statistics_shards
 
 
-def index_views():
+def index_item_views():
     # get total number of distinct facets for items with a minimum of 1 view,
     # otherwise Solr returns all kinds of weird ids that are actually not in
     # the database. Also, stats are expensive, but we need stats.calcdistinct
@@ -125,7 +125,7 @@ def index_views():
                 results_current_page += 1
 
 
-def index_downloads():
+def index_item_downloads():
     # get the total number of distinct facets for items with at least 1 download
     solr_query_params = {
         "q": "type:0",
@@ -221,7 +221,7 @@ with DatabaseManager() as db:
 
 shards = get_statistics_shards()
 
-index_views()
-index_downloads()
+index_item_views()
+index_item_downloads()
 
 # vim: set sw=4 ts=4 expandtab:
