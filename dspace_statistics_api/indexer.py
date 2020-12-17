@@ -47,6 +47,7 @@ def index_views():
     solr_query_params = {
         "q": "type:2",
         "fq": "-isBot:true AND statistics_type:view",
+        "fl": "id",
         "facet": "true",
         "facet.field": "id",
         "facet.mincount": 1,
@@ -93,6 +94,7 @@ def index_views():
                 solr_query_params = {
                     "q": "type:2",
                     "fq": "-isBot:true AND statistics_type:view",
+                    "fl": "id",
                     "facet": "true",
                     "facet.field": "id",
                     "facet.mincount": 1,
