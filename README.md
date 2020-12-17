@@ -109,11 +109,13 @@ The item id is the *internal* UUID for an item. You can get these from the stand
 
 - Better logging
 - Version API (or at least include a /version endpoint?)
+  - Probably use /status with a version in the response
 - Use JSON in PostgreSQL
 - Add top items endpoint, perhaps `/top/items` or `/items/top`?
   - Actually we could add `/items?limit=10&sort=views`
 - Make community and collection stats available
-- Check IDs in database to see if they are deleted...
+  - Facet on owningComm and owningColl
+- Add Swagger with OpenAPI 3.0.x with [falcon-swagger-ui](https://github.com/rdidyk/falcon-swagger-ui)
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
