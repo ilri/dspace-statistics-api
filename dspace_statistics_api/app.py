@@ -31,7 +31,7 @@ class AllItemsResource:
 
                 # get statistics and use limit and offset to page through results
                 cursor.execute(
-                    "SELECT id, views, downloads FROM items LIMIT %s OFFSET %s",
+                    "SELECT id, views, downloads FROM items ORDER BY id LIMIT %s OFFSET %s",
                     [limit, offset],
                 )
 
