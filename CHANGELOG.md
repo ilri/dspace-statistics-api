@@ -5,10 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+### Added
+- indexer.py now indexes views and downloads for communities and collections
+
 ### Changed
 - Add ORDER BY to /items resource to make sure results are returned
 deterministically
-- Use `fl` parameter in indexer to return only the id field
+- Use `fl` parameter in indexer to return only the field we are faceting by
 - Minor refactoring of imports for PEP8 style
 
 ## [1.3.2] - 2020-11-18
