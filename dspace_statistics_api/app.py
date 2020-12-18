@@ -1,4 +1,5 @@
 import falcon
+import psycopg2.extras
 
 from .database import DatabaseManager
 from .items import get_downloads, get_views
@@ -119,8 +120,6 @@ class AllItemsResource:
 class ItemResource:
     def on_get(self, req, resp, item_id):
         """Handles GET requests"""
-
-        import psycopg2.extras
 
         # Adapt Python’s uuid.UUID type to PostgreSQL’s uuid
         # See: https://www.psycopg.org/docs/extras.html

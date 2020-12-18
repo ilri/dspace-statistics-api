@@ -1,4 +1,11 @@
+import datetime
+import json
+import re
+
 import falcon
+import requests
+
+from .config import SOLR_SERVER
 
 
 def get_statistics_shards():
@@ -8,11 +15,6 @@ def get_statistics_shards():
     Returns:
         str:A list of Solr statistics shards separated by commas.
     """
-    import re
-
-    import requests
-
-    from .config import SOLR_SERVER
 
     # Initialize an empty list for statistics core years
     statistics_core_years = []
@@ -58,7 +60,6 @@ def get_statistics_shards():
 
 
 def is_valid_date(date):
-    import datetime
 
     try:
         # Solr date format is: 2020-01-01T00:00:00Z
@@ -78,7 +79,6 @@ def validate_items_post_parameters(req, resp, resource, params):
 
     Meant to be used as a `before` hook.
     """
-    import json
 
     # Only attempt to read the POSTed request if its length is not 0 (or
     # rather, in the Python sense, if length is not a False-y value).
