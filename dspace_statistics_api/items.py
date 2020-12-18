@@ -103,4 +103,5 @@ def get_downloads(solr_date_string: str, items: list):
 
     return data
 
+
 # vim: set sw=4 ts=4 expandtab:
