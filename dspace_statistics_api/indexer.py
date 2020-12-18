@@ -130,6 +130,7 @@ def index_downloads():
     solr_query_params = {
         "q": "type:0",
         "fq": "-isBot:true AND statistics_type:view AND bundleName:ORIGINAL",
+        "fl": "owningItem",
         "facet": "true",
         "facet.field": "owningItem",
         "facet.mincount": 1,
@@ -176,6 +177,7 @@ def index_downloads():
                 solr_query_params = {
                     "q": "type:0",
                     "fq": "-isBot:true AND statistics_type:view AND bundleName:ORIGINAL",
+                    "fl": "owningItem",
                     "facet": "true",
                     "facet.field": "owningItem",
                     "facet.mincount": 1,
