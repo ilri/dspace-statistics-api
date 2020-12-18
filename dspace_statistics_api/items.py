@@ -20,6 +20,7 @@ def get_views(solr_date_string: str, items: list):
     solr_query_params = {
         "q": f"id:({solr_items_string})",
         "fq": f"type:2 AND isBot:false AND statistics_type:view AND time:{solr_date_string}",
+        "fl": "id",
         "facet": "true",
         "facet.field": "id",
         "facet.mincount": 1,
@@ -70,6 +71,7 @@ def get_downloads(solr_date_string: str, items: list):
     solr_query_params = {
         "q": f"owningItem:({solr_items_string})",
         "fq": f"type:0 AND isBot:false AND statistics_type:view AND bundleName:ORIGINAL AND time:{solr_date_string}",
+        "fl": "owningItem",
         "facet": "true",
         "facet.field": "owningItem",
         "facet.mincount": 1,
