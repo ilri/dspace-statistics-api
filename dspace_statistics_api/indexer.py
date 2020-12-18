@@ -18,8 +18,8 @@
 #
 # ---
 #
-# Connects to a DSpace Solr statistics core and ingests item views and downloads
-# into a PostgreSQL database for use by other applications (like an API).
+# Connects to a DSpace Solr statistics core and ingests views and downloads for
+# communities, collections, and items into a PostgreSQL database.
 #
 # This script is written for Python 3.6+ and requires several modules that you
 # can install with pip (I recommend using a Python virtual environment):
@@ -36,7 +36,7 @@ from .database import DatabaseManager
 from .util import get_statistics_shards
 
 
-def index_item_views():
+def index_views(indexType: str, facetField: str):
     # get total number of distinct facets for items with a minimum of 1 view,
     # otherwise Solr returns all kinds of weird ids that are actually not in
     # the database. Also, stats are expensive, but we need stats.calcdistinct
@@ -47,14 +47,14 @@ def index_item_views():
     solr_query_params = {
         "q": "type:2",
         "fq": "-isBot:true AND statistics_type:view",
-        "fl": "id",
+        "fl": facetField,
         "facet": "true",
-        "facet.field": "id",
+        "facet.field": facetField,
         "facet.mincount": 1,
         "facet.limit": 1,
         "facet.offset": 0,
         "stats": "true",
-        "stats.field": "id",
+        "stats.field": facetField,
         "stats.calcdistinct": "true",
         "shards": shards,
         "rows": 0,
@@ -67,11 +67,11 @@ def index_item_views():
 
     try:
         # get total number of distinct facets (countDistinct)
-        results_totalNumFacets = res.json()["stats"]["stats_fields"]["id"][
+        results_totalNumFacets = res.json()["stats"]["stats_fields"][facetField][
             "countDistinct"
         ]
     except TypeError:
-        print("No item views to index, exiting.")
+        print(f"{indexType}: no views, exiting.")
 
         exit(0)
 
@@ -88,15 +88,15 @@ def index_item_views():
             while results_current_page <= results_num_pages:
                 # "pages" are zero based, but one based is more human readable
                 print(
-                    f"Indexing item views (page {results_current_page + 1} of {results_num_pages + 1})"
+                    f"{indexType}: indexing views (page {results_current_page + 1} of {results_num_pages + 1})"
                 )
 
                 solr_query_params = {
                     "q": "type:2",
                     "fq": "-isBot:true AND statistics_type:view",
-                    "fl": "id",
+                    "fl": facetField,
                     "facet": "true",
-                    "facet.field": "id",
+                    "facet.field": facetField,
                     "facet.mincount": 1,
                     "facet.limit": results_per_page,
                     "facet.offset": results_current_page * results_per_page,
@@ -110,12 +110,12 @@ def index_item_views():
 
                 # Solr returns facets as a dict of dicts (see json.nl parameter)
                 views = res.json()["facet_counts"]["facet_fields"]
-                # iterate over the 'id' dict and get the item ids and views
-                for item_id, item_views in views["id"].items():
-                    data.append((item_id, item_views))
+                # iterate over the facetField dict and get the ids and views
+                for id_, views in views[facetField].items():
+                    data.append((id_, views))
 
                 # do a batch insert of values from the current "page" of results
-                sql = "INSERT INTO items(id, views) VALUES %s ON CONFLICT(id) DO UPDATE SET views=excluded.views"
+                sql = f"INSERT INTO {indexType}(id, views) VALUES %s ON CONFLICT(id) DO UPDATE SET views=excluded.views"
                 psycopg2.extras.execute_values(cursor, sql, data, template="(%s, %s)")
                 db.commit()
 
@@ -125,19 +125,19 @@ def index_item_views():
                 results_current_page += 1
 
 
-def index_item_downloads():
+def index_downloads(indexType: str, facetField: str):
     # get the total number of distinct facets for items with at least 1 download
     solr_query_params = {
         "q": "type:0",
         "fq": "-isBot:true AND statistics_type:view AND bundleName:ORIGINAL",
-        "fl": "owningItem",
+        "fl": facetField,
         "facet": "true",
-        "facet.field": "owningItem",
+        "facet.field": facetField,
         "facet.mincount": 1,
         "facet.limit": 1,
         "facet.offset": 0,
         "stats": "true",
-        "stats.field": "owningItem",
+        "stats.field": facetField,
         "stats.calcdistinct": "true",
         "shards": shards,
         "rows": 0,
@@ -150,11 +150,11 @@ def index_item_downloads():
 
     try:
         # get total number of distinct facets (countDistinct)
-        results_totalNumFacets = res.json()["stats"]["stats_fields"]["owningItem"][
+        results_totalNumFacets = res.json()["stats"]["stats_fields"][facetField][
             "countDistinct"
         ]
     except TypeError:
-        print("No item downloads to index, exiting.")
+        print(f"{indexType}: no downloads, exiting.")
 
         exit(0)
 
@@ -171,15 +171,15 @@ def index_item_downloads():
             while results_current_page <= results_num_pages:
                 # "pages" are zero based, but one based is more human readable
                 print(
-                    f"Indexing item downloads (page {results_current_page + 1} of {results_num_pages + 1})"
+                    f"{indexType}: indexing downloads (page {results_current_page + 1} of {results_num_pages + 1})"
                 )
 
                 solr_query_params = {
                     "q": "type:0",
                     "fq": "-isBot:true AND statistics_type:view AND bundleName:ORIGINAL",
-                    "fl": "owningItem",
+                    "fl": facetField,
                     "facet": "true",
-                    "facet.field": "owningItem",
+                    "facet.field": facetField,
                     "facet.mincount": 1,
                     "facet.limit": results_per_page,
                     "facet.offset": results_current_page * results_per_page,
@@ -193,12 +193,12 @@ def index_item_downloads():
 
                 # Solr returns facets as a dict of dicts (see json.nl parameter)
                 downloads = res.json()["facet_counts"]["facet_fields"]
-                # iterate over the 'owningItem' dict and get the item ids and downloads
-                for item_id, item_downloads in downloads["owningItem"].items():
-                    data.append((item_id, item_downloads))
+                # iterate over the facetField dict and get the item ids and downloads
+                for id_, downloads in downloads[facetField].items():
+                    data.append((id_, downloads))
 
                 # do a batch insert of values from the current "page" of results
-                sql = "INSERT INTO items(id, downloads) VALUES %s ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads"
+                sql = f"INSERT INTO {indexType}(id, downloads) VALUES %s ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads"
                 psycopg2.extras.execute_values(cursor, sql, data, template="(%s, %s)")
                 db.commit()
 
@@ -215,13 +215,32 @@ with DatabaseManager() as db:
             """CREATE TABLE IF NOT EXISTS items
                   (id UUID PRIMARY KEY, views INT DEFAULT 0, downloads INT DEFAULT 0)"""
         )
+        # create table to store community views and downloads
+        cursor.execute(
+            """CREATE TABLE IF NOT EXISTS communities
+                  (id UUID PRIMARY KEY, views INT DEFAULT 0, downloads INT DEFAULT 0)"""
+        )
+        # create table to store collection views and downloads
+        cursor.execute(
+            """CREATE TABLE IF NOT EXISTS collections
+                  (id UUID PRIMARY KEY, views INT DEFAULT 0, downloads INT DEFAULT 0)"""
+        )
 
     # commit the table creation before closing the database connection
     db.commit()
 
 shards = get_statistics_shards()
 
-index_item_views()
-index_item_downloads()
+# Index views and downloads for items, communities, and collections. Here the
+# first parameter is the type of indexing to perform, and the second parameter
+# is the field to facet by in Solr's statistics to get this information.
+
+index_views("items", "id")
+index_views("communities", "owningComm")
+index_views("collections", "owningColl")
+
+index_downloads("items", "owningItem")
+index_downloads("communities", "owningComm")
+index_downloads("collections", "owningColl")
 
 # vim: set sw=4 ts=4 expandtab:
