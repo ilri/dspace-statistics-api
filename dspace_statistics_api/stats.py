@@ -21,7 +21,7 @@ def get_views(solr_date_string: str, elements: list, facetField: str):
 
     solr_query_params = {
         "q": f"{facetField}:({solr_elements_string})",
-        "fq": f"type:2 AND isBot:false AND statistics_type:view AND time:{solr_date_string}",
+        "fq": f"type:2 AND -isBot:true AND statistics_type:view AND time:{solr_date_string}",
         "fl": facetField,
         "facet": "true",
         "facet.field": facetField,
@@ -83,7 +83,7 @@ def get_downloads(solr_date_string: str, elements: list, facetField: str):
 
     solr_query_params = {
         "q": f"{facetField}:({solr_elements_string})",
-        "fq": f"type:0 AND isBot:false AND statistics_type:view AND bundleName:ORIGINAL AND time:{solr_date_string}",
+        "fq": f"type:0 AND -isBot:true AND statistics_type:view AND bundleName:ORIGINAL AND time:{solr_date_string}",
         "fl": facetField,
         "facet": "true",
         "facet.field": facetField,
