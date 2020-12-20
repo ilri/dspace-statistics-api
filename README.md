@@ -4,7 +4,7 @@ DSpace stores item view and download events in a Solr "statistics" core. This in
 - If your DSpace is version 4 or 5, use [dspace-statistics-api v1.1.1](https://github.com/ilri/dspace-statistics-api/releases/tag/v1.1.1)
 - If your DSpace is version 6+, use [dspace-statistics-api v1.2.0 or greater](https://github.com/ilri/dspace-statistics-api/releases/tag/v1.2.0)
 
-This project contains an indexer and a [Falcon-based](https://falcon.readthedocs.io/) web application to make the statistics available via a simple REST API. You can read more about the Solr queries used to gather the item view and download statistics on the [DSpace wiki](https://wiki.lyrasis.org/display/DSPACE/Solr).
+This project contains an indexer and a [Falcon-based](https://falcon.readthedocs.io/) web application to make the item, community, and collection statistics available via a simple REST API. You can read more about the Solr queries used to gather the item view and download statistics on the [DSpace wiki](https://wiki.lyrasis.org/display/DSPACE/Solr).
 
 If you use the DSpace Statistics API please cite:
 
@@ -83,12 +83,18 @@ The API exposes the following endpoints:
   - GET `/items` — return views and downloads for all items that Solr knows about¹. Accepts `limit` and `page` query parameters for pagination of results (`limit` must be an integer between 1 and 100, and `page` must be an integer greater than or equal to 0).
   - POST `/items` — return views and downloads for an arbitrary list of items with an optional date range. Accepts `limit`, `page`, `dateFrom`, and `dateTo` parameters².
   - GET `/item/id` — return views and downloads for a single item (`id` must be a UUID). Returns HTTP 404 if an item id is not found.
+  - GET `/communities` — return views and downloads for all communities that Solr knows about¹. Accepts `limit` and `page` query parameters for pagination of results (`limit` must be an integer between 1 and 100, and `page` must be an integer greater than or equal to 0).
+  - POST `/communities` — return views and downloads for an arbitrary list of communities with an optional date range. Accepts `limit`, `page`, `dateFrom`, and `dateTo` parameters².
+  - GET `/community/id` — return views and downloads for a single community (`id` must be a UUID). Returns HTTP 404 if a community id is not found.
+  - GET `/collections` — return views and downloads for all collections that Solr knows about¹. Accepts `limit` and `page` query parameters for pagination of results (`limit` must be an integer between 1 and 100, and `page` must be an integer greater than or equal to 0).
+  - POST `/collections` — return views and downloads for an arbitrary list of collections with an optional date range. Accepts `limit`, `page`, `dateFrom`, and `dateTo` parameters².
+  - GET `/collection/id` — return views and downloads for a single collection (`id` must be a UUID). Returns HTTP 404 if an collection id is not found.
 
-The item id is the *internal* UUID for an item. You can get these from the standard DSpace REST API.
+The id is the *internal* UUID for an item, community, or collection. You can get these from the standard DSpace REST API.
 
-¹ We are querying the Solr statistics core, which technically only knows about items that have either views or downloads. If an item is not present here you can assume it has zero views and zero downloads, but not necessarily that it does not exist in the repository.
+¹ We are querying the Solr statistics core, which technically only knows about items, communities, or collections that have either views or downloads. If an item, community, or collection is not present here you can assume it has zero views and zero downloads, but not necessarily that it does not exist in the repository.
 
-² POST requests to `/items` should be in JSON format with the following parameters:
+² POST requests to `/items`, `/communities`, and `/collections` should be in JSON format with the following parameters (substitute the "items" list for communities or collections accordingly):
 
 ```
 {
@@ -113,8 +119,6 @@ The item id is the *internal* UUID for an item. You can get these from the stand
 - Use JSON in PostgreSQL
 - Add top items endpoint, perhaps `/top/items` or `/items/top`?
   - Actually we could add `/items?limit=10&sort=views`
-- Make community and collection stats available
-  - Facet on owningComm and owningColl
 - Add Swagger with OpenAPI 3.0.x with [falcon-swagger-ui](https://github.com/rdidyk/falcon-swagger-ui)
 
 ## License
