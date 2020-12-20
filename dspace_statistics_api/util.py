@@ -74,8 +74,9 @@ def is_valid_date(date):
         )
 
 
-def validate_items_post_parameters(req, resp, resource, params):
-    """Check the POSTed request parameters for the `/items` endpoint.
+def validate_post_parameters(req, resp, resource, params):
+    """Check the POSTed request parameters for the `/items`, `/communities` and
+    `/collections` endpoints.
 
     Meant to be used as a `before` hook.
     """
@@ -125,14 +126,64 @@ def validate_items_post_parameters(req, resp, resource, params):
     else:
         req.context.page = 0
 
-    # Parse the list of items from the POST request body
-    if "items" in doc:
-        if isinstance(doc["items"], list) and len(doc["items"]) > 0:
-            req.context.items = doc["items"]
+    # Parse the list of elements from the POST request body
+    if req.context.statistics_scope in doc:
+        if (
+            isinstance(doc[req.context.statistics_scope], list)
+            and len(doc[req.context.statistics_scope]) > 0
+        ):
+            req.context.elements = doc[req.context.statistics_scope]
         else:
             raise falcon.HTTPBadRequest(
                 title="Invalid parameter",
-                description='The "items" parameter is invalid. The value must be a comma-separated list of item UUIDs.',
+                description=f'The "{req.context.statistics_scope}" parameter is invalid. The value must be a comma-separated list of UUIDs.',
             )
     else:
-        req.context.items = list()
+        req.context.elements = list()
+
+
+def set_statistics_scope(req, resp, resource, params):
+    """Set the statistics scope (item, collection, or community) of the request
+    as well as the appropriate database (for GET requests) and Solr facet fields
+    (for POST requests).
+
+    Meant to be used as a `before` hook.
+    """
+
+    # Extract the scope from the request path. This is *guaranteed* to be one
+    # of the following values because we only send requests matching these few
+    # patterns to routes using this set_statistics_scope hook.
+    #
+    # Note: this regex is ordered so that "items" and "collections" match before
+    # "item" and "collection".
+    req.context.statistics_scope = re.findall(
+        r"^/(communities|community|collections|collection|items|item)", req.path
+    )[0]
+
+    # Set the correct database based on the statistics_scope. The database is
+    # used for all GET requests where statistics are returned directly from the
+    # database. In this case we can return early.
+    if req.method == "GET":
+        if re.findall(r"^(item|items)$", req.context.statistics_scope):
+            req.context.database = "items"
+        elif re.findall(r"^(community|communities)$", req.context.statistics_scope):
+            req.context.database = "communities"
+        elif re.findall(r"^(collection|collections)$", req.context.statistics_scope):
+            req.context.database = "collections"
+
+        # GET requests only need the scope and the database so we can return now
+        return
+
+    # If the current request is for a plural items, communities, or collections
+    # that includes a list of element ids POSTed with the request body then we
+    # need to set the Solr facet field so we can get the live results.
+    if req.method == "POST":
+        if req.context.statistics_scope == "items":
+            req.context.views_facet_field = "id"
+            req.context.downloads_facet_field = "owningItem"
+        elif req.context.statistics_scope == "communities":
+            req.context.views_facet_field = "owningComm"
+            req.context.downloads_facet_field = "owningComm"
+        elif req.context.statistics_scope == "collections":
+            req.context.views_facet_field = "owningColl"
+            req.context.downloads_facet_field = "owningColl"

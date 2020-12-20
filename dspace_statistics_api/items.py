@@ -4,25 +4,27 @@ from .config import SOLR_SERVER
 from .util import get_statistics_shards
 
 
-def get_views(solr_date_string: str, items: list):
+def get_views(solr_date_string: str, elements: list, facetField: str):
     """
-    Get view statistics for a list of items from Solr.
+    Get view statistics for a list of elements from Solr. Depending on the req-
+    uest this could be items, communities, or collections.
 
     :parameter solr_date_string (str): Solr date string, for example "[* TO *]"
-    :parameter items (list): a list of item IDs
-    :returns: A dict of item IDs and views
+    :parameter elements (list): a list of IDs
+    :parameter facetField (str): Solr field to facet by, for example "id"
+    :returns: A dict of IDs and views
     """
     shards = get_statistics_shards()
 
     # Join the UUIDs with "OR" and escape the hyphens for Solr
-    solr_items_string: str = " OR ".join(items).replace("-", r"\-")
+    solr_elements_string: str = " OR ".join(elements).replace("-", r"\-")
 
     solr_query_params = {
-        "q": f"id:({solr_items_string})",
+        "q": f"{facetField}:({solr_elements_string})",
         "fq": f"type:2 AND isBot:false AND statistics_type:view AND time:{solr_date_string}",
-        "fl": "id",
+        "fl": facetField,
         "facet": "true",
-        "facet.field": "id",
+        "facet.field": facetField,
         "facet.mincount": 1,
         "shards": shards,
         "rows": 0,
@@ -38,41 +40,53 @@ def get_views(solr_date_string: str, items: list):
 
     # Solr returns facets as a dict of dicts (see the json.nl parameter)
     views = res.json()["facet_counts"]["facet_fields"]
-    # iterate over the 'id' dict and get the item ids and views
-    for item_id, item_views in views["id"].items():
-        data[item_id] = item_views
+    # iterate over the facetField dict and ids and views
+    for id_, views in views[facetField].items():
+        # For items we can rely on Solr returning facets for the *only* the ids
+        # in our query, but for communities and collections, the owningComm and
+        # owningColl fields are multi-value so Solr will return facets with the
+        # values in our query as well as *any others* that happen to be present
+        # in the field (which looks like Solr returning unrelated results until
+        # you realize that the field is multi-value and this is correct).
+        #
+        # To work around this I make sure that each id in the returned dict are
+        # present in the elements list POSTed by the user.
+        if id_ in elements:
+            data[id_] = views
 
-    # Check if any items have missing stats so we can set them to 0
-    if len(data) < len(items):
-        # List comprehension to get a list of item ids (keys) in the data
+    # Check if any ids have missing stats so we can set them to 0
+    if len(data) < len(elements):
+        # List comprehension to get a list of ids (keys) in the data
         data_ids = [k for k, v in data.items()]
-        for item_id in items:
-            if item_id not in data_ids:
-                data[item_id] = 0
+        for element_id in elements:
+            if element_id not in data_ids:
+                data[element_id] = 0
                 continue
 
     return data
 
 
-def get_downloads(solr_date_string: str, items: list):
+def get_downloads(solr_date_string: str, elements: list, facetField: str):
     """
-    Get download statistics for a list of items from Solr.
+    Get download statistics for a list of items from Solr. Depending on the req-
+    uest this could be items, communities, or collections.
 
     :parameter solr_date_string (str): Solr date string, for example "[* TO *]"
-    :parameter items (list): a list of item IDs
-    :returns: A dict of item IDs and downloads
+    :parameter elements (list): a list of IDs
+    :parameter facetField (str): Solr field to facet by, for example "id"
+    :returns: A dict of IDs and downloads
     """
     shards = get_statistics_shards()
 
     # Join the UUIDs with "OR" and escape the hyphens for Solr
-    solr_items_string: str = " OR ".join(items).replace("-", r"\-")
+    solr_elements_string: str = " OR ".join(elements).replace("-", r"\-")
 
     solr_query_params = {
-        "q": f"owningItem:({solr_items_string})",
+        "q": f"{facetField}:({solr_elements_string})",
         "fq": f"type:0 AND isBot:false AND statistics_type:view AND bundleName:ORIGINAL AND time:{solr_date_string}",
-        "fl": "owningItem",
+        "fl": facetField,
         "facet": "true",
-        "facet.field": "owningItem",
+        "facet.field": facetField,
         "facet.mincount": 1,
         "shards": shards,
         "rows": 0,
@@ -88,17 +102,20 @@ def get_downloads(solr_date_string: str, items: list):
 
     # Solr returns facets as a dict of dicts (see the json.nl parameter)
     downloads = res.json()["facet_counts"]["facet_fields"]
-    # Iterate over the 'owningItem' dict and get the item ids and downloads
-    for item_id, item_downloads in downloads["owningItem"].items():
-        data[item_id] = item_downloads
+    # Iterate over the facetField dict and get the ids and downloads
+    for id_, downloads in downloads[facetField].items():
+        # Make sure that each id in the returned dict are present in the
+        # elements list POSTed by the user.
+        if id_ in elements:
+            data[id_] = downloads
 
-    # Check if any items have missing stats so we can set them to 0
-    if len(data) < len(items):
-        # List comprehension to get a list of item ids (keys) in the data
+    # Check if any elements have missing stats so we can set them to 0
+    if len(data) < len(elements):
+        # List comprehension to get a list of ids (keys) in the data
         data_ids = [k for k, v in data.items()]
-        for item_id in items:
-            if item_id not in data_ids:
-                data[item_id] = 0
+        for element_id in elements:
+            if element_id not in data_ids:
+                data[element_id] = 0
                 continue
 
     return data
