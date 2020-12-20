@@ -11,15 +11,6 @@ def client():
     return testing.TestClient(api)
 
 
-def test_get_docs(client):
-    """Test requesting the documentation at the root."""
-
-    response = client.simulate_get("/")
-
-    assert isinstance(response.content, bytes)
-    assert response.status_code == 200
-
-
 def test_get_item(client):
     """Test requesting a single item."""
 
@@ -70,7 +61,7 @@ def test_get_items_invalid_page(client):
 
 @pytest.mark.xfail
 def test_post_items_valid_dateFrom(client):
-    """Test POSTing a request with a valid dateFrom parameter in the request body."""
+    """Test POSTing a request to /items with a valid dateFrom parameter in the request body."""
 
     request_body = {
         "dateFrom": "2020-01-01T00:00:00Z",
@@ -94,7 +85,7 @@ def test_post_items_valid_dateFrom(client):
 
 
 def test_post_items_valid_dateFrom_mocked(client):
-    """Mock test POSTing a request with a valid dateFrom parameter in the request body."""
+    """Mock test POSTing a request to /items with a valid dateFrom parameter in the request body."""
 
     request_body = {
         "dateFrom": "2020-01-01T00:00:00Z",
@@ -134,7 +125,7 @@ def test_post_items_valid_dateFrom_mocked(client):
 
 
 def test_post_items_invalid_dateFrom(client):
-    """Test POSTing a request with an invalid dateFrom parameter in the request body."""
+    """Test POSTing a request to /items with an invalid dateFrom parameter in the request body."""
 
     request_body = {
         "dateFrom": "2020-01-01T00:00:00",
@@ -151,7 +142,7 @@ def test_post_items_invalid_dateFrom(client):
 
 @pytest.mark.xfail
 def test_post_items_valid_dateTo(client):
-    """Test POSTing a request with a valid dateTo parameter in the request body."""
+    """Test POSTing a request to /items with a valid dateTo parameter in the request body."""
 
     request_body = {
         "dateTo": "2020-01-01T00:00:00Z",
@@ -175,7 +166,7 @@ def test_post_items_valid_dateTo(client):
 
 
 def test_post_items_valid_dateTo_mocked(client):
-    """Mock test POSTing a request with a valid dateTo parameter in the request body."""
+    """Mock test POSTing a request to /items with a valid dateTo parameter in the request body."""
 
     request_body = {
         "dateTo": "2020-01-01T00:00:00Z",
@@ -215,7 +206,7 @@ def test_post_items_valid_dateTo_mocked(client):
 
 
 def test_post_items_invalid_dateTo(client):
-    """Test POSTing a request with an invalid dateTo parameter in the request body."""
+    """Test POSTing a request to /items with an invalid dateTo parameter in the request body."""
 
     request_body = {
         "dateFrom": "2020-01-01T00:00:00",
@@ -232,7 +223,7 @@ def test_post_items_invalid_dateTo(client):
 
 @pytest.mark.xfail
 def test_post_items_valid_limit(client):
-    """Test POSTing a request with a valid limit parameter in the request body."""
+    """Test POSTing a request to /items with a valid limit parameter in the request body."""
 
     request_body = {
         "limit": 1,
@@ -254,7 +245,7 @@ def test_post_items_valid_limit(client):
 
 
 def test_post_items_valid_limit_mocked(client):
-    """Mock test POSTing a request with a valid limit parameter in the request body."""
+    """Mock test POSTing a request to /items with a valid limit parameter in the request body."""
 
     request_body = {
         "limit": 1,
@@ -286,7 +277,7 @@ def test_post_items_valid_limit_mocked(client):
 
 
 def test_post_items_invalid_limit(client):
-    """Test POSTing a request with an invalid limit parameter in the request body."""
+    """Test POSTing a request to /items with an invalid limit parameter in the request body."""
 
     request_body = {
         "limit": -1,
@@ -303,7 +294,7 @@ def test_post_items_invalid_limit(client):
 
 @pytest.mark.xfail
 def test_post_items_valid_page(client):
-    """Test POSTing a request with a valid page parameter in the request body."""
+    """Test POSTing a request to /items with a valid page parameter in the request body."""
 
     request_body = {
         "page": 0,
@@ -327,7 +318,7 @@ def test_post_items_valid_page(client):
 
 
 def test_post_items_valid_page_mocked(client):
-    """Mock test POSTing a request with a valid page parameter in the request body."""
+    """Mock test POSTing a request to /items with a valid page parameter in the request body."""
 
     request_body = {
         "page": 0,
@@ -367,7 +358,7 @@ def test_post_items_valid_page_mocked(client):
 
 
 def test_post_items_invalid_page(client):
-    """Test POSTing a request with an invalid page parameter in the request body."""
+    """Test POSTing a request to /items with an invalid page parameter in the request body."""
 
     request_body = {
         "page": -1,
