@@ -2,7 +2,7 @@ import falcon
 import psycopg2.extras
 
 from .database import DatabaseManager
-from .items import get_downloads, get_views
+from .stats import get_downloads, get_views
 from .util import set_statistics_scope
 from .util import validate_post_parameters
 
