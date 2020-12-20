@@ -3,8 +3,7 @@ import psycopg2.extras
 
 from .database import DatabaseManager
 from .stats import get_downloads, get_views
-from .util import set_statistics_scope
-from .util import validate_post_parameters
+from .util import set_statistics_scope, validate_post_parameters
 
 
 class RootResource:
