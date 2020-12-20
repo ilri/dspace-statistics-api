@@ -187,3 +187,6 @@ def set_statistics_scope(req, resp, resource, params):
         elif req.context.statistics_scope == "collections":
             req.context.views_facet_field = "owningColl"
             req.context.downloads_facet_field = "owningColl"
+
+
+# vim: set sw=4 ts=4 expandtab:
