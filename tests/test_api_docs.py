@@ -34,3 +34,12 @@ def test_get_swagger_ui(client):
 
     assert isinstance(response.content, bytes)
     assert response.status_code == 200
+
+
+def test_get_status(client):
+    """Test requesting the status page."""
+
+    response = client.simulate_get("/status")
+
+    assert isinstance(response.content, bytes)
+    assert response.status_code == 200

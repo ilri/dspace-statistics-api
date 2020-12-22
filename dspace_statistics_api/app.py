@@ -5,6 +5,7 @@ from falcon_swagger_ui import register_swaggerui_app
 from .database import DatabaseManager
 from .stats import get_downloads, get_views
 from .util import set_statistics_scope, validate_post_parameters
+from .config import VERSION
 
 
 class RootResource:
@@ -13,6 +14,14 @@ class RootResource:
         resp.content_type = "text/html"
         with open("dspace_statistics_api/docs/index.html", "r") as f:
             resp.body = f.read()
+
+
+class StatusResource:
+    def on_get(self, req, resp):
+        message = {"version": VERSION}
+
+        resp.status = falcon.HTTP_200
+        resp.media = message
 
 
 class OpenAPIJSONResource:
@@ -174,6 +183,7 @@ class SingleStatisticsResource:
 
 api = application = falcon.API()
 api.add_route("/", RootResource())
+api.add_route("/status", StatusResource())
 
 # Item routes
 api.add_route("/items", AllStatisticsResource())
