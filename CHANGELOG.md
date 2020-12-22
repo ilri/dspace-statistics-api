@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - indexer.py now indexes views and downloads for communities and collections
 - API endpoints for /communities, /community/id, /collections, and /collections/id
+- Swagger UI interface on /swagger
 
 ### Changed
 - Add ORDER BY to /items resource to make sure results are returned
