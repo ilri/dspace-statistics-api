@@ -6,6 +6,8 @@ from .database import DatabaseManager
 from .stats import get_downloads, get_views
 from .util import set_statistics_scope, validate_post_parameters
 from .config import VERSION
+from .config import SWAGGERUI_URL
+from .config import SWAGGERUI_SCHEMA_URL
 
 
 class RootResource:
@@ -198,14 +200,12 @@ api.add_route("/collections", AllStatisticsResource())
 api.add_route("/collection/{id_:uuid}", SingleStatisticsResource())
 
 # Swagger configuration
-SWAGGERUI_URL = "/swagger"  # without trailing slash
-SCHEMA_URL = "/docs/openapi.json"
-api.add_route("/docs/openapi.json", OpenAPIJSONResource())
+api.add_route(SWAGGERUI_SCHEMA_URL, OpenAPIJSONResource())
 
 register_swaggerui_app(
     api,
     SWAGGERUI_URL,
-    SCHEMA_URL,
+    SWAGGERUI_SCHEMA_URL,
     config={
         "supportedSubmitMethods": ["get", "post"],
     },
