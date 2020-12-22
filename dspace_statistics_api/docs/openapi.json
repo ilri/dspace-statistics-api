@@ -549,6 +549,36 @@
           }
         }
       }
+    },
+    "/status": {
+      "get": {
+        "summary": "Get API status",
+        "operationId": "getStatus",
+        "tags": [
+          "status"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "version": {
+                      "type": "string",
+                      "example": "1.4.0-dev"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed"
+          }
+        }
+      }
     }
   },
   "components": {
