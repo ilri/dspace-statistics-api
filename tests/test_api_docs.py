@@ -16,3 +16,21 @@ def test_get_docs(client):
 
     assert isinstance(response.content, bytes)
     assert response.status_code == 200
+
+
+def test_get_openapi_json(client):
+    """Test requesting the OpenAPI JSON schema."""
+
+    response = client.simulate_get("/docs/openapi.json")
+
+    assert isinstance(response.content, bytes)
+    assert response.status_code == 200
+
+
+def test_get_swagger_ui(client):
+    """Test requesting the Swagger UI."""
+
+    response = client.simulate_get("/swagger")
+
+    assert isinstance(response.content, bytes)
+    assert response.status_code == 200

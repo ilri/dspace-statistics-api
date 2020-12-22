@@ -1,5 +1,6 @@
 import falcon
 import psycopg2.extras
+from falcon_swagger_ui import register_swaggerui_app
 
 from .database import DatabaseManager
 from .stats import get_downloads, get_views
@@ -11,6 +12,14 @@ class RootResource:
         resp.status = falcon.HTTP_200
         resp.content_type = "text/html"
         with open("dspace_statistics_api/docs/index.html", "r") as f:
+            resp.body = f.read()
+
+
+class OpenAPIJSONResource:
+    def on_get(self, req, resp):
+        resp.status = falcon.HTTP_200
+        resp.content_type = "text/html"
+        with open("dspace_statistics_api/docs/openapi.json", "r") as f:
             resp.body = f.read()
 
 
@@ -177,5 +186,19 @@ api.add_route("/community/{id_:uuid}", SingleStatisticsResource())
 # Collection routes
 api.add_route("/collections", AllStatisticsResource())
 api.add_route("/collection/{id_:uuid}", SingleStatisticsResource())
+
+# Swagger configuration
+SWAGGERUI_URL = "/swagger"  # without trailing slash
+SCHEMA_URL = "/docs/openapi.json"
+api.add_route("/docs/openapi.json", OpenAPIJSONResource())
+
+register_swaggerui_app(
+    api,
+    SWAGGERUI_URL,
+    SCHEMA_URL,
+    config={
+        "supportedSubmitMethods": ["get", "post"],
+    },
+)
 
 # vim: set sw=4 ts=4 expandtab:
