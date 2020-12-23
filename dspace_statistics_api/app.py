@@ -1,13 +1,13 @@
+import json
+
 import falcon
 import psycopg2.extras
 from falcon_swagger_ui import register_swaggerui_app
 
+from .config import DSPACE_STATISTICS_API_URL, VERSION
 from .database import DatabaseManager
 from .stats import get_downloads, get_views
 from .util import set_statistics_scope, validate_post_parameters
-from .config import VERSION
-from .config import SWAGGERUI_URL
-from .config import SWAGGERUI_SCHEMA_URL
 
 
 class RootResource:
@@ -31,7 +31,20 @@ class OpenAPIJSONResource:
         resp.status = falcon.HTTP_200
         resp.content_type = "text/html"
         with open("dspace_statistics_api/docs/openapi.json", "r") as f:
-            resp.body = f.read()
+            # Load the openapi.json schema
+            data = json.load(f)
+
+            # Swagger assumes your API is at the root of the current host unless
+            # you configure a "servers" block in the schema. The problem is that
+            # I want this to work in both development and production, so we need
+            # to make this configurable.
+            #
+            # If the DSPACE_STATISTICS_API_URL is configured then we will add a
+            # server entry to the openapi.json schema before sending it.
+            if DSPACE_STATISTICS_API_URL != "":
+                data["servers"] = [{"url": DSPACE_STATISTICS_API_URL}]
+
+            resp.body = json.dumps(data)
 
 
 class AllStatisticsResource:
@@ -199,16 +212,29 @@ api.add_route("/community/{id_:uuid}", SingleStatisticsResource())
 api.add_route("/collections", AllStatisticsResource())
 api.add_route("/collection/{id_:uuid}", SingleStatisticsResource())
 
-# Swagger configuration
-api.add_route(SWAGGERUI_SCHEMA_URL, OpenAPIJSONResource())
+# Route to the Swagger UI OpenAPI schema
+api.add_route("/docs/openapi.json", OpenAPIJSONResource())
+
+# Path to host the Swagger UI. Keep in mind that Falcon will add a route for
+# this automatically when we register Swagger and the path will be relative
+# to the Falcon app like all other routes, not the absolute root.
+SWAGGERUI_PATH = "/swagger"
+
+# The *absolute* path to the OpenJSON schema. This must be absolute because
+# it will be requested by the client and must resolve absolutely. Note: the
+# name of this variable is misleading because it is actually the schema URL
+# but we pass it into the register_swaggerui_app() function as the api_url
+# parameter.
+SWAGGERUI_API_URL = f"{DSPACE_STATISTICS_API_URL}/docs/openapi.json"
 
 register_swaggerui_app(
     api,
-    SWAGGERUI_URL,
-    SWAGGERUI_SCHEMA_URL,
+    SWAGGERUI_PATH,
+    SWAGGERUI_API_URL,
     config={
         "supportedSubmitMethods": ["get", "post"],
     },
+    uri_prefix=DSPACE_STATISTICS_API_URL,
 )
 
 # vim: set sw=4 ts=4 expandtab:

@@ -9,12 +9,12 @@ DATABASE_PASS = os.environ.get("DATABASE_PASS", "dspacestatistics")
 DATABASE_HOST = os.environ.get("DATABASE_HOST", "localhost")
 DATABASE_PORT = os.environ.get("DATABASE_PORT", "5432")
 
-# SwaggerUI configuration
-
-# URI path where the Swagger UI should be available (without trailing slash)
-SWAGGERUI_URL = os.environ.get("SWAGGERUI_URL", "/swagger")
-# URI path to the OpenAPI JSON schema
-SWAGGERUI_SCHEMA_URL = os.environ.get("SWAGGERUI_SCHEMA_URL", "/docs/openapi.json")
+# URL to DSpace Statistics API, which will be used as a prefix to API calls in
+# the Swagger UI. An empty string will allow this to work out of the box in a
+# local development environment, but for production it should be set to a value
+# like "/rest/statistics", assuming that the statistics API is deployed next to
+# the vanilla DSpace REST API.
+DSPACE_STATISTICS_API_URL = os.environ.get("DSPACE_STATISTICS_API_URL", "")
 
 VERSION = "1.4.0-dev"
 
