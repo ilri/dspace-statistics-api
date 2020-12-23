@@ -14,8 +14,21 @@ class RootResource:
     def on_get(self, req, resp):
         resp.status = falcon.HTTP_200
         resp.content_type = "text/html"
-        with open("dspace_statistics_api/docs/index.html", "r") as f:
-            resp.body = f.read()
+        docs_html = (
+            "<!DOCTYPE html>"
+            "<html lang=\"en-US\">"
+            "    <head>"
+            "        <meta charset=\"UTF-8\">"
+            "        <title>DSpace Statistics API</title>"
+            "    </head>"
+            "    <body>"
+            f"        <h1>DSpace Statistics API {VERSION}</h1>"
+            f"        <p>This site is running the <a href=\"https://github.com/ilri/dspace-statistics-api\" title=\"DSpace Statistics API project\">DSpace Statistics API</a>. For more information see the project's README.md or the interactive <a href=\"{DSPACE_STATISTICS_API_URL + '/swagger'}\">Swagger UI</a> built into this API.</p>"
+            "    </body>"
+            "</html"
+        )
+
+        resp.body = docs_html
 
 
 class StatusResource:
