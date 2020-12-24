@@ -371,3 +371,5 @@ def test_post_collections_invalid_page(client):
     response = client.simulate_post("/collections", json=request_body)
 
     assert response.status_code == 400
+
+# vim: set sw=4 ts=4 expandtab:
