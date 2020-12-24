@@ -44,4 +44,5 @@ def test_get_status(client):
     assert isinstance(response.content, bytes)
     assert response.status_code == 200
 
+
 # vim: set sw=4 ts=4 expandtab:

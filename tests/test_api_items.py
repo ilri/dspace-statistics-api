@@ -372,4 +372,5 @@ def test_post_items_invalid_page(client):
 
     assert response.status_code == 400
 
+
 # vim: set sw=4 ts=4 expandtab:
