@@ -11,7 +11,7 @@ colorama==0.4.4; python_version >= "3.7" and python_version < "4.0" and sys_plat
 dataclasses==0.6; python_version < "3.7"
 decorator==4.4.2; python_version >= "3.7" and python_version < "4.0"
 falcon==2.0.0
-falcon-swagger-ui==1.2.1
+-e git+https://github.com/alanorth/falcon-swagger-ui.git@a44244c85dceccfcd249b62fea4ee82a8221e3d2#egg=falcon-swagger-ui
 flake8==3.8.4
 gunicorn==20.0.4
 idna==2.10

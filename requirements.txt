@@ -1,7 +1,7 @@
 certifi==2020.12.5
 chardet==4.0.0
 falcon==2.0.0
-falcon-swagger-ui==1.2.1
+-e git+https://github.com/alanorth/falcon-swagger-ui.git@a44244c85dceccfcd249b62fea4ee82a8221e3d2#egg=falcon-swagger-ui
 gunicorn==20.0.4
 idna==2.10
 jinja2==2.11.2
