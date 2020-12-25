@@ -144,6 +144,11 @@ python-versions = "*"
 falcon = "*"
 Jinja2 = "*"
 
+[package.source]
+url = "https://github.com/alanorth/falcon-swagger-ui.git"
+reference = "a44244c85dceccfcd249b62fea4ee82a8221e3d2"
+type = "git"
+
 [[package]]
 name = "flake8"
 version = "3.8.4"
@@ -589,7 +594,7 @@ testing = ["pytest (>=3.5,<3.7.3 || >3.7.3)", "pytest-checkdocs (>=1.2.3)", "pyt
 [metadata]
 lock-version = "1.0"
 python-versions = "^3.6"
-content-hash = "1d56758c9e3aa4586109e8aaf4def576d3506385bc749b97e8518f936f2e91ca"
+content-hash = "3a8e8a7152971ae091864e7dd5a8fd25f895f68dd1444bffc153c61227e84914"
 
 [metadata.files]
 appdirs = [
@@ -655,9 +660,7 @@ falcon = [
     {file = "falcon-2.0.0-py2.py3-none-any.whl", hash = "sha256:54f2cb4b687035b2a03206dbfc538055cc48b59a953187b0458aa1b574d47b53"},
     {file = "falcon-2.0.0.tar.gz", hash = "sha256:eea593cf466b9c126ce667f6d30503624ef24459f118c75594a69353b6c3d5fc"},
 ]
-falcon-swagger-ui = [
-    {file = "falcon_swagger_ui-1.2.1-py3-none-any.whl", hash = "sha256:2514e6cb403e87e49a1527764cf090c82885185cc650b7ab5cefa8ebe89af8b8"},
-]
+falcon-swagger-ui = []
 flake8 = [
     {file = "flake8-3.8.4-py2.py3-none-any.whl", hash = "sha256:749dbbd6bfd0cf1318af27bf97a14e28e5ff548ef8e5b1566ccfb25a11e7c839"},
     {file = "flake8-3.8.4.tar.gz", hash = "sha256:aadae8761ec651813c24be05c6f7b4680857ef6afaae4651a4eccaef97ce6c3b"},
