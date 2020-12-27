@@ -58,6 +58,9 @@ class OpenAPIJSONResource:
             if DSPACE_STATISTICS_API_URL != "":
                 data["servers"] = [{"url": DSPACE_STATISTICS_API_URL}]
 
+            # Set the version in the schema so Swagger UI can display it
+            data["info"]["version"] = VERSION
+
             resp.body = json.dumps(data)
 
 
