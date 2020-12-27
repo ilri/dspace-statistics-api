@@ -28,6 +28,8 @@
 #
 # See: https://wiki.duraspace.org/display/DSPACE/Solr
 
+import math
+
 import psycopg2.extras
 import requests
 
@@ -75,9 +77,9 @@ def index_views(indexType: str, facetField: str):
 
         exit(0)
 
-    # divide results into "pages" (cast to int to effectively round down)
+    # divide results into "pages" and round up to next integer
     results_per_page = 100
-    results_num_pages = int(results_totalNumFacets / results_per_page)
+    results_num_pages = math.ceil(results_totalNumFacets / results_per_page)
     results_current_page = 0
 
     with DatabaseManager() as db:
@@ -158,9 +160,8 @@ def index_downloads(indexType: str, facetField: str):
 
         exit(0)
 
-    # divide results into "pages" (cast to int to effectively round down)
     results_per_page = 100
-    results_num_pages = int(results_totalNumFacets / results_per_page)
+    results_num_pages = math.ceil(results_totalNumFacets / results_per_page)
     results_current_page = 0
 
     with DatabaseManager() as db:

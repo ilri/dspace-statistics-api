@@ -1,4 +1,5 @@
 import json
+import math
 
 import falcon
 import psycopg2.extras
@@ -75,7 +76,7 @@ class AllStatisticsResource:
             with db.cursor() as cursor:
                 # get total number of communities/collections/items so we can estimate the pages
                 cursor.execute(f"SELECT COUNT(id) FROM {req.context.statistics_scope}")
-                pages = round(cursor.fetchone()[0] / limit)
+                pages = math.ceil(cursor.fetchone()[0] / limit)
 
                 # get statistics and use limit and offset to page through results
                 cursor.execute(
@@ -128,7 +129,7 @@ class AllStatisticsResource:
         # Helper variables to make working with pages/items/results easier and
         # to make the code easier to understand
         number_of_elements: int = len(req.context.elements)
-        pages: int = int(number_of_elements / req.context.limit)
+        pages: int = math.ceil(number_of_elements / req.context.limit)
         first_element: int = req.context.page * req.context.limit
         last_element: int = first_element + req.context.limit
         # Get a subset of the POSTed items based on our limit. Note that Python
