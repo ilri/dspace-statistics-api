@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 deterministically
 - Use `fl` parameter in indexer to return only the field we are faceting by
 - Minor refactoring of imports for PEP8 style
+- More correct calculation of `totalPages` parameter in REST API response
 
 ## [1.3.2] - 2020-11-18
 ### Fixed
