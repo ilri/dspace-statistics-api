@@ -24,7 +24,7 @@ steps:
   commands:
   - id
   - python -V
-  - apt update && apt install -y gcc
+  - apt update && apt install -y gcc git
   - pip install -r requirements-dev.txt
   - pytest
 
@@ -71,6 +71,7 @@ steps:
   commands:
   - id
   - python -V
+  - apt update && apt install -y git
   - pip install -r requirements-dev.txt
   - pytest
 
@@ -109,6 +110,7 @@ steps:
   commands:
   - id
   - python -V
+  - apt update && apt install -y git
   - pip install -r requirements-dev.txt
   - pytest
 
@@ -147,6 +149,7 @@ steps:
   commands:
   - id
   - python -V
+  - apt update && apt install -y git
   - pip install -r requirements-dev.txt
   - pytest
 
