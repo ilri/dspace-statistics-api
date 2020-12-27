@@ -17,9 +17,9 @@ class RootResource:
         resp.content_type = "text/html"
         docs_html = (
             "<!DOCTYPE html>"
-            "<html lang=\"en-US\">"
+            '<html lang="en-US">'
             "    <head>"
-            "        <meta charset=\"UTF-8\">"
+            '        <meta charset="UTF-8">'
             "        <title>DSpace Statistics API</title>"
             "    </head>"
             "    <body>"
