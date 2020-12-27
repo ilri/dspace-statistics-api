@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dspace-statistics-api"
-version = "1.4.0-dev"
+version = "1.4.0"
 description = "A simple REST API to expose Solr view and download statistics for items, communities, and collections in a DSpace repository."
 authors = ["Alan Orth <aorth@mjanja.ch>"]
 license = "GPL-3.0-only"
