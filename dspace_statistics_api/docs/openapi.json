@@ -1,6 +1,7 @@
 {
   "openapi": "3.0.3",
   "info": {
+    "version": "1.4.0",
     "title": "DSpace Statistics API",
     "description": "A [Falcon-based](https://falcon.readthedocs.io/) web application to make DSpace's item, community, and collection statistics available via a simple REST API. This Swagger interface is powered by [falcon-swagger-ui](https://github.com/rdidyk/falcon-swagger-ui).",
     "license": {
@@ -141,7 +142,7 @@
                 },
                 "example": {
                   "limit": 100,
-                  "page": 5,
+                  "page": 0,
                   "dateFrom": "2020-01-01T00:00:00Z",
                   "dateTo": "2020-12-31T00:00:00Z",
                   "items": [
@@ -501,7 +502,7 @@
                 },
                 "example": {
                   "limit": 100,
-                  "page": 2,
+                  "page": 0,
                   "dateFrom": "2020-01-01T00:00:00Z",
                   "dateTo": "2020-12-31T00:00:00Z",
                   "collections": [
