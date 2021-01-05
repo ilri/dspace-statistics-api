@@ -3,6 +3,7 @@ DSpace stores item view and download events in a Solr "statistics" core. This in
 
 - If your DSpace is version 4 or 5, use [dspace-statistics-api v1.1.1](https://github.com/ilri/dspace-statistics-api/releases/tag/v1.1.1)
 - If your DSpace is version 6+, use [dspace-statistics-api v1.2.0 or greater](https://github.com/ilri/dspace-statistics-api/releases/tag/v1.2.0)
+  - Please make sure your statistics have been migrated from integers to UUIDs with the [solr-upgrade-statistics-6x](https://wiki.lyrasis.org/display/DSDOC6x/SOLR+Statistics+Maintenance) command
 
 This project contains an indexer and a [Falcon-based](https://falcon.readthedocs.io/) web application to make the item, community, and collection statistics available via a simple REST API. You can read more about the Solr queries used to gather the item view and download statistics on the [DSpace wiki](https://wiki.lyrasis.org/display/DSPACE/Solr).
 
