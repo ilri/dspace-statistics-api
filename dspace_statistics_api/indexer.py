@@ -47,7 +47,7 @@ def index_views(indexType: str, facetField: str):
     #
     # see: https://lucene.apache.org/solr/guide/6_6/the-stats-component.html
     solr_query_params = {
-        "q": "type:2",
+        "q": f"type:2 AND {facetField}:/.{{36}}/",
         "fq": "-isBot:true AND statistics_type:view",
         "fl": facetField,
         "facet": "true",
@@ -94,7 +94,7 @@ def index_views(indexType: str, facetField: str):
                 )
 
                 solr_query_params = {
-                    "q": "type:2",
+                    "q": f"type:2 AND {facetField}:/.{{36}}/",
                     "fq": "-isBot:true AND statistics_type:view",
                     "fl": facetField,
                     "facet": "true",
@@ -130,7 +130,7 @@ def index_views(indexType: str, facetField: str):
 def index_downloads(indexType: str, facetField: str):
     # get the total number of distinct facets for items with at least 1 download
     solr_query_params = {
-        "q": "type:0",
+        "q": f"type:0 AND {facetField}:/.{{36}}/",
         "fq": "-isBot:true AND statistics_type:view AND bundleName:ORIGINAL",
         "fl": facetField,
         "facet": "true",
@@ -176,7 +176,7 @@ def index_downloads(indexType: str, facetField: str):
                 )
 
                 solr_query_params = {
-                    "q": "type:0",
+                    "q": f"type:0 AND {facetField}:/.{{36}}/",
                     "fq": "-isBot:true AND statistics_type:view AND bundleName:ORIGINAL",
                     "fl": facetField,
                     "facet": "true",
