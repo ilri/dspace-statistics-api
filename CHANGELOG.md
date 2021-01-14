@@ -94,7 +94,7 @@ and gunicorn 20.0.4
 ## [0.9.0] - 2019-01-22
 ### Updated
 - pytest version 4.0.0
-- Fix indexing of sharded statistics cores ([#10))
+- Fix indexing of sharded statistics cores (#10)
 - Handle case of missing views/downloads gracefully
 
 ## [0.8.1] - 2018-11-14
