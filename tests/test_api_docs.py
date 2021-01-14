@@ -1,5 +1,5 @@
-from falcon import testing
 import pytest
+from falcon import testing
 
 from dspace_statistics_api.app import api
 

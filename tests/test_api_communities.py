@@ -1,7 +1,8 @@
-from falcon import testing
 import json
-import pytest
 from unittest.mock import patch
+
+import pytest
+from falcon import testing
 
 from dspace_statistics_api.app import api
 
