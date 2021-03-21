@@ -86,7 +86,7 @@ and gunicorn 20.0.4
 - Minor syntax issues highlighted by flake8
 
 ## [1.1.0] - 2019-05-05
-## Updated
+### Updated
 - Falcon 2.0.0 (@alanorth)
 
 ## [1.0.0] - 2019-04-15
