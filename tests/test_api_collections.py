@@ -6,12 +6,12 @@ from unittest.mock import patch
 import pytest
 from falcon import testing
 
-from dspace_statistics_api.app import api
+from dspace_statistics_api.app import app
 
 
 @pytest.fixture
 def client():
-    return testing.TestClient(api)
+    return testing.TestClient(app)
 
 
 def test_get_collection(client):
