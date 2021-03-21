@@ -1,0 +1,61 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Build and Test
+
+on: ['push', 'pull_request']
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+      database:
+        image: postgres:10-alpine
+        env:
+          # password for postgres user in the Docker container
+          POSTGRES_PASSWORD: postgres
+          # default database to create
+          POSTGRES_DB: dspacestatistics
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Set up PostgreSQL
+      run: |
+        pg_isready -U postgres -d dspacestatistics
+        createuser -U postgres dspacestatistics
+        psql -U postgres -c "ALTER USER dspacestatistics WITH PASSWORD 'dspacestatistics'"
+        psql -U postgres -d dspacestatistics < tests/dspacestatistics.sql
+      env:
+        PGHOST: localhost
+        PGPASSWORD: postgres
+    - name: Test with pytest
+      run: |
+        pytest
+      env:
+        PGHOST: localhost
+        PGPASSWORD: dspacestatistics
