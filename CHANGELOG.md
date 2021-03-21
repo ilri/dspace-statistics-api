@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 - Update dependencies with `poetry update`
 
+### Added
+- GitHub Actions workflow to build and test the API
+
 ## [1.4.1] - 2021-01-14
 ### Changed
 - Limit Solr query to UUIDs to avoid errors with unmigrated legacy stats (https://github.com/ilri/dspace-statistics-api/issues/12)
