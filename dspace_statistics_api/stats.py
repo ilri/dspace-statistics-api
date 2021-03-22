@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 import requests
 
 from .config import SOLR_SERVER

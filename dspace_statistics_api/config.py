@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 import os
 
 # Check if Solr connection information was provided in the environment

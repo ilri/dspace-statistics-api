@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-only
+
 import falcon
 import psycopg2
 import psycopg2.extras
