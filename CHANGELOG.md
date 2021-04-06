@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Falcon 3.0.0, a minor change for us, but good to be using a current upstream
 version
 
+### Fixed
+- Bug in several of the "valid page" tests
+
 ### Added
 - GitHub Actions workflow to build and test the API
 
