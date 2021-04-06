@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Updated
 - Update dependencies with `poetry update`
+- Falcon 3.0.0, a minor change for us, but good to be using a current upstream
+version
 
 ### Added
 - GitHub Actions workflow to build and test the API
