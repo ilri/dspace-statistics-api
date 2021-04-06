@@ -312,7 +312,7 @@ def test_post_collections_valid_page(client):
     assert response.status_code == 200
     assert response.json["limit"] == 100
     assert response.json["currentPage"] == 0
-    assert response.json["totalPages"] == 0
+    assert response.json["totalPages"] == 1
     assert len(response.json["statistics"]) == 2
     assert isinstance(response.json["statistics"][0]["views"], int)
     assert isinstance(response.json["statistics"][0]["downloads"], int)
