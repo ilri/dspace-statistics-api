@@ -120,7 +120,6 @@ The id is the *internal* UUID for an item, community, or collection. You can get
 - Use JSON in PostgreSQL
 - Add top items endpoint, perhaps `/top/items` or `/items/top`?
   - Actually we could add `/items?limit=10&sort=views`
-- Add Swagger with OpenAPI 3.0.x with [falcon-swagger-ui](https://github.com/rdidyk/falcon-swagger-ui)
 
 ## License
 This work is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html).
