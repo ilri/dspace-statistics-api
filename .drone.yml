@@ -71,7 +71,7 @@ steps:
   commands:
   - id
   - python -V
-  - apt update && apt install -y git libpq-dev
+  - apt update && apt install -y gcc git libpq-dev
   - pip install -r requirements-dev.txt
   - pytest
 
@@ -110,7 +110,7 @@ steps:
   commands:
   - id
   - python -V
-  - apt update && apt install -y git libpq-dev
+  - apt update && apt install -y gcc git libpq-dev
   - pip install -r requirements-dev.txt
   - pytest
 
@@ -149,7 +149,7 @@ steps:
   commands:
   - id
   - python -V
-  - apt update && apt install -y git libpq-dev
+  - apt update && apt install -y gcc git libpq-dev
   - pip install -r requirements-dev.txt
   - pytest
 
