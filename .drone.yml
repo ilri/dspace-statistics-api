@@ -1,5 +1,44 @@
 kind: pipeline
 type: docker
+name: python10
+
+steps:
+- name: setup
+  image: postgres:10-alpine
+  environment:
+    PGPASSWORD: postgres
+  commands:
+  - id
+  - psql --version
+  - sleep 5
+  - pg_isready -h database -U postgres -d dspacestatistics
+  - createuser -h database -U postgres dspacestatistics
+  - psql -h database -U postgres -c "ALTER USER dspacestatistics WITH PASSWORD 'dspacestatistics'"
+  - psql -h database -U postgres -d dspacestatistics < tests/dspacestatistics.sql
+
+- name: test
+  image: python:3.10-slim
+  environment:
+    PGPASSWORD: dspacestatistics
+    DATABASE_HOST: database
+  commands:
+  - id
+  - python -V
+  - apt update && apt install -y gcc git libpq-dev
+  - pip install -r requirements-dev.txt
+  - pytest
+
+services:
+- name: database
+  image: postgres:10-alpine
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+    POSTGRES_DB: dspacestatistics
+
+---
+kind: pipeline
+type: docker
 name: python39
 
 steps:
