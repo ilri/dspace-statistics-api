@@ -1,6 +1,6 @@
 kind: pipeline
 type: docker
-name: python10
+name: python310
 
 steps:
 - name: setup
