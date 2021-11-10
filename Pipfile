@@ -11,7 +11,7 @@ requests = "~=2.26.0"
 falcon-swagger-ui = {editable = true, ref = "falcon3-update-swagger-ui", git = "https://github.com/alanorth/falcon-swagger-ui.git"}
 
 [dev-packages]
-ipython = "*"
+ipython = { version="*", markers="python_version >= '3.7'"}
 black = "*"
 flake8 = "*"
 isort = "*"
