@@ -1,4 +1,11 @@
-# DSpace Statistics API [![Build Status](https://ci.mjanja.ch/api/badges/alanorth/dspace-statistics-api/status.svg?ref=refs/heads/v6_x)](https://ci.mjanja.ch/alanorth/dspace-statistics-api) [![Build and Test](https://github.com/ilri/dspace-statistics-api/actions/workflows/python-app.yml/badge.svg)](https://github.com/ilri/dspace-statistics-api/actions/workflows/python-app.yml)
+<h1 align="center">DSpace Statistics API</h1>
+
+<p align="center">
+<a href="https://ci.mjanja.ch/alanorth/dspace-statistics-api"><img alt="Build Status" src="https://ci.mjanja.ch/api/badges/alanorth/dspace-statistics-api/status.svg?ref=refs/heads/v6_x"></a>
+<a href="https://github.com/ilri/dspace-statistics-api/actions/workflows/python-app.yml"><img alt="Build and Test" src="https://github.com/ilri/dspace-statistics-api/actions/workflows/python-app.yml/badge.svg"></a>
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+</p>
+
 DSpace stores item view and download events in a Solr "statistics" core. This information is available for use in the various DSpace user interfaces, but is not exposed externally via any APIs. The DSpace 4/5/6 [REST API](https://wiki.lyrasis.org/display/DSDOC5x/REST+API), for example, only exposes _metadata_ about communities, collections, items, and bitstreams.
 
 - If your DSpace is version 4 or 5, use [dspace-statistics-api v1.1.1](https://github.com/ilri/dspace-statistics-api/releases/tag/v1.1.1)
