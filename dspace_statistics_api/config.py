@@ -18,6 +18,6 @@ DATABASE_PORT = os.environ.get("DATABASE_PORT", "5432")
 # the vanilla DSpace REST API.
 DSPACE_STATISTICS_API_URL = os.environ.get("DSPACE_STATISTICS_API_URL", "")
 
-VERSION = "1.4.3-dev"
+VERSION = "1.4.3"
 
 # vim: set sw=4 ts=4 expandtab:
