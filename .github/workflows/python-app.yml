@@ -12,7 +12,7 @@ jobs:
 
     services:
       database:
-        image: postgres:10-alpine
+        image: postgres:12-alpine
         env:
           # password for postgres user in the Docker container
           POSTGRES_PASSWORD: postgres
