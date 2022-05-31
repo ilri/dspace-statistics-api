@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 ### Changed
 - Update recommended Python version to 3.7+
+- Use PostgreSQL 12 in CI
 
 ## 1.4.3 - 2022-03-26
 ### Updated
