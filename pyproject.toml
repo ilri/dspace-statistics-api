@@ -22,3 +22,7 @@ isort = {version = "^5.9.1", python = ">=3.6.1"}
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.isort]
+profile = "black"
+line_length=88
