@@ -62,7 +62,6 @@ def get_statistics_shards():
 
 
 def is_valid_date(date):
-
     try:
         # Solr date format is: 2020-01-01T00:00:00Z
         # See: https://docs.python.org/3/library/datetime.html#strftime-strptime-behavior
