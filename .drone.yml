@@ -4,7 +4,7 @@ name: python310
 
 steps:
 - name: setup
-  image: postgres:12-alpine
+  image: postgres:14-alpine
   environment:
     PGPASSWORD: postgres
   commands:
@@ -30,7 +30,7 @@ steps:
 
 services:
 - name: database
-  image: postgres:12-alpine
+  image: postgres:14-alpine
   environment:
     POSTGRES_USER: postgres
     POSTGRES_PASSWORD: postgres
@@ -43,7 +43,7 @@ name: python39
 
 steps:
 - name: setup
-  image: postgres:12-alpine
+  image: postgres:14-alpine
   environment:
     PGPASSWORD: postgres
   commands:
@@ -69,7 +69,7 @@ steps:
 
 services:
 - name: database
-  image: postgres:12-alpine
+  image: postgres:14-alpine
   environment:
     POSTGRES_USER: postgres
     POSTGRES_PASSWORD: postgres
@@ -82,7 +82,7 @@ name: python38
 
 steps:
 - name: database
-  image: postgres:12-alpine
+  image: postgres:14-alpine
   detach: true
   environment:
     POSTGRES_USER: postgres
@@ -90,7 +90,7 @@ steps:
     POSTGRES_DB: dspacestatistics
 
 - name: setup
-  image: postgres:12-alpine
+  image: postgres:14-alpine
   environment:
     PGPASSWORD: postgres
   commands:
@@ -121,7 +121,7 @@ name: python37
 
 steps:
 - name: database
-  image: postgres:12-alpine
+  image: postgres:14-alpine
   detach: true
   environment:
     POSTGRES_USER: postgres
@@ -129,7 +129,7 @@ steps:
     POSTGRES_DB: dspacestatistics
 
 - name: setup
-  image: postgres:12-alpine
+  image: postgres:14-alpine
   environment:
     PGPASSWORD: postgres
   commands:
