@@ -17,7 +17,7 @@ steps:
   - psql -h database -U postgres -d dspacestatistics < tests/dspacestatistics.sql
 
 - name: test
-  image: python:3.10-slim
+  image: python:3.11-slim
   environment:
     PGPASSWORD: dspacestatistics
     DATABASE_HOST: database
@@ -56,7 +56,7 @@ steps:
   - psql -h database -U postgres -d dspacestatistics < tests/dspacestatistics.sql
 
 - name: test
-  image: python:3.9-slim
+  image: python:3.11-slim
   environment:
     PGPASSWORD: dspacestatistics
     DATABASE_HOST: database
@@ -103,7 +103,7 @@ steps:
   - psql -h database -U postgres -d dspacestatistics < tests/dspacestatistics.sql
 
 - name: test
-  image: python:3.8-slim
+  image: python:3.11-slim
   environment:
     PGPASSWORD: dspacestatistics
     DATABASE_HOST: database
