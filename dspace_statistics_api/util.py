@@ -140,7 +140,7 @@ def validate_post_parameters(req, resp, resource, params):
                 description=f'The "{req.context.statistics_scope}" parameter is invalid. The value must be a comma-separated list of UUIDs.',
             )
     else:
-        req.context.elements = list()
+        req.context.elements = []
 
 
 def set_statistics_scope(req, resp, resource, params):

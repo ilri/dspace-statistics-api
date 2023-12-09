@@ -90,7 +90,7 @@ class AllStatisticsResource:
                 )
 
                 # create a list to hold dicts of stats
-                statistics = list()
+                statistics = []
 
                 # iterate over results and build statistics object
                 for result in cursor:
@@ -162,7 +162,7 @@ class AllStatisticsResource:
         )
 
         # create a list to hold dicts of stats
-        statistics = list()
+        statistics = []
 
         # iterate over views dict to extract views and use the element id as an
         # index to the downloads dict to extract downloads.
