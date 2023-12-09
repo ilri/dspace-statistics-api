@@ -19,6 +19,9 @@ pytest = "^7.0.0"
 black = "^23.0.0"
 isort = "^5.9.1"
 
+[tool.poetry.group.dev.dependencies]
+fixit = "^2.1.0"
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
