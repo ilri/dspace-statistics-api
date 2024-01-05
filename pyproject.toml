@@ -11,7 +11,7 @@ gunicorn = "^21.0.0"
 falcon = "3.1.3"
 psycopg2 = "^2.9.1"
 requests = "^2.24.0"
-falcon-swagger-ui = {git = "https://github.com/alanorth/falcon-swagger-ui.git", rev="falcon3-update-swagger-ui"}
+falcon-swagger-ui = {git = "https://github.com/alanorth/falcon-swagger-ui.git", rev="818c09e17ae1231b935f18edb9823878dc6c7bfb"}
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.0.0"
