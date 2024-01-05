@@ -225,7 +225,7 @@ files = [
 [[package]]
 name = "falcon-swagger-ui"
 version = "1.2.1"
-description = "Swagger UI Application for Falcon"
+description = ""
 optional = false
 python-versions = "*"
 files = []
@@ -238,8 +238,8 @@ Jinja2 = "*"
 [package.source]
 type = "git"
 url = "https://github.com/alanorth/falcon-swagger-ui.git"
-reference = "falcon3-update-swagger-ui"
-resolved_reference = "c019c270b479c03d9276e20fd95488495b0943f6"
+reference = "818c09e17ae1231b935f18edb9823878dc6c7bfb"
+resolved_reference = "818c09e17ae1231b935f18edb9823878dc6c7bfb"
 
 [[package]]
 name = "fixit"
@@ -770,4 +770,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8.1"
-content-hash = "415a8a46a5b7f86c2bc1acd5b82422cc79c504664665d3dbf11a76c89516ceb3"
+content-hash = "f8f3fc51dffc71dfb5171e69bb5acef44d38460ac6a2c5b9b6507b8a1b42d9cc"
