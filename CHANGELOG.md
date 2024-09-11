@@ -6,11 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Changed
-- Update recommended Python version to 3.7+
-- Use PostgreSQL 12 in CI
+- Update recommended Python version to 3.8+
+- Use PostgreSQL 15 in CI
+- Use Python 3.12 in CI
 
 ### Updated
-- Falcon 3.1.1
+- Falcon 3.1.3, a minor change for us, but good to be using a current upstream
+version
 
 ### Removed
 - Drone CI
