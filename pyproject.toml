@@ -7,18 +7,17 @@ license = "GPL-3.0-only"
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
-gunicorn = "^22.0.0"
-falcon = "3.1.3"
-psycopg2 = "^2.9.1"
-requests = "^2.24.0"
+gunicorn = "^23.0.0"
+falcon = "^3.1.3"
+psycopg2 = "^2.9.9"
+requests = "^2.32.3"
 falcon-swagger-ui = {git = "https://github.com/alanorth/falcon-swagger-ui.git", rev="falcon3-update-swagger-ui"}
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.0.0"
-fixit = "^2.1.0"
-flake8 = "^7.0.0"
-isort = "^5.9.1"
-pytest = "^7.0.0"
+black = "^24.0.0"
+flake8 = "^7.1.1"
+isort = "^5.13.2"
+pytest = "^8.3.3"
 
 [build-system]
 requires = ["poetry>=0.12"]
