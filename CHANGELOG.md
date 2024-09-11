@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Updated
 - Falcon 3.1.1
 
+### Removed
+- Drone CI
+
 ## 1.4.3 - 2022-03-26
 ### Updated
 - Update dependencies with `poetry update`
