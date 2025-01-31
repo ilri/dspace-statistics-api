@@ -14,7 +14,7 @@ requests = "^2.32.3"
 falcon-swagger-ui = {git = "https://github.com/alanorth/falcon-swagger-ui.git", rev="falcon3-update-swagger-ui"}
 
 [tool.poetry.group.dev.dependencies]
-black = "^24.0.0"
+black = "^25.0.0"
 flake8 = "^7.1.1"
 isort = "^5.13.2"
 pytest = "^8.3.3"
