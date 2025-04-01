@@ -76,7 +76,7 @@ class AllStatisticsResource:
         offset = limit * page
 
         with DatabaseManager() as db:
-            db.set_session(readonly=True)
+            db.set_read_only(True)
 
             with db.cursor() as cursor:
                 # get total number of communities/collections/items so we can estimate the pages
@@ -190,7 +190,7 @@ class SingleStatisticsResource:
         psycopg2.extras.register_uuid()
 
         with DatabaseManager() as db:
-            db.set_session(readonly=True)
+            db.set_read_only(True)
 
             with db.cursor() as cursor:
                 cursor = db.cursor()
