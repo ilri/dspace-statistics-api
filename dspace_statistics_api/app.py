@@ -4,7 +4,6 @@ import json
 import math
 
 import falcon
-import psycopg2.extras
 from falcon_swagger_ui import register_swaggerui_app
 
 from .config import DSPACE_STATISTICS_API_URL, VERSION
@@ -184,10 +183,6 @@ class SingleStatisticsResource:
     @falcon.before(set_statistics_scope)
     def on_get(self, req, resp, id_):
         """Handles GET requests"""
-
-        # Adapt Python’s uuid.UUID type to PostgreSQL’s uuid
-        # See: https://www.psycopg.org/docs/extras.html
-        psycopg2.extras.register_uuid()
 
         with DatabaseManager() as db:
             db.set_read_only(True)
