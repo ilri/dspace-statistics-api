@@ -8,7 +8,7 @@
 # This script is written for Python 3.6+ and requires several modules that you
 # can install with pip (I recommend using a Python virtual environment):
 #
-#   $ pip install psycopg2-binary
+#   $ pip install psycopg
 #
 # See: https://wiki.duraspace.org/display/DSPACE/Solr
 
