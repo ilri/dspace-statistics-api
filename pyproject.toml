@@ -1,27 +1,42 @@
-[tool.poetry]
+[project]
 name = "dspace-statistics-api"
 version = "1.4.5-dev"
 description = "A simple REST API to expose Solr view and download statistics for items, communities, and collections in a DSpace repository."
-authors = ["Alan Orth <git@mjanja.mozmail.com>"]
+authors = [
+    { name = "Alan Orth", email = "git@mjanja.mozmail.com" }
+]
+
+requires-python = ">= 3.8.1"
+
 license = "GPL-3.0-only"
+license-files = ["LICENSE.txt"]
+dependencies = [
+    "gunicorn==23.0.*",
+    "falcon==3.1.*",
+    "psycopg2==2.9.*",
+    "requests==2.32.*",
+    "falcon-swagger-ui",
+]
 
-[tool.poetry.dependencies]
-python = "^3.8.1"
-gunicorn = "^23.0.0"
-falcon = "^3.1.3"
-psycopg2 = "^2.9.9"
-requests = "^2.32.3"
-falcon-swagger-ui = {git = "https://github.com/alanorth/falcon-swagger-ui.git", rev="falcon3-update-swagger-ui"}
+[project.urls]
+repository = "https://github.com/ilri/dspace-statistics-api"
+homepage = "https://github.com/ilri/dspace-statistics-api"
 
-[tool.poetry.group.dev.dependencies]
-black = "^24.0.0"
-flake8 = "^7.1.1"
-isort = "^5.13.2"
-pytest = "^8.3.3"
+[tool.uv.sources]
+falcon-swagger-ui = { git = "https://github.com/alanorth/falcon-swagger-ui", rev = "falcon3-update-swagger-ui" }
 
+# So uv doesn't fall back to setuptools
+# See: https://packaging.python.org/en/latest/tutorials/packaging-projects/#choosing-build-backend
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "flake8==7.1.*",
+    "isort==5.13.*",
+    "pytest==8.3.*",
+]
 
 [tool.isort]
 profile = "black"
