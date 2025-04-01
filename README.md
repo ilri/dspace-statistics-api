@@ -5,7 +5,7 @@
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
-DSpace stores item view and download events in a Solr "statistics" core. This information is available for use in the various DSpace user interfaces, but is not exposed externally via any APIs. The DSpace 4/5/6 [REST API](https://wiki.lyrasis.org/display/DSDOC5x/REST+API), for example, only exposes _metadata_ about communities, collections, items, and bitstreams.
+DSpace stores item view and download events in a Solr "statistics" core. This information is available for use in the various DSpace user interfaces, but is not exposed externally via any APIs. The DSpace 4/5/6 [REST API](https://wiki.lyrasis.org/display/DSDOC5x/REST+API), for example, only exposes _metadata_ about communities, collections, items, and bitstreams. As of DSpace 7, the [REST API](https://wiki.lyrasis.org/display/DSDOC7x/REST+API) exposes _some_ statistics about DSpace objects, but does not provide a way to get them for all items, and lacks some flexibility.
 
 - If your DSpace is version 4 or 5, use [dspace-statistics-api v1.1.1](https://github.com/ilri/dspace-statistics-api/releases/tag/v1.1.1)
 - If your DSpace is version 6+, use [dspace-statistics-api v1.2.0 or greater](https://github.com/ilri/dspace-statistics-api/releases/tag/v1.2.0)
@@ -34,7 +34,7 @@ Create a Python virtual environment and install the dependencies:
 
 Set up the environment variables for Solr and PostgreSQL:
 
-    $ export SOLR_SERVER=http://localhost:8080/solr
+    $ export SOLR_SERVER=http://localhost:8983/solr
     $ export DATABASE_NAME=dspacestatistics
     $ export DATABASE_USER=dspacestatistics
     $ export DATABASE_PASS=dspacestatistics
