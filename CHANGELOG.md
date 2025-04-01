@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Use uv instead of poetry to manage the project and dependencies
 
+### Updated
+- Falcon 4.0.x
+
 ## 1.4.4 - 2024-09-11
 ### Changed
 - Update recommended Python version to 3.8+
