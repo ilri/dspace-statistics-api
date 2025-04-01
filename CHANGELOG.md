@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Updated
 - Falcon 4.0.x
+- psycopg2 to psycopg (version 3.2.6)
 
 ## 1.4.4 - 2024-09-11
 ### Changed
