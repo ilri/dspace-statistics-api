@@ -1,8 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 import falcon
-import psycopg2
-import psycopg2.extras
+import psycopg
 
 from .config import (
     DATABASE_HOST,
@@ -21,10 +20,10 @@ class DatabaseManager:
 
     def __enter__(self):
         try:
-            self._connection = psycopg2.connect(
-                self._connection_uri, cursor_factory=psycopg2.extras.DictCursor
+            self._connection = psycopg.connect(
+                self._connection_uri, row_factory=psycopg.rows.dict_row
             )
-        except psycopg2.OperationalError:
+        except psycopg.OperationalError:
             title = "500 Internal Server Error"
             description = "Could not connect to database"
             raise falcon.HTTPInternalServerError(title, description)
