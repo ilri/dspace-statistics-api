@@ -14,7 +14,7 @@
 
 import math
 
-import psycopg2.extras
+import psycopg
 import requests
 
 from .config import SOLR_SERVER
@@ -101,8 +101,8 @@ def index_views(indexType: str, facetField: str):
                     data.append((id_, views))
 
                 # do a batch insert of values from the current "page" of results
-                sql = f"INSERT INTO {indexType}(id, views) VALUES %s ON CONFLICT(id) DO UPDATE SET views=excluded.views"
-                psycopg2.extras.execute_values(cursor, sql, data, template="(%s, %s)")
+                sql = f"INSERT INTO {indexType}(id, views) VALUES (%s, %s) ON CONFLICT(id) DO UPDATE SET views=excluded.views"
+                cursor.executemany(sql, data)
                 db.commit()
 
                 # clear all items from the list so we can populate it with the next batch
@@ -183,8 +183,8 @@ def index_downloads(indexType: str, facetField: str):
                     data.append((id_, downloads))
 
                 # do a batch insert of values from the current "page" of results
-                sql = f"INSERT INTO {indexType}(id, downloads) VALUES %s ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads"
-                psycopg2.extras.execute_values(cursor, sql, data, template="(%s, %s)")
+                sql = f"INSERT INTO {indexType}(id, downloads) VALUES (%s, %s) ON CONFLICT(id) DO UPDATE SET downloads=excluded.downloads"
+                cursor.executemany(sql, data)
                 db.commit()
 
                 # clear all items from the list so we can populate it with the next batch
