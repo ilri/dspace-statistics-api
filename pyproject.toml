@@ -1,6 +1,6 @@
 [project]
 name = "dspace-statistics-api"
-version = "1.4.5"
+version = "1.4.6-dev"
 description = "A simple REST API to expose Solr view and download statistics for items, communities, and collections in a DSpace repository."
 authors = [
     { name = "Alan Orth", email = "git@mjanja.mozmail.com" }
