@@ -25,11 +25,10 @@ homepage = "https://github.com/ilri/dspace-statistics-api"
 [tool.uv.sources]
 falcon-swagger-ui = { git = "https://github.com/alanorth/falcon-swagger-ui", rev = "falcon3-update-swagger-ui" }
 
-# So uv doesn't fall back to setuptools
-# See: https://packaging.python.org/en/latest/tutorials/packaging-projects/#choosing-build-backend
+# See: https://docs.astral.sh/uv/concepts/build-backend/#using-the-uv-build-backend
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.7.19,<0.8.0"]
+build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
