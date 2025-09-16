@@ -12,7 +12,7 @@ license = "GPL-3.0-only"
 license-files = ["LICENSE.txt"]
 dependencies = [
     "gunicorn==23.0.*",
-    "falcon==4.0.*",
+    "falcon==4.1.*",
     "psycopg==3.2.*",
     "requests==2.32.*",
     "falcon-swagger-ui",
