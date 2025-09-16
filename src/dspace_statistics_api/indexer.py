@@ -5,16 +5,12 @@
 # Connects to a DSpace Solr statistics core and ingests views and downloads for
 # communities, collections, and items into a PostgreSQL database.
 #
-# This script is written for Python 3.6+ and requires several modules that you
-# can install with pip (I recommend using a Python virtual environment):
-#
-#   $ pip install psycopg
+# This script is written for Python 3.6+.
 #
 # See: https://wiki.duraspace.org/display/DSPACE/Solr
 
 import math
 
-import psycopg
 import requests
 
 from .config import SOLR_SERVER
