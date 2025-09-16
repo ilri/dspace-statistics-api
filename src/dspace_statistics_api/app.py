@@ -80,7 +80,7 @@ class AllStatisticsResource:
             with db.cursor() as cursor:
                 # get total number of communities/collections/items so we can estimate the pages
                 cursor.execute(f"SELECT COUNT(id) FROM {req.context.statistics_scope}")
-                pages = math.ceil(cursor.fetchone()['count'] / limit)
+                pages = math.ceil(cursor.fetchone()["count"] / limit)
 
                 # get statistics and use limit and offset to page through results
                 cursor.execute(
