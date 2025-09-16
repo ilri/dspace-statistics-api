@@ -45,7 +45,7 @@ class OpenAPIJSONResource:
     def on_get(self, req, resp):
         resp.status = falcon.HTTP_200
         resp.content_type = "text/html"
-        with open("dspace_statistics_api/docs/openapi.json", "r") as f:
+        with open("src/dspace_statistics_api/docs/openapi.json", "r") as f:
             # Load the openapi.json schema
             data = json.load(f)
 
