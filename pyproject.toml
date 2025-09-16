@@ -32,7 +32,7 @@ build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
-    "flake8==7.1.*",
+    "flake8==7.3.*",
     "isort==6.0.*",
     "pytest==8.3.*",
 ]
