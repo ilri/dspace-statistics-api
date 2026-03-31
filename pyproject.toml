@@ -14,7 +14,7 @@ dependencies = [
     "gunicorn==23.0.*",
     "falcon==4.1.*",
     "psycopg==3.2.*",
-    "requests==2.32.*",
+    "requests==2.33.*",
     "falcon-swagger-ui",
 ]
 
