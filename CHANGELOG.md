@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update recommended Python version to 3.10+
 
 ### Updated
-- Falcon 4.1.0
+- Falcon 4.2.0
 
 ## 1.4.5 - 2025-04-02
 ### Changed
