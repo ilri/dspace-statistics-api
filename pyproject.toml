@@ -23,7 +23,7 @@ repository = "https://github.com/ilri/dspace-statistics-api"
 homepage = "https://github.com/ilri/dspace-statistics-api"
 
 [tool.uv.sources]
-falcon-swagger-ui = { git = "https://github.com/alanorth/falcon-swagger-ui", rev = "falcon3-update-swagger-ui" }
+falcon-swagger-ui = { git = "https://github.com/alanorth/falcon-swagger-ui", rev = "818c09e17ae1231b935f18edb9823878dc6c7bfb" }
 
 # See: https://docs.astral.sh/uv/concepts/build-backend/#using-the-uv-build-backend
 [build-system]
